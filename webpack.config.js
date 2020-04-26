@@ -10,7 +10,7 @@ module.exports = {
         main: ['babel-polyfill', './src/index.js']
     },
     output: {
-        publicPath: './'
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -106,7 +106,7 @@ module.exports = {
         new HtmlWebPackPlugin({
             template: './public/index.html',
             filename: './index.html',
-            // favicon: './src/assets/images/favicon.ico'
+            favicon: './public/favicon.ico'
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? '[name].css' : '[name].[hash].css',

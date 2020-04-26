@@ -2,7 +2,7 @@
 import MainOrder from './components/LiveOrder/MainOrder'
 
 const routePaths = {
-    MAINORDER: '/adminka/order-main'
+    MAINORDER: '/order-main'
 }
 const routes = [
     {
