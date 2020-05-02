@@ -14,9 +14,14 @@ class LiveTimeAnalitics extends React.Component {
     render() {
         return (
             <div className="donut">
-                <Chart options={this.state.options} series={this.state.series} type="donut" width="450"/>
-                <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
-                <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
+                  <div className="analytics-second-part ">                
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
+                </div>
+                <div className="analytics-second-part">                
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="450" />
+                </div>
             </div>
         );
     }

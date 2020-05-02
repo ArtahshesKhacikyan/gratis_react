@@ -11,11 +11,7 @@ class LiveOrderTab extends React.Component {
     render() {
         return (
             <div className="live-tab-section">
-                <FormInput />
-                <SearchBoxInput />
-                <FormInput />
-                <FormInput />
-                <FormInput />
+
                 <div className="map-and-table-section">
                     <Tabs
                         id="map-section-tab"
@@ -23,7 +19,7 @@ class LiveOrderTab extends React.Component {
                     >
                         <Tab eventKey="map" title={
                             <FontAwesomeIcon icon={faGlobeAfrica}
-                             />
+                            />
                         }
                             className=''>
                             <MapSection />
@@ -34,15 +30,18 @@ class LiveOrderTab extends React.Component {
                             title={
                                 <FontAwesomeIcon icon={faTable} />
                             }>
-                                Table secttion
-                               
+                            <FormInput />
+                            <SearchBoxInput />
+                            <FormInput />
+                            <FormInput />
+
                         </Tab>
                         <Tab eventKey="chart-line" title={
                             <FontAwesomeIcon icon={faChartLine} />
                         }
                             className=''>
                             <LiveTimeAnalitics />
-                    </Tab>
+                        </Tab>
                     </Tabs>
                 </div>
             </div >

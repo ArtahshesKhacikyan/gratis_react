@@ -16,6 +16,7 @@ class MainOrder extends React.Component {
                     <FormInput label="Страна"/>
                     <FormInput label="Тарифные зоны"/>
                     <FormInput  label="Клиент"/>
+                    <FormInput  label="Клиент"/>
                     <FormInput label="Смена"/>
                     <CheckBoxInput />
                     <SearchBoxInput />

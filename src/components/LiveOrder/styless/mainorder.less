@@ -205,10 +205,36 @@
 }
 
 .donut{
-    display: flex;
     svg{
         foreignObject{
             height: 400px;
         }
     }
+}
+
+.analytics-second-part{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.analytics-first-part{
+    display: flex;
+    justify-content: space-around;
+}
+
+#map-section-tab-tabpane-map{
+    .selec-multiple{
+        float: right;
+        right: 15px;
+    }
+}
+
+.mapboxgl-ctrl-group{
+    background: transparent;
+    border-radius: unset;
+}
+
+.mapboxgl-ctrl-group:not(:empty){
+    box-shadow: unset;
 }
