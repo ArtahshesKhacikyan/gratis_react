@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import LiveOrderTab from './LiveOrderTab';
+import OrdersHistory from './OrdersHistory/OrdersHistory';
 
 
 class TabsComponent extends React.Component {
@@ -14,7 +15,7 @@ class TabsComponent extends React.Component {
                        <LiveOrderTab/>
                     </Tab>
                     <Tab eventKey="live-history" title="ИСТОРИЯ ЗАКАЗОВ" className='live-history'>
-                        Istorya zakaza
+                        <OrdersHistory/>
                     </Tab>
                 </Tabs>
             </div>
