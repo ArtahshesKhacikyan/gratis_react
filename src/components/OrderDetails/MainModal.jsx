@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import Orders from './Payment/Orders';
+import Payment from './Payment/Payment';
 import _ from 'lodash';
+import Orders from './Orders/Orders';
 
 class MainModal extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class MainModal extends React.Component {
 
     render() {
         return (
-            <Modal show={this.props.show} onHide={this.props.handleClose} className='detail-order-main-model'>
+            <Modal show={this.props.show} onHide={this.props.onHide} className='detail-order-main-model'>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <a
@@ -52,11 +53,21 @@ class MainModal extends React.Component {
                                     'active' : 'section-link'}
                             onClick={this.onSectionClick}
                             name='payment'>Платёж</a>
+                        {this.state.showSection.orders ?
+                            <div className="orders-buton-section">
+                                <button className="cancle">Oтменить </button>
+                                <button className="in-place">на месте </button>
+                                <button className="on-the-way">В пути </button>
+                                <button className="on-the-way">Завершит</button> 
+                            </div>: ''}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.showSection.payment ?
-                        <Orders /> : ''
+                        <Payment /> : ''
+                    }
+                    {this.state.showSection.orders ?
+                       <Orders/> : ''
                     }
                 </Modal.Body>
                 <Modal.Footer>

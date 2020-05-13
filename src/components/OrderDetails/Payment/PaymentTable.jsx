@@ -24,7 +24,7 @@ const rows = [
   createData('', 'Superuser водителя', 'AA145468', 49, '5 (0,5%)', 'TRAZ54564564', 500, 'TRAZ54564510'),
 ];
 
-class OrdersTable extends React.Component  {
+class PaymentTable extends React.Component  {
     render(){
         return (
             <TableContainer component={Paper}>
@@ -63,4 +63,4 @@ class OrdersTable extends React.Component  {
     }
 }
 
-export default OrdersTable;
+export default PaymentTable;

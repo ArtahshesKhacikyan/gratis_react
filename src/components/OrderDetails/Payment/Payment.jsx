@@ -1,8 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import OrdersTable from './OrdersTable';
+import PaymentTable from './PaymentTable';
 
-class Orders extends React.Component {
+class Payment extends React.Component {
     render() {
         return (
             <div>
@@ -34,7 +34,7 @@ class Orders extends React.Component {
                         className='text-field-material'
                         disabled />
                 </form>
-                <OrdersTable />
+                <PaymentTable />
                 <form noValidate autoComplete="off" className="main-orders-form">
                     <TextField id="outlined-basic"
                         label="Кешбэк клиента"
@@ -81,4 +81,4 @@ class Orders extends React.Component {
         )
     }
 }
-export default Orders;
+export default Payment;
