@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts'
+import { routePaths } from '../../../router';
 
 class AnaliticsChart extends React.Component {
     constructor(props) {
