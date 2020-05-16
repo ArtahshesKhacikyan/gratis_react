@@ -14,9 +14,7 @@ class Orders extends React.Component {
     }
 
     orderDetailsClick = () => {
-        this.setState({
-            isDetailsOrderShow: true
-        })
+        window.open('/details-order','','height=950,width=1200');
     }
 
     handleClose =()=>{

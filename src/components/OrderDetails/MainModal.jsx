@@ -29,6 +29,7 @@ class MainModal extends React.Component {
     }
 
 
+    
     render() {
         return (
             <Modal show={this.props.show} onHide={this.props.onHide} className='detail-order-main-model'>
