@@ -14,7 +14,7 @@ class Orders extends React.Component {
     }
 
     orderDetailsClick = () => {
-        window.open('/details-order','','height=950,width=1200');
+        window.open(routePaths.DETAILS_ORDERS,'','height=950,width=1200');
     }
 
     handleClose =()=>{
