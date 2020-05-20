@@ -1,5 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import {getOrderList} from './stores/actions'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import logoGratis from '../../assets/images/gratisLogo.png';
 import FormInput from './FormInput';
 import CheckBoxInput from './CheckBoxInput';
@@ -8,6 +12,14 @@ import TabsComponent from './TabsComponent';
 
 
 class MainOrder extends React.Component {
+    constructor(props){
+        super(props);
+    }
+
+    componentDidMount(){
+        console.log("--------44444---")
+        this.props.getOrderList()
+    }
     render() {
         return (
             <div className="main-order">
@@ -35,4 +47,16 @@ class MainOrder extends React.Component {
     }
 }
 
-export default withRouter(MainOrder)
+function mapStateToProps(state) {
+    return {
+       
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getOrderList
+    }, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainOrder))
