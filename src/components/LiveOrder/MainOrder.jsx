@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import {getOrderList} from './stores/actions'
+import {getOrderList} from './liveOrderstore/actions'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -16,10 +16,13 @@ class MainOrder extends React.Component {
         super(props);
     }
 
-    componentDidMount(){
-        console.log("--------44444---")
-        this.props.getOrderList()
-    }
+    // componentDidMount = async () =>  {
+    //     await this.props.getOrderList()
+    //     if(this.props.getOrderListResponse){
+    //         console.log("this.props.getOrderListRespose", this.props.getOrderListResponse)
+    //     }
+    // }
+
     render() {
         return (
             <div className="main-order">
@@ -49,7 +52,7 @@ class MainOrder extends React.Component {
 
 function mapStateToProps(state) {
     return {
-       
+        getOrderListResponse: state.liveOrder.getOrderListResponse
     };
 }
 

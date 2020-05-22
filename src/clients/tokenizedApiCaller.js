@@ -7,18 +7,22 @@ const jwtToken = (() => {
 })();
 
 const tokenizedApiCaller = axios.create({
+   
+});
+
+const headerConfig = {
     headers: {
         'Content-Type': 'application/json',
         'Auth': `Gratis ${jwtToken}`,
         'Accept' : 'application/json'
     }
-});
-
-const updateTokens = function(authToken, refreshToken) {
-    tokenizedApiCaller.defaults.headers['Authorization'] = `Bearer ${authToken}`;
-    localStorage.setItem('authToken', authToken);
-    localStorage.setItem('refreshToken', refreshToken);
 };
+
+// const updateTokens = function(authToken, refreshToken) {
+//     tokenizedApiCaller.defaults.headers['Auth'] = `Bearer ${authToken}`;
+//     localStorage.setItem('authToken', authToken);
+//     localStorage.setItem('refreshToken', refreshToken);
+// };
 
 
 
@@ -31,5 +35,5 @@ const unTokenizedApiCaller = axios.create({
 export {
     tokenizedApiCaller,
     unTokenizedApiCaller,
-    updateTokens,
+    headerConfig
 };
