@@ -12,7 +12,7 @@ import {
 
 export const getPhotocontrolData = () => async (dispatch) => {
     try {
-        const { data } = await tokenizedApiCaller.post(constants.api + 'photocontrol', {}, headerConfig);
+        const { data } = await tokenizedApiCaller.post(constants.api + 'photocontrol/', {}, headerConfig);
         dispatch({
             type: GET_PHOTOCONTROL_LIST_SUCCESS,
             payload: data

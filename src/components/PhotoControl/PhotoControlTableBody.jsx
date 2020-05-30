@@ -2,8 +2,28 @@ import React from "react";
 import { TableRow, TableCell, TableBody } from "@material-ui/core";
 import pending from "../../assets/images/pending.png";
 import rejected from "../../assets/images/not_allowed.png";
+import PhotoControlModal from "./PhotoControlModal";
 
 class PhotoControlTableBody extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalShow: false,
+    };
+  }
+
+  handleCloseModal = () => {
+    this.setState({
+      isModalShow: false,
+    });
+  };
+
+  handleClick = (event, name) => {
+    this.setState({
+      isModalShow: true
+    })
+  };
+
   render() {
     const {
       stableSort,
@@ -17,9 +37,9 @@ class PhotoControlTableBody extends React.Component {
       dense,
       isSelected,
     } = this.props;
-    console.log("-----AAAAA--------", this.props);
     return (
       <TableBody className="photo-control-table-body">
+        <PhotoControlModal show={this.state.isModalShow} onHide={this.handleCloseModal}/>
         {stableSort(rows, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => {
@@ -31,9 +51,10 @@ class PhotoControlTableBody extends React.Component {
                 tabIndex={-1}
                 key={row.name}
                 selected={isItemSelected}
+                onClick={(event) => this.handleClick(event, row.id)}
               >
                 <TableCell component="th" id={labelId}>
-                  <div className='table-infomation-section'>
+                  <div className="table-infomation-section">
                     <img
                       src={
                         row.status === "pending"
@@ -45,17 +66,21 @@ class PhotoControlTableBody extends React.Component {
                       alt=""
                       style={{ width: "20px", height: "20px" }}
                     />
-                    <p className='date-setion'>{row.date}</p>
+                    <p className="date-setion">{row.date}</p>
                   </div>
-                  <br/>
-                  <strong className='table-body-span'>О.Н. {row.id}</strong>
+                  <br />
+                  <strong className="table-body-span">О.Н. {row.id}</strong>
                   <br />
                   <strong>ID:{row.userId}</strong>
-                  <br/>
-                  <strong>{row.surname} {row.name}</strong>
-                  <br/>
-                    <p className="table-bod-car-mark">{row.mark}{' '}{row.model}{' '}{row.carNum}{' '}{row.color}</p>
-                    <p className="year-section">Год выпуска {row.year}</p>
+                  <br />
+                  <strong>
+                    {row.surname} {row.name}
+                  </strong>
+                  <br />
+                  <p className="table-bod-car-mark">
+                    {row.mark} {row.model} {row.carNum} {row.color}
+                  </p>
+                  <p className="year-section">Год выпуска {row.year}</p>
                 </TableCell>
                 <TableCell align="center">
                   <img src={row.photo.front} alt="" />
