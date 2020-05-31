@@ -3,22 +3,32 @@ export default [
         classname: '',
         cols: [
             {
-                name: 'surname',
+                name: 'category',
                 size: 6,
                 className: ''
             },
             {
-                name: 'name',
+                name: 'carNum',
                 size: 6,
                 className: ''
             },
             {
-                name: 'driverSerialNumber',
+                name: 'mark',
                 size: 6,
                 className: ''
             },
             {
-                name: 'driverCountry',
+                name: 'model',
+                size: 6,
+                className: ''
+            },
+            {
+                name: 'color',
+                size: 6,
+                className: ''
+            },
+            {
+                name: 'year',
                 size: 6,
                 className: ''
             },

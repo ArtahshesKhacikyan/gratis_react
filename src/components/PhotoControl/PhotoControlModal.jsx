@@ -6,8 +6,13 @@ import PhotoControlGalary from './PhotoControlGalary';
 class PhotoControlModal extends React.Component {
 
     render() {
+        const {userid} = this.props
+        console.log("0this.props---", this.props)
         return (
-            <Modal show={this.props.show} onHide={this.props.onHide} className='photocantrol-main-modal'>
+            <Modal 
+            show={this.props.show} 
+            onHide={this.props.onHide}
+            className='photocantrol-main-modal'>
                 <Modal.Header closeButton>
                     <Modal.Title>
 
@@ -15,7 +20,7 @@ class PhotoControlModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="modal-section-row">
-                        <PhotoControlFormSection />
+                        <PhotoControlFormSection  selectUserId={userid}/>
                         <PhotoControlGalary />
 
                     </div>

@@ -17,6 +17,11 @@ export default [
                 size: 6,
                 className: ''
             },
+            {
+                name: 'driverCountry',
+                size: 6,
+                className: ''
+            },
         ]
     }
 ];

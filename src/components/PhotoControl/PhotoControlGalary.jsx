@@ -36,24 +36,6 @@ class PhotoControlGalary extends React.Component {
         return (
             <div className="image-gallery-header">
                 <ImageGallery items={images} />
-                <div className='car-image-section'>
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                </div>
-                <div className='car-texnical-doc-header'>
-                    <div className='car-texnical-doc'>
-                        <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                        <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    </div>
-                    <div className='car-texnical-doc'>
-                        <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                        <img src="https://picsum.photos/id/1015/250/150/" alt="" />
-                    </div>
-                </div>
             </div>
         )
     }

@@ -9,9 +9,16 @@ import FormPanel from '../Common/FormPanel/FormPanel';
 import MobileLayout from './Layout/Mobile-layout';
 import TabletLayout from './Layout/Tablet-layout';
 import DesktopLayout from './Layout/Desktop-layout';
-import PhotoControlDetailsFields from './PhotoControlDetailsFields'
+import PhotoControlPersonalDataField from './PhotoControlPersonalDataField'
 import EditIcon from '@material-ui/icons/Edit';
+import CarPhotoControlDetailsData from "./CarPhotoControlDetailsData";
+import PhotoControlDetailsDesktopLayout from './Layout/PhotoControlDetailsDesktop-layout'
+import PhotoControlDetailsMobileLayout from './Layout/PhotoControlDetailsMobile-layout'
+import PhotoControlDetailsTabletLayout from './Layout/PhotoControlDetailsTablet-layout'
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getUserData } from "./photoControlStore/action";
 
 class PhotoControlFormSection extends React.Component {
     constructor(props) {
@@ -22,8 +29,10 @@ class PhotoControlFormSection extends React.Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount= async () => {
+        await this.props.getUserData(this.props.selectUserId);
         const { initialValues, validationSchema } = this.init();
+        console.log("-----props-------", this.props.selectUserId)
         this.setState({
             initialValues,
             validationSchema
@@ -33,7 +42,12 @@ class PhotoControlFormSection extends React.Component {
     init = () => {
         const validationShape = {};
         const initialValues = {};
-        Object.values(PhotoControlDetailsFields).forEach(value => {
+        Object.values(PhotoControlPersonalDataField).forEach(value => {
+            validationShape[value.name] = value.schema;
+            initialValues[value.name] = null;
+            // AddressFields[value.name].onChange = this.formElementChanged;
+        });
+        Object.values(CarPhotoControlDetailsData).forEach(value => {
             validationShape[value.name] = value.schema;
             initialValues[value.name] = null;
             // AddressFields[value.name].onChange = this.formElementChanged;
@@ -47,7 +61,7 @@ class PhotoControlFormSection extends React.Component {
     handleFormChange = (e) => {
         this.formikHandleChange(e);
     }
-        
+
     render() {
         const { initialValues, validationSchema } = this.state;
         if (!initialValues || !validationSchema) return '';
@@ -60,7 +74,6 @@ class PhotoControlFormSection extends React.Component {
 
                         </button>
                         <p className='edit-icon-section'> Фотоконтроль водителя</p>
-
                     </div>
 
                     <p className='personal-data-section-paragraph'>Личные данные</p>
@@ -70,7 +83,7 @@ class PhotoControlFormSection extends React.Component {
                                 initialValues={initialValues}
                                 validationSchema={validationSchema}
                                 enableReinitialize={true}
-                                // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
+                            // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
                             >
                                 {(data) => {
                                     this.formikHandleChange = data.handleChange;
@@ -81,16 +94,27 @@ class PhotoControlFormSection extends React.Component {
                                                 tabletLayout={TabletLayout}
                                                 desktopLayout={DesktopLayout}
                                                 storage={data.values}
-                                                fields={PhotoControlDetailsFields}
+                                                fields={PhotoControlPersonalDataField}
                                                 errors={data.errors}
                                                 touched={data.touched}
                                                 handleChange={this.handleFormChange}
                                                 handleBlur={data.handleBlur}
                                             />
-                                            <div className="create-modal-edit-footer">
+                                            <p className='personal-data-section-paragraph'>Фотоконтроль автомобиля</p>
+                                            <FormPanel
+                                                mobileLayout={PhotoControlDetailsMobileLayout}
+                                                tabletLayout={PhotoControlDetailsTabletLayout}
+                                                desktopLayout={PhotoControlDetailsDesktopLayout}
+                                                storage={data.values}
+                                                fields={CarPhotoControlDetailsData}
+                                                errors={data.errors}
+                                                touched={data.touched}
+                                                handleChange={this.handleFormChange}
+                                                handleBlur={data.handleBlur}
+                                            />
                                             
-                                            </div>
                                         </Form>
+                                      
                                     );
                                 }}
                             </Formik>
@@ -102,4 +126,20 @@ class PhotoControlFormSection extends React.Component {
     }
 }
 
-export default withRouter(PhotoControlFormSection);
+function mapStateToProps(state) {
+    return {
+        getUserDataResponse: state.photoControl.getUserDataResponse,
+    };
+  }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+      {
+        getUserData,
+      },
+      dispatch
+    );
+  }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoControlFormSection);

@@ -26,8 +26,8 @@ export default {
         initialValue: '',
         schema: Yup.string()
             .trim()
-            .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
-            .matches(/^[a-zA-Z.-\s]*$/, {message: errorMessages.namesCharacters, excludeEmptyString: true })
+            // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
+            // .matches(/^[a-zA-Z.-\s]*$/, {message: errorMessages.namesCharacters, excludeEmptyString: true })
             // .max(100, errorMessages.maxCharacters.replace('enter-count', 100))
             .required(errorMessages.requiredInput)
             .nullable()
@@ -40,10 +40,25 @@ export default {
         initialValue: '',
         schema: Yup.string()
             .trim()
-            .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
-            .matches(/^[a-zA-Z.-\s]*$/, {message: errorMessages.namesCharacters, excludeEmptyString: true })
+            // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
+            // .matches(/^[a-zA-Z.-\s]*$/, {message: errorMessages.namesCharacters, excludeEmptyString: true })
             // .max(100, errorMessages.maxCharacters.replace('enter-count', 100))
             .required(errorMessages.requiredInput)
             .nullable()
     },
+    'driverCountry': {
+        type: inputType.muiSelectField,
+        placeholder: strings.placeholder.driverCountry,
+        name: 'driverCountry',
+        label: strings.placeholder.driverCountry,
+        initialValue: '',
+        options: [{
+            key: 'Patient',
+            value: 'Patient'
+        }],
+        renderForUser: 'Practitioner',
+        schema: Yup.string()
+            .required(errorMessages.requiredInput)
+            .nullable()
+    }
 }

@@ -9,6 +9,7 @@ class PhotoControlTableBody extends React.Component {
     super(props);
     this.state = {
       isModalShow: false,
+      selectUserId: ''
     };
   }
 
@@ -18,9 +19,11 @@ class PhotoControlTableBody extends React.Component {
     });
   };
 
-  handleClick = (event, name) => {
+  handleClick = (event, id) => {
+    console.log("event", id)
     this.setState({
-      isModalShow: true
+      isModalShow: true,
+      selectUserId: id
     })
   };
 
@@ -39,7 +42,10 @@ class PhotoControlTableBody extends React.Component {
     } = this.props;
     return (
       <TableBody className="photo-control-table-body">
-        <PhotoControlModal show={this.state.isModalShow} onHide={this.handleCloseModal}/>
+        <PhotoControlModal
+          show={this.state.isModalShow}
+          onHide={this.handleCloseModal}
+          userid={this.state.selectUserId} />
         {stableSort(rows, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => {
@@ -60,8 +66,8 @@ class PhotoControlTableBody extends React.Component {
                         row.status === "pending"
                           ? pending
                           : row.status === "rejected"
-                          ? rejected
-                          : ""
+                            ? rejected
+                            : ""
                       }
                       alt=""
                       style={{ width: "20px", height: "20px" }}

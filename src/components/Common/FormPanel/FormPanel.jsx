@@ -40,7 +40,6 @@ class FormPanel extends React.Component {
     }
 
     getDefaultSize = (fields) => {
-        console.log("=-------", fields)
         let sum = 0;
         let haveNoSizeCount = 0;
         fields.forEach((field) => {
@@ -62,8 +61,6 @@ class FormPanel extends React.Component {
     }
 
     renderCols = (fields, sizes) => {
-        console.log("-------------", this.props)
-        console.log("renderCols", fields)
         const defaultSize = this.getDefaultSize(fields);
         let colFields = [];
         fields.forEach(field => {
