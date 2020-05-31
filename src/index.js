@@ -13,7 +13,7 @@ import {createBrowserHistory} from 'history';
 import rootReducer from './stores/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/less/all.less';
-
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 reduxStore.store = createStore(rootReducer, composeWithDevTools(applyMiddleware(reduxThunk)));
 const rootElement = document.getElementById('root');
 

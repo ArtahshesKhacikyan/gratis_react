@@ -29,8 +29,11 @@
     "react-burger-menu": "^2.6.13",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
+    "react-image-gallery": "^1.0.7",
+    "react-lightbox-component": "^1.2.1",
     "react-map-gl": "^5.2.5",
     "react-redux": "^7.2.0",
+    "react-responsive-carousel": "^3.2.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-search-input": "^0.11.3",
@@ -38,7 +41,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "webpack": "4.42.0",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
