@@ -1,0 +1,235 @@
+.label-input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.input-loader {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    border-radius: 22px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: @base-font-family-light, @base-font-family, sans-serif;
+    color: #9d9d9d;
+    /* padding: 10px 30px 10px 20px; */
+    outline: none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.required {
+    padding-left: 5px;
+    color: @highlight-error;
+}
+
+.selectdiv::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.selectdiv:before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: "\f0d7";
+    color: #a2a1a1;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 5%;
+    top: 20%;
+    padding: 0 0 2px;
+    position: absolute;
+    pointer-events: none;
+    transform: unset;
+}
+
+.selectdiv select {
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;
+    // display: block;
+    // width: 100%;
+    // float: right;
+}
+
+.inputFields-error-holder {
+    text-align: left;
+
+    .error-message {
+        color: @highlight-error;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.form-cell {
+    position: relative;
+
+    .fa-question-circle {
+        color: @highlight-info;
+        font-size: @medium-font-size;
+        position: absolute;
+        right: 30px;
+        bottom: 13px;
+        z-index: 1;
+        cursor: help;
+
+        &.select-field-text {
+            right: 45px;
+        }
+    }
+
+    .select-box-icon {
+        font-size: 16px;
+        position: absolute;
+        right: 30px;
+        bottom: 13px;
+        z-index: 1;
+    }
+}
+
+#dateOfBirth {
+    color: transparent;
+}
+
+.signup-elements {
+    .react-datepicker-wrapper {
+        position: absolute;
+        bottom: 26px;
+        left: 18px;
+        border-color: unset;
+
+        .react-datepicker__input-container {
+            input {
+                border: none;
+                width: 305px;
+                box-shadow: unset;
+
+                @media screen and (max-width: 400px) {
+                    width: 285px;
+                }
+            }
+        }
+    }
+}
+
+.page-footer {
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    position: fixed;
+    bottom: 0pt;
+    left: 0pt;
+    margin: 10px;
+}
+
+// Contac form css
+
+
+
+.create-modal-edit.modal {
+    z-index: 1250;
+    .modal-dialog {
+        top: 10%;
+    }
+}
+
+.create-modal-edit-body .email-mobile,
+.create-modal-edit-body .create-contact-select-form {
+    margin-top: 20px;
+}
+
+.create-modal-edit-body .create-contact-select {
+    background-color: #FFFFFF;
+    color: #8B8D91;
+
+    & select {
+        &:focus {
+            background-color: transparent;
+        }
+
+        height: 30px;
+        padding: 10px;
+        width: 450px;
+        padding-left: 10px;
+        border-radius: 3px;
+        background-color: #FFFFFF;
+    }
+}
+
+.edit-create-modal {
+    label[class*="focused"] {
+        color: @mui-focused-color;
+    }
+
+    div[class*="focused"] fieldset {
+        border: 1px solid @mui-focused-color  !important;
+        border-radius: 3px !important;
+    }
+
+    span[class*=Mui-checked] {
+        color: @mui-focused-color;
+    }
+
+    .contact-input-fields {
+        div:hover fieldset {
+            border: 1px solid @mui-border-color  !important;
+            border-radius: 3px !important;
+            box-shadow: unset;
+        }
+    }
+}
+.create-modal-edit-body {
+    padding-top: 0px;
+}
+
+.modal-open {
+    span[class*=Mui-checked] {
+        color: @mui-focused-color;
+    }
+}
+
+.create-modal-edit-body {
+    .create-modal-edit-footer {
+        position: relative;
+        right: 10px;
+    }
+}
+
+// TODO: Get rid of this style during "Add contact" refactoring
+.contact-input-fields {
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.create-modal-edit {
+    .modal-content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    // .modal-title {
+    //     padding-top: 20px;
+    // }
+
+}
+
+option {
+    padding: 5px;
+}
+
+option:disabled {
+    color: #8B8D91;
+    background-color: #8B8D91;
+}

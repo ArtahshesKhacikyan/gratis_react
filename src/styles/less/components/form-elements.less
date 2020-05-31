@@ -1,0 +1,189 @@
+.btn{
+    border-radius: 22px;
+    color: @text-color;
+    border: 1px solid transparent;
+    background: transparent;
+    font-weight: @bold-font-weight;
+    font-size: @min-font-size;
+    padding: 5px 25px;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
+
+        &:hover{
+        color: @text-color-dark;
+        background: @input-bg;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:focus{
+        color: @text-color-dark;
+        background: @input-bg;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:active{
+        color: @text-color-dark;
+        background: @input-bg;
+        border-color: transparent;
+        outline: none;
+        box-shadow: none;
+
+        &:focus{
+            color: @text-color-dark;
+            background: @input-bg;
+            border-color: transparent;
+            outline: none;
+        }
+
+        &:hover{
+            color: @text-color-dark;
+            background: @input-bg;
+            border-color: transparent;
+            outline: none;
+        }
+    }
+}
+
+.is-primary{
+    color: #fff;
+    background: @primary-bg;
+    font-family: @base-font-family-bold;
+    border-color: transparent;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+
+    &:hover{
+        color: #fff;
+        background-color: @primary-color-dark;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:focus{
+        color: #fff;
+        background: @primary-bg;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:active{
+        color: #fff;
+        background: @primary-bg;
+        border-color: transparent;
+        outline: none;
+
+        &:focus{
+            color: #fff;
+            background: @primary-bg;
+            border-color: transparent;
+            outline: none;
+        }
+
+        &:hover{
+            color: #fff;
+            background: @primary-bg;
+            border-color: transparent;
+            outline: none;
+        }
+    }
+}
+
+.is-secondary{
+    border-color: @primary-color;
+    font-family: @base-font-family-bold;
+    color: @primary-color;
+
+    &:hover{
+        color: #fff;
+        background: @primary-bg;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:focus{
+        color: #fff;
+        background: @primary-bg;
+        border-color: transparent;
+        outline: none;
+    }
+
+    &:active{
+        color: #fff;
+        background: @primary-bg;
+        border-color: transparent;
+        outline: none;
+
+        &:hover{
+            color: #fff;
+            background: @primary-bg;
+            border-color: transparent;
+            outline: none;
+        }
+
+        &:focus{
+            color: #fff;
+            background: @primary-bg;
+            border-color: transparent;
+            outline: none;
+        }
+    }
+}
+
+.is-large{
+    font-size: @max-font-size;
+    padding: 11px 45px 9px;
+    line-height: @max-font-size + 2px;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.custom-file-upload {
+    float: right;
+    background-color: #fd902b;
+    color: white;
+    height: auto;
+    border-radius: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: LatoLight, Lato, sans-serif;
+    padding: 10px 30px 10px 30px;
+}
+
+.input-loader-file-name {
+    position: absolute;
+    top: 10px;
+    left: 35px;
+}
+
+button.main-button, button.main-button:active {
+    padding: 9px 33px;
+    min-width: 121px;
+    line-height: 22px;
+    background-color: @button-bg-color;
+    background-image: none;
+    color: @primary-text-color;
+    font-family: @base-font-family;
+    font-size: @max-font-size;
+    font-weight: @medium-bold-font-weight;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1);
+    outline: none;
+
+    &:hover, &:focus {
+        background-color: @button-hover-bg-color;
+        color: @primary-text-color;
+        box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.2);
+    }
+}
+
+button.btn.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}

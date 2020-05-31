@@ -1,0 +1,148 @@
+.mui-textfield {
+    width: 100%;
+
+    label {
+        color: @mui-label-color;
+        font-family: @base-font-family-light;
+    }
+
+    label[class*="focused"] {
+        color: @mui-focused-color;
+    }
+
+    label[class*="error"] {
+        color: @mui-error-color;
+    }
+
+    label + div[class*="adornedEnd"] {
+        button:hover {
+            background-color: initial;
+        }
+    }
+
+    div[class*="error"] + p[class*="error"] {
+        color: @mui-error-color;
+        margin-left: 0px;
+    }
+
+    div:hover fieldset {
+        border: 1px solid @mui-border-color !important;
+        border-radius: 3px !important;
+    }
+
+    div[class*="focused"] fieldset {
+        border: 1px solid @mui-focused-color !important;
+        border-radius: 3px !important;
+    }
+
+    div[class*="error"] fieldset {
+        border: 1px solid @mui-error-color !important;
+    }
+
+    input, select {
+        background-color: white;
+        font-size: @medium-font-size;
+        font-weight: @font-weight;
+        font-family: @base-font-family-light;
+        color: @text-color;
+        outline: none;
+        &:focus {
+            background-color: initial;
+        }
+        &[disabled] {
+            color: @mui-label-color;
+        }
+    }
+
+    svg.light-icon {
+        color: @mui-light-icon-color;
+    }
+
+    div[class*=InputAdornment] button {
+        outline: 0;
+    }
+}
+
+.mui-datefield {
+    .MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd {
+        button {
+            opacity: 0.8;
+        }
+    }
+}
+
+.mui-timefield {
+    .MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd {
+        padding-right: 1px;
+        button {
+            opacity: 0.8;
+        }
+    }
+}
+
+.mui-checkbox {
+    &[class*=MuiFormControlLabel] span[class*=MuiFormControlLabel] {
+        color: @panel-title;
+        font-family: @base-font-family;
+        font-size: @medium-font-size;
+        line-height: 20px;
+    }
+    span[class*=MuiCheckbox][class*=checked] span[class*=MuiIconButton] svg {
+        color: @mui-focused-color;
+    }
+}
+
+.mui-radio-button{
+    span[class*=Mui-checked] {
+        color: @mui-focused-color;
+    }
+}
+
+
+.mui-multiple-select{
+    border-radius: 3px;
+    border: 1px solid #C4C4C4;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    height: 41px;
+    &::before{
+        border-bottom: none !important;
+
+        &:hover{
+            border-bottom: none !important;
+
+        }
+    }
+    &::after{
+        border-bottom: none !important;
+        border: 1px solid #C4C4C4;
+        background-color: #FFFFFF;
+
+    }
+
+    .MuiSelect-select:focus{
+        border-bottom: none !important;
+        border: 1px solid #C4C4C4;
+        background-color: #FFFFFF;
+    }
+}
+
+span[class*=Mui-checked] {
+    color: @mui-focused-color !important;
+}
+
+.MuiAutocomplete-popper {
+    // TODO: Prevent this style using to all autocomplete noOptionTexts
+    .MuiAutocomplete-noOptions {
+        background-color: rgba(107,122,143,0.05);
+        padding: 3px 9px;
+        margin: 0;
+    }
+
+    .btn-link.mui-autocomplete-no-option {
+        text-transform: uppercase;
+        color: #6B7A8F;
+        font-family: @base-font-family-semi-bold;
+        font-size: @medium-font-size;
+    }
+}

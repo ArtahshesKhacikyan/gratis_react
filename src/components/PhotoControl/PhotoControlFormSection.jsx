@@ -1,14 +1,56 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import strings from "../../resources/strings";
-
-import { TextField, FormControl, Select, MenuItem, InputLabel, Checkbox } from '@material-ui/core'
+import strings from "../../resources/en/strings";
+import { Row } from 'react-bootstrap';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import PropTypes from 'prop-types';
+import FormPanel from '../Common/FormPanel/FormPanel';
+import MobileLayout from './Layout/Mobile-layout';
+import TabletLayout from './Layout/Tablet-layout';
+import DesktopLayout from './Layout/Desktop-layout';
+import PhotoControlDetailsFields from './PhotoControlDetailsFields'
 import EditIcon from '@material-ui/icons/Edit';
 
 
 class PhotoControlFormSection extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            initialValues: null,
+            validationSchema: null
+        };
+    }
 
+    componentDidMount(){
+        const { initialValues, validationSchema } = this.init();
+        this.setState({
+            initialValues,
+            validationSchema
+        });
+    }
+
+    init = () => {
+        const validationShape = {};
+        const initialValues = {};
+        Object.values(PhotoControlDetailsFields).forEach(value => {
+            validationShape[value.name] = value.schema;
+            initialValues[value.name] = null;
+            // AddressFields[value.name].onChange = this.formElementChanged;
+        });
+        return {
+            initialValues,
+            validationSchema: Yup.object().shape(validationShape)
+        };
+    }
+
+    handleFormChange = (e) => {
+        this.formikHandleChange(e);
+    }
+        
     render() {
+        const { initialValues, validationSchema } = this.state;
+        if (!initialValues || !validationSchema) return '';
         return (
             <div className="personal-data-header">
                 <div className='personal-data-section'>
@@ -22,177 +64,38 @@ class PhotoControlFormSection extends React.Component {
                     </div>
 
                     <p className='personal-data-section-paragraph'>Личные данные</p>
-                    <form autoComplete="off">
-                        <TextField id="outlined-basic" label="Фамилия*" variant="outlined" />
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                        <TextField id="outlined-basic" label="Имя*" variant="outlined" />
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                    </form>
-                    <form autoComplete="off">
-                        <TextField id="outlined-basic" label="Серия и номер прав*" variant="outlined" />
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                    </form>
-                </div>
-                <div className='car-photocontrol-section'>
-                    <p className='personal-data-section-paragraph'>Фотоконтроль автомобиля</p>
-                    <FormControl variant="outlined">
-                        <InputLabel htmlFor="outlined-age-native-simple">Категория*</InputLabel>
-                        <Select
-                            native
-                            // value={state.age}
-                            // onChange={handleChange}
-                            label="Age"
-                            inputProps={{
-                                name: 'age',
-                                id: 'outlined-age-native-simple',
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value={10}>Ten</option>
-                            <option value={20}>Twenty</option>
-                            <option value={30}>Thirty</option>
-                        </Select>
-                        <TextField id="outlined-basic" label="Номер автомобиля*" variant="outlined" />
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                    </FormControl>
-                    <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="category"
-                        />
-                    <FormControl variant="outlined" className="car-category-section">
-                       
-                    </FormControl>
-                    <FormControl variant="outlined">
-                        <InputLabel htmlFor="outlined-age-native-simple">Марка*</InputLabel>
-                        <Select
-                            native
-                            // value={state.age}
-                            // onChange={handleChange}
-                            label="Age"
-                            inputProps={{
-                                name: 'age',
-                                id: 'outlined-age-native-simple',
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value={10}>Ten</option>
-                            <option value={20}>Twenty</option>
-                            <option value={30}>Thirty</option>
-                        </Select>
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="category"
-                        />
-                    </FormControl>
-                   
-                    <FormControl variant="outlined" className="car-category-section">
-                        <InputLabel id="demo-simple-select-outlined-label">Марка*</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value='10'
-                            // onChange={handleChange}
-                            label="Age"
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                        <InputLabel id="demo-simple-select-outlined-label">Модель*</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value='10'
-                            // onChange={handleChange}
-                            label="Age"
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                    </FormControl>
-                    <FormControl variant="outlined" className="car-category-section">
-                        <InputLabel id="demo-simple-select-outlined-label">Цвет*</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value='10'
-                            // onChange={handleChange}
-                            label="Age"
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                        <InputLabel id="demo-simple-select-outlined-label">Год*</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value='10'
-                            // onChange={handleChange}
-                            label="Age"
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                        <Checkbox
-                            // checked={state.checkedB}
-                            // onChange={handleChange}
-                            name="checkedB"
-                        />
-                    </FormControl>
+                    <Row className='our-modal-div'>
+                        <div className='edit-create-modal'>
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={validationSchema}
+                                enableReinitialize={true}
+                                // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
+                            >
+                                {(data) => {
+                                    this.formikHandleChange = data.handleChange;
+                                    return (
+                                        <Form>
+                                            <FormPanel
+                                                mobileLayout={MobileLayout}
+                                                tabletLayout={TabletLayout}
+                                                desktopLayout={DesktopLayout}
+                                                storage={data.values}
+                                                fields={PhotoControlDetailsFields}
+                                                errors={data.errors}
+                                                touched={data.touched}
+                                                handleChange={this.handleFormChange}
+                                                handleBlur={data.handleBlur}
+                                            />
+                                            <div className="create-modal-edit-footer">
+                                            
+                                            </div>
+                                        </Form>
+                                    );
+                                }}
+                            </Formik>
+                        </div>
+                    </Row>
                 </div>
             </div>
         );

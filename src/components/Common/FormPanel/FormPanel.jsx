@@ -6,7 +6,7 @@ import Media from 'react-media';
 import { connect } from 'react-redux';
 
 import Field from '../Field/Field';
-import fieldTypes from '../../../resources/inputType';
+import fieldTypes from '../../../resources/fieldTypes';
 
 class FormPanel extends React.Component {
 
@@ -19,12 +19,12 @@ class FormPanel extends React.Component {
         desktopLayout: PropTypes.array.isRequired,
         handleChange: PropTypes.func.isRequired,
         handleBlur: PropTypes.func.isRequired,
-        handleFileChange: PropTypes.func,
+        // handleFileChange: PropTypes.func,
         className: PropTypes.string,
         storage: PropTypes.object,
         errors: PropTypes.object,
         touched: PropTypes.object,
-        files: PropTypes.object
+        // files: PropTypes.object
     }
 
     renderRows = (rows, sizes) => {
@@ -40,6 +40,7 @@ class FormPanel extends React.Component {
     }
 
     getDefaultSize = (fields) => {
+        console.log("=-------", fields)
         let sum = 0;
         let haveNoSizeCount = 0;
         fields.forEach((field) => {
@@ -61,6 +62,8 @@ class FormPanel extends React.Component {
     }
 
     renderCols = (fields, sizes) => {
+        console.log("-------------", this.props)
+        console.log("renderCols", fields)
         const defaultSize = this.getDefaultSize(fields);
         let colFields = [];
         fields.forEach(field => {
@@ -83,8 +86,8 @@ class FormPanel extends React.Component {
                             error={this.props.errors[field.name]}
                             touched={this.props.touched[field.name]}
                             handleBlur={this.props.handleBlur}
-                            handleFileChange={this.props.handleFileChange}
-                            files={this.props.files}
+                            // handleFileChange={this.props.handleFileChange}
+                            // files={this.props.files}
                         />
                     }
                 </Col>

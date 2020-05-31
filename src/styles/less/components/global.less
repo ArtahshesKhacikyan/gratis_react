@@ -1,0 +1,98 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+body{
+    overflow: overlay;
+    font-family: @base-font-family;
+    min-height: 100vh;
+    color: @text-color-medium;
+    font-size: @base-font-size;
+    line-height: normal;
+}
+
+.page-name{
+    display: none;
+}
+
+.main-content{
+    margin-top: 70px;
+}
+
+.login-nav{
+    margin-left: 15%;
+}
+
+.container-big, .container-small{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.container-big{
+    max-width: @container-size;
+}
+
+.container-small{
+    position: relative;
+    max-width: @small-container-size;
+}
+
+.container-small-nav{
+    margin-right: 40px;
+    padding-top: 15px;
+    position: relative;
+    max-width: 1184px;
+    width: 100%;
+    margin-left: auto;
+}
+
+.panel{
+    background-color: @panel-bg;
+}
+
+.has-shadow{
+    box-shadow: 0 0 25px rgba(53, 152, 219, 0.1);
+}
+
+.panel-title {
+    color: @text-color-dark;
+    font-weight: @bold-font-weight;
+    font-size: @max-font-size;
+    font-family: @base-font-family-bold;
+}
+
+.is-align-left{
+    text-align: left;
+}
+
+@media all and (max-width: @mobile-landscape-size){
+    .button-box{
+        text-align: center;
+    }
+}
+
+.styles_overlay__CLSq- {
+    z-index: 1002;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

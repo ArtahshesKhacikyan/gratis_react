@@ -1,23 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 
-import InputField from './InputField';
 import MuiInputField from './MuiInputField';
 import MuiCheckbox from './MuiCheckbox';
-import MuiMaskedInputField from './MuiMaskedInputField';
-import MuiAutocompleteField from './MuiAutocompleteField';
 import MuiSelectField from './MuiSelectField';
-import MuiDateField from './MuiDateField';
-import MuiTimeField from './MuiTimeField';
-import SelectField from './SelectField';
 import HtmlContentField from './HtmlContentField';
 import inputTypes from '../../../resources/inputType';
 import fieldTypes from '../../../resources/fieldTypes';
-import 'react-datepicker/dist/react-datepicker.css';
-import MuiMultiSelectField from './MuiMultiSelectField';
-import MuiRadioButtonGroup from './MuiRadioButtonGroup';
 
 
 class Field extends React.Component {
@@ -122,7 +112,6 @@ class Field extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        trialExpired: state.uiStorage.trialExpired
     };
 }
 
