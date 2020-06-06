@@ -1,13 +1,13 @@
 import {
     GET_PHOTOCONTROL_LIST_SUCCESS,
     GET_PHOTOCONTROL_LIST_FAIL,
-    GET_USER_DATA_SUCCESS,
-    GET_USER_DATA_FAIL
+    GET_DRIVER_COUNTRIES_LIST,
+    GET_DRIVER_COUNTRIES_LIST_FAIL
 } from './actionTypes';
 
 const initialState = {
+    getCountryListResponse: {},
     getPhotoCantrolDataResponse: {},
-    getUserDataResponse: {}
 };
 
 export default function (state = initialState, action) {
@@ -21,11 +21,11 @@ export default function (state = initialState, action) {
                 ...state,
                 errorMessage: action.message
             };
-        case GET_USER_DATA_SUCCESS:
+        case GET_DRIVER_COUNTRIES_LIST:
             return {
-                getUserDataResponse: action.payload,
+                getCountryListResponse: action.payload,
             };
-        case GET_USER_DATA_FAIL:
+        case GET_DRIVER_COUNTRIES_LIST_FAIL:
             return {
                 ...state,
                 errorMessage: action.message

@@ -7,7 +7,6 @@ class PhotoControlModal extends React.Component {
 
     render() {
         const {userid} = this.props
-        console.log("0this.props---", this.props)
         return (
             <Modal 
             show={this.props.show} 

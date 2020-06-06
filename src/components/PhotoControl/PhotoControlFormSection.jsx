@@ -18,7 +18,7 @@ import PhotoControlDetailsTabletLayout from './Layout/PhotoControlDetailsTablet-
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getUserData } from "./photoControlStore/action";
+import { getDriverCountryList } from "./photoControlStore/action";
 
 class PhotoControlFormSection extends React.Component {
     constructor(props) {
@@ -29,22 +29,30 @@ class PhotoControlFormSection extends React.Component {
         };
     }
 
-    componentDidMount= async () => {
-        await this.props.getUserData(this.props.selectUserId);
+    componentDidMount = async () => {
+        await this.props.getDriverCountryList();
         const { initialValues, validationSchema } = this.init();
-        console.log("-----props-------", this.props.selectUserId)
         this.setState({
             initialValues,
             validationSchema
         });
+        console.log("-------", this.props)
     }
 
     init = () => {
+        console.log("getUserDataResponse", this.props.getPhotoCantrolDataResponse.data)
         const validationShape = {};
         const initialValues = {};
+        let selectedUserData = {}
+        if (this.props.getPhotoCantrolDataResponse.data) {
+            selectedUserData = this.props.getPhotoCantrolDataResponse.data.find(data => {
+                return data.id === this.props.selectUserId
+            })
+        }
+        console.log("selectedUserData", selectedUserData)
         Object.values(PhotoControlPersonalDataField).forEach(value => {
             validationShape[value.name] = value.schema;
-            initialValues[value.name] = null;
+            initialValues[value.name] = selectedUserData[value.name];
             // AddressFields[value.name].onChange = this.formElementChanged;
         });
         Object.values(CarPhotoControlDetailsData).forEach(value => {
@@ -112,9 +120,9 @@ class PhotoControlFormSection extends React.Component {
                                                 handleChange={this.handleFormChange}
                                                 handleBlur={data.handleBlur}
                                             />
-                                            
+
                                         </Form>
-                                      
+
                                     );
                                 }}
                             </Formik>
@@ -128,18 +136,19 @@ class PhotoControlFormSection extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getUserDataResponse: state.photoControl.getUserDataResponse,
+        getPhotoCantrolDataResponse: state.photoControl.getPhotoCantrolDataResponse,
+        getCountryListResponse: state.photoControl.getCountryListResponse
     };
-  }
+}
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-      {
-        getUserData,
-      },
-      dispatch
+        {
+            getDriverCountryList
+        },
+        dispatch
     );
-  }
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoControlFormSection);

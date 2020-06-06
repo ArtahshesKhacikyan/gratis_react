@@ -47,7 +47,7 @@ class PhotoControlTable extends React.Component {
   }
 
   componentDidMount = async () => {
-    await this.props.getPhotocontrolData();
+    await this.props.getPhotocontrolData(); 
   };
 
   descendingComparator(a, b, orderBy) {
