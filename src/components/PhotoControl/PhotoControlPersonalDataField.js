@@ -52,11 +52,7 @@ export default {
         name: 'driverCountry',
         label: strings.placeholder.driverCountry,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
-        renderForUser: 'Practitioner',
+        options: [],
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()

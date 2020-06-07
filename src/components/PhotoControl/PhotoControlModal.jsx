@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { TextField } from '@material-ui/core'
+// import { TextField } from '@material-ui/core'
 import PhotoControlFormSection from './PhotoControlFormSection';
 import PhotoControlGalary from './PhotoControlGalary';
 class PhotoControlModal extends React.Component {

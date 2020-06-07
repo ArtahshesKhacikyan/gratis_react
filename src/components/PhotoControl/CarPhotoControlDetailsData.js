@@ -10,10 +10,7 @@ export default {
         name: 'category',
         label: strings.placeholder.category,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
+        options: [],
         renderForUser: 'Practitioner',
         schema: Yup.string()
             .required(errorMessages.requiredInput)
@@ -39,10 +36,7 @@ export default {
         name: 'mark',
         label: strings.placeholder.mark,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
+        options: [],
         renderForUser: 'Practitioner',
         schema: Yup.string()
             .required(errorMessages.requiredInput)
@@ -54,11 +48,7 @@ export default {
         name: 'model',
         label: strings.placeholder.model,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
-        renderForUser: 'Practitioner',
+        options: [],
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -69,11 +59,7 @@ export default {
         name: 'color',
         label: strings.placeholder.color,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
-        renderForUser: 'Practitioner',
+        options: [],
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -84,11 +70,7 @@ export default {
         name: 'year',
         label: strings.placeholder.year,
         initialValue: '',
-        options: [{
-            key: 'Patient',
-            value: 'Patient'
-        }],
-        renderForUser: 'Practitioner',
+        options: [],
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()

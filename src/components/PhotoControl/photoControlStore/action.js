@@ -2,7 +2,11 @@ import {
     GET_PHOTOCONTROL_LIST_SUCCESS,
     GET_PHOTOCONTROL_LIST_FAIL,
     GET_DRIVER_COUNTRIES_LIST_FAIL,
-    GET_DRIVER_COUNTRIES_LIST
+    GET_DRIVER_COUNTRIES_LIST,
+    GET_USER_CATEGORY_SUCCESS,
+    GET_USER_CATEGORY_FAIL,
+    GET_CAR_LIST_SUCCESS,
+    GET_CAR_LIST_FAIL
 } from './actionTypes';
 
 import constants from '../../../resources/constants';
@@ -38,11 +42,47 @@ export const getDriverCountryList = () => async (dispatch) => {
             status: data.status
         });
     } catch (error) {
-        console.log("---getDriverCountryList Error-------", error)
         dispatch({
             type: GET_DRIVER_COUNTRIES_LIST_FAIL,
             message: error
         })
     }
 };
+
+
+export const getUserCategory = () => async (dispatch) => {
+    try {
+        const { data } = await tokenizedApiCaller.post(constants.api + 'tariffZone/transportType', {}, headerConfig);
+        console.log('getUserCategory', data)
+        dispatch({
+            type: GET_USER_CATEGORY_SUCCESS,
+            payload: data,
+            status: data.status
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_USER_CATEGORY_FAIL,
+            message: error
+        })
+    }
+};
+
+export const getCarsList = () => async (dispatch) => {
+    try {
+        const { data } = await tokenizedApiCaller.post(constants.api + 'cars', {}, headerConfig);
+        console.log('getCarsList', data)
+        dispatch({
+            type: GET_CAR_LIST_SUCCESS,
+            payload: data,
+            status: data.status
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_CAR_LIST_FAIL,
+            message: error
+        })
+    }
+};
+
+
 
