@@ -23,7 +23,6 @@ class UpTableHead extends React.Component {
   render() {
     const { order, orderBy } = this.props;
     if(!this.props.getOrderListResponse.data) return ''
-    console.log("----this.props.getOrderListResponse---", this.props.getOrderListResponse.data.table_up)
     return (
       <TableHead>
         <TableRow>

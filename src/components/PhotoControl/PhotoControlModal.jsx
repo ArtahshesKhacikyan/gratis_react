@@ -20,7 +20,7 @@ class PhotoControlModal extends React.Component {
                 <Modal.Body>
                     <div className="modal-section-row">
                         <PhotoControlFormSection  selectUserId={userid}/>
-                        <PhotoControlGalary />
+                        <PhotoControlGalary selectUserId={userid}/>
 
                     </div>
                 </Modal.Body>

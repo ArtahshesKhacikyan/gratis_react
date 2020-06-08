@@ -20,7 +20,6 @@ class PhotoControlTableBody extends React.Component {
   };
 
   handleClick = (event, id) => {
-    console.log("event", id)
     this.setState({
       isModalShow: true,
       selectUserId: id

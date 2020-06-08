@@ -113,8 +113,6 @@ class PhotoControlTable extends React.Component {
         this.state.rowsPerPage,
         this.props.getPhotoCantrolDataResponse.data.length - this.state.page * this.state.rowsPerPage
       );
-    console.log("this prop", this.props.getPhotoCantrolDataResponse.data.length);
-
     return (
       <div className="">
         <Paper>
