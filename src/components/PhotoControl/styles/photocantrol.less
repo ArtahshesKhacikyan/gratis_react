@@ -122,6 +122,8 @@
 .modal-section-row{
     display: flex;
     padding: 40px;
+    padding-top: 0;
+    padding-bottom: 70px;
     .image-gallery-slides{
         height: 380px;
     }
@@ -160,6 +162,7 @@
         font-size: 24px;
         font-weight: bold;
         margin: 0;
+        margin-top: 5px;
     }
     .edit-icon-button{
         border: none;
@@ -189,7 +192,7 @@
     width: 1000px;
     position: relative;
     left: 370px;
-    top: 40px;
+    top: 315px;
     button{
         width: 300px;
         border-radius: 3px;
@@ -213,5 +216,26 @@
     
     .close-button{
         background-color: #f0ad4e;
+    }
+}
+
+.cars-photo-table{
+    img{
+        width: 90px;
+        height: 70px;
+        object-fit: contain;
+    }
+    .MuiTableCell-root{
+        padding: 0px;
+    }
+    .MuiTableCell-head, .MuiTableCell-body{
+        border: 1px solid #000;
+    }
+}
+.tex-passport-img-section{
+    display: flex;
+    margin-top: 20px;
+    div:nth-child(2){
+        margin-left: 15px;
     }
 }

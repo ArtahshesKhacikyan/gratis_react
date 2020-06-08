@@ -1,0 +1,82 @@
+import React from "react";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+
+class PhotoControlGalary extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("---AAA--", this.props);
+    this.state = {
+      selectidUserData: {},
+      back: "",
+      front: "",
+      left_side: "",
+      license: "",
+      license_b: "",
+      right_side: "",
+      salon_a: "",
+      salon_b: "",
+      tech_pass: "",
+      tech_pass_b: "",
+    };
+  }
+
+  componentDidMount = () => {
+    if (this.props.getPhotoCantrolDataResponse) {
+      let _selectedUserData = this.props.getPhotoCantrolDataResponse.data.filter(
+        (data) => {
+          return data.id === this.props.selectUserId;
+        }
+      );
+      if (_selectedUserData) {
+        _selectedUserData.map((img) =>
+          this.setState({
+            front: img.photo.front,
+            back: img.photo.back,
+            left_side: img.photo.left_side,
+            license: img.photo.license,
+            license_b: img.photo.license_b,
+            right_side: img.photo.right_side,
+            salon_a: img.photo.salon_a,
+            salon_b: img.photo.salon_b,
+            tech_pass: img.photo.tech_pass,
+            tech_pass_b: img.photo.tech_pass_b,
+          })
+        );
+      }
+
+      this.setState({ selectidUserData: _selectedUserData });
+    }
+  };
+
+  render() {
+    console.log("This props", this.state);
+    if (!this.state.selectidUserDatas || !this.state.front) return "";
+    return (
+      <div className="image-gallery-header">
+        <Carousel>
+          <div>
+            <img src="https://api.gratisgm.com/upload/images/2020/05/4d2c3cd71135ee6474c4727d57b943ae.jpg" />
+            <p className="legend">Legend 1</p>
+          </div>
+        </Carousel>
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    getPhotoCantrolDataResponse: state.photoControl.getPhotoCantrolDataResponse,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoControlGalary);
