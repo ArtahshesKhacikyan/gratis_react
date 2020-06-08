@@ -24,19 +24,6 @@ class PhotoControlModal extends React.Component {
 
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <div className='button-section'>
-                        <button className="success-button">
-                            Верифицировать
-                    </button>
-                        <button className='cancle-button'>
-                            Отклонить
-                    </button >
-                        <button className='close-button'>
-                            Закрыть
-                    </button>
-                    </div>
-                </Modal.Footer>
             </Modal>
         )
     }

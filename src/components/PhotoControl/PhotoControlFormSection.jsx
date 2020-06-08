@@ -212,6 +212,34 @@ class PhotoControlFormSection extends React.Component {
                         handleChange={this.handleFormChange}
                         handleBlur={data.handleBlur}
                       />
+                      {this.state.isEdit ?
+                        <div>
+                          <div className='button-section'>
+                            <button className="success-button">
+                              Верифицировать
+                    </button>
+                            <button className='cancle-button'>
+                              Отклонить
+                    </button >
+                            <button className='close-button'>
+                              Закрыть
+                    </button>
+                          </div>
+                        </div> :  <div>
+                          <div className='button-section'>
+                            <button className="success-button">
+                            Сохранить
+                    </button>
+                            {/* <button className='cancle-button'>
+                              Отклонить
+                    </button > */}
+                            <button className='close-button'>
+                            Отменить
+                    </button>
+                          </div>
+                        </div>
+                      }
+
                     </Form>
                   );
                 }}
