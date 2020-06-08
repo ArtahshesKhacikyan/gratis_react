@@ -10,6 +10,7 @@ export default {
         name: 'surname',
         label: strings.placeholder.surname,
         initialValue: '',
+        disabled: true,
         schema: Yup.string()
             .trim()
             // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
@@ -24,6 +25,7 @@ export default {
         name: 'name',
         label: strings.placeholder.name,
         initialValue: '',
+        disabled: true,
         schema: Yup.string()
             .trim()
             // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
@@ -38,6 +40,7 @@ export default {
         name: 'driverSerialNumber',
         label: strings.placeholder.driverSerialNumber,
         initialValue: '',
+        disabled: true,
         schema: Yup.string()
             .trim()
             // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
@@ -53,6 +56,7 @@ export default {
         label: strings.placeholder.driverCountry,
         initialValue: '',
         options: [],
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()

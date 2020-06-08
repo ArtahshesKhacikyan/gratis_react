@@ -24,6 +24,7 @@ class FormPanel extends React.Component {
         storage: PropTypes.object,
         errors: PropTypes.object,
         touched: PropTypes.object,
+        disabled: PropTypes.bool
         // files: PropTypes.object
     }
 
@@ -83,6 +84,7 @@ class FormPanel extends React.Component {
                             error={this.props.errors[field.name]}
                             touched={this.props.touched[field.name]}
                             handleBlur={this.props.handleBlur}
+                            disabled={this.props.disabled}
                             // handleFileChange={this.props.handleFileChange}
                             // files={this.props.files}
                         />

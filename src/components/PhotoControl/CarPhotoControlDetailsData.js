@@ -11,7 +11,7 @@ export default {
         label: strings.placeholder.category,
         initialValue: '',
         options: [],
-        renderForUser: 'Practitioner',
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -22,6 +22,7 @@ export default {
         name: 'carNum',
         label: strings.placeholder.carNum,
         initialValue: '',
+        disabled: true,
         schema: Yup.string()
             .trim()
             // .matches(/^[a-zA-Z]/, {message: errorMessages.startLetters, excludeEmptyString: true })
@@ -37,7 +38,7 @@ export default {
         label: strings.placeholder.mark,
         initialValue: '',
         options: [],
-        renderForUser: 'Practitioner',
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -49,6 +50,7 @@ export default {
         label: strings.placeholder.model,
         initialValue: '',
         options: [],
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -60,6 +62,7 @@ export default {
         label: strings.placeholder.color,
         initialValue: '',
         options: [],
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
@@ -71,6 +74,7 @@ export default {
         label: strings.placeholder.year,
         initialValue: '',
         options: [],
+        disabled: true,
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()

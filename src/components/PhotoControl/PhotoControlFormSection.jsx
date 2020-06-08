@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import strings from "../../resources/en/strings";
 import { Row } from "react-bootstrap";
@@ -10,11 +10,13 @@ import MobileLayout from "./Layout/Mobile-layout";
 import TabletLayout from "./Layout/Tablet-layout";
 import DesktopLayout from "./Layout/Desktop-layout";
 import PhotoControlPersonalDataField from "./PhotoControlPersonalDataField";
-import EditIcon from "@material-ui/icons/Edit";
 import CarPhotoControlDetailsData from "./CarPhotoControlDetailsData";
 import PhotoControlDetailsDesktopLayout from "./Layout/PhotoControlDetailsDesktop-layout";
 import PhotoControlDetailsMobileLayout from "./Layout/PhotoControlDetailsMobile-layout";
 import PhotoControlDetailsTabletLayout from "./Layout/PhotoControlDetailsTablet-layout";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -31,6 +33,8 @@ class PhotoControlFormSection extends React.Component {
       initialValues: null,
       validationSchema: null,
       selectedUserData: {},
+      isDisabled: true,
+      isEdit: true
     };
   }
 
@@ -44,7 +48,7 @@ class PhotoControlFormSection extends React.Component {
           return data.id === this.props.selectUserId;
         }
       );
-      this.setState({selectedUserData :_selectedUserData});
+      this.setState({ selectedUserData: _selectedUserData });
 
     }
     if (this.props.getCountryListResponse) {
@@ -84,10 +88,25 @@ class PhotoControlFormSection extends React.Component {
           });
         }
       );
-      let carsMark = Object.keys(this.props.getCarsListResponse.data.models).find(value => {
-          console.log("------kalsklas----", value)
+      Object.entries(this.props.getCarsListResponse.data.models).forEach(value => {
+        if (value[0] === this.state.selectedUserData.mark) {
+          let currentYear = new Date().getFullYear()
+          value[1].forEach(element => {
+            CarPhotoControlDetailsData.model.options.push({
+              key: element.key,
+              value: element.name,
+            });
+            if (element.name === this.state.selectedUserData.model) {
+              for (var i = element.from_year; i <= currentYear; i++) {
+                CarPhotoControlDetailsData.year.options.push({
+                  key: i,
+                  value: i,
+                });
+              }
+            }
+          })
+        }
       })
-      console.log("----carsMark----", carsMark)
     }
     const { initialValues, validationSchema } = this.init();
     this.setState({
@@ -97,17 +116,8 @@ class PhotoControlFormSection extends React.Component {
   };
 
   init = () => {
-    console.log(this.props.getPhotoCantrolDataResponse.data);
     const validationShape = {};
     const initialValues = {};
-    // let selectedUserData = {};
-    // if (this.props.getPhotoCantrolDataResponse.data) {
-    //   selectedUserData = this.props.getPhotoCantrolDataResponse.data.find(
-    //     (data) => {
-    //       return data.id === this.props.selectUserId;
-    //     }
-    //   );
-    // }
     if (this.state.selectedUserData.id) {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
@@ -142,6 +152,11 @@ class PhotoControlFormSection extends React.Component {
     this.formikHandleChange(e);
   };
 
+  editButtonClick = () => {
+    this.setState({ isEdit: !this.state.isEdit })
+  }
+
+
   render() {
     const { initialValues, validationSchema } = this.state;
     if (!initialValues || !validationSchema) return "";
@@ -149,8 +164,10 @@ class PhotoControlFormSection extends React.Component {
       <div className="personal-data-header">
         <div className="personal-data-section">
           <div className="photo-control-header">
-            <button className="edit-icon-button">
-              <EditIcon />
+            <button className="edit-icon-button" onClick={this.editButtonClick}>
+              {this.state.isEdit ?
+                <FontAwesomeIcon icon={faUserEdit} className='edit-icon-svg' fill='red' /> :
+                <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />}
             </button>
             <p className="edit-icon-section"> Фотоконтроль водителя</p>
           </div>
@@ -162,7 +179,7 @@ class PhotoControlFormSection extends React.Component {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 enableReinitialize={true}
-                // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
+              // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
               >
                 {(data) => {
                   this.formikHandleChange = data.handleChange;
@@ -178,6 +195,7 @@ class PhotoControlFormSection extends React.Component {
                         touched={data.touched}
                         handleChange={this.handleFormChange}
                         handleBlur={data.handleBlur}
+                        disabled={this.state.isEdit}
                       />
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
@@ -187,6 +205,7 @@ class PhotoControlFormSection extends React.Component {
                         tabletLayout={PhotoControlDetailsTabletLayout}
                         desktopLayout={PhotoControlDetailsDesktopLayout}
                         storage={data.values}
+                        disabled={this.state.isEdit}
                         fields={CarPhotoControlDetailsData}
                         errors={data.errors}
                         touched={data.touched}

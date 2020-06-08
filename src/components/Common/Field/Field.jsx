@@ -45,7 +45,7 @@ class Field extends React.Component {
     }
 
     render = () => {
-        const { field, handleChange, value, handleFileChange, files } = this.props;
+        const { field, handleChange, value, disabled, files } = this.props;
         if (!field) {
             return null;
         }
@@ -60,7 +60,7 @@ class Field extends React.Component {
                     label={field.label}
                     name={field.name}
                     type={field.type}
-                    disabled={field.disabled || this.props.trialExpired}
+                    disabled={disabled}
                     onChange={handleChange}
                     onBlur={this.handleBlur}
                     required={isRequired}
@@ -76,7 +76,7 @@ class Field extends React.Component {
                     name={field.name}
                     onChange={handleChange}
                     className='checkbox-input'
-                    disabled={field.disabled || this.props.trialExpired}
+                    disabled={disabled}
                     checked={value}
                 />
             );
@@ -89,7 +89,7 @@ class Field extends React.Component {
                     onChange={handleChange}
                     onBlur={this.handleBlur}
                     placeholder={field.placeholder}
-                    disabled={field.disabled || this.props.trialExpired}
+                    disabled={disabled}
                     helpText={field.help}
                     options={field.options}
                     required={isRequired}
