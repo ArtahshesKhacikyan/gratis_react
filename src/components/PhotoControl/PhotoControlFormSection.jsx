@@ -212,6 +212,18 @@ class PhotoControlFormSection extends React.Component {
                         handleChange={this.handleFormChange}
                         handleBlur={data.handleBlur}
                       />
+                      <p className="personal-data-section-paragraph">
+                        Фотоконтроль автомобиля
+                      </p>
+                      <div className="tarrifs">
+                        {this.state.selectedUserData.tariffs.map(value => {
+                          return <div>
+                            <input type="checkbox" value={value} checked/>
+                            <label htmlFor="">{value}</label>
+                          </div>
+                        })}
+                      </div>
+                      {/* <input type="checkbox" /> */}
                       {this.state.isEdit ?
                         <div>
                           <div className='button-section'>
@@ -225,16 +237,16 @@ class PhotoControlFormSection extends React.Component {
                               Закрыть
                     </button>
                           </div>
-                        </div> :  <div>
+                        </div> : <div>
                           <div className='button-section'>
                             <button className="success-button">
-                            Сохранить
+                              Сохранить
                     </button>
                             {/* <button className='cancle-button'>
                               Отклонить
                     </button > */}
                             <button className='close-button'>
-                            Отменить
+                              Отменить
                     </button>
                           </div>
                         </div>
