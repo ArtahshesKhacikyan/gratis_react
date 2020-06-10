@@ -36,12 +36,14 @@ class Field extends React.Component {
         return { error: '' };
     }
 
-    handleTimeChange = name => value => {
-        this.props.handleChange({ target: { name, value } });
-    }
-
     handleBlur = (e) => {
         this.props.handleBlur(e);
+    }
+
+    handleChange = (e, onChange) => {
+        console.log("----onChange-eeee-", e)
+        this.props.handleChange(e);
+        onChange && onChange(e);
     }
 
     render = () => {
@@ -52,9 +54,6 @@ class Field extends React.Component {
         const isRequired = field.schema && field.schema._exclusive.required !== undefined;
         switch (field.type) {
         case inputTypes.muiTextField:
-        case inputTypes.muiNumberField:
-        case inputTypes.muiEmailField:
-        case inputTypes.muiPasswordField:
             return (
                 <MuiInputField
                     label={field.label}
@@ -86,7 +85,7 @@ class Field extends React.Component {
                     label={field.label}
                     name={field.name}
                     value={value}
-                    onChange={handleChange}
+                    onChange={(e) => this.handleChange(e, field.onChange)}
                     onBlur={this.handleBlur}
                     placeholder={field.placeholder}
                     disabled={disabled}
