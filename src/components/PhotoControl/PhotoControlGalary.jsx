@@ -60,7 +60,6 @@ class PhotoControlGalary extends React.Component {
     };
 
     carPhotosTable = (rows) => {
-        console.log("-----r---", rows);
         return (
             <TableContainer component={Paper} className="cars-photo-table">
                 <Table aria-label="simple table">
@@ -107,7 +106,6 @@ class PhotoControlGalary extends React.Component {
     };
 
     carTexPassportPhotos = (rows) => {
-        console.log("-----r---", rows);
         return (
             <TableContainer component={Paper} className="cars-photo-table">
                 <Table aria-label="simple table">
@@ -138,7 +136,6 @@ class PhotoControlGalary extends React.Component {
     };
 
     render() {
-        console.log("This props", this.state.images);
         return (
             <div className="image-gallery-header">
                 <Carousel>

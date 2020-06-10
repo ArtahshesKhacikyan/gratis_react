@@ -16,6 +16,7 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
+    
     'carNum': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.carNum,

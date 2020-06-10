@@ -5,10 +5,10 @@ import OrderDetailsMain from './components/OrderDetails/OrderDetailsMain'
 import PhotoControl from './components/PhotoControl/PhotoControl';
 
 const routePaths = {
-    MAINORDER: '/order-main',
-    TOOLS: '/tools',
-    DETAILS_ORDERS: '/details-order',
-    PHOTOCONTROL: '/photocontrol'
+    MAINORDER: '/adminka/order-main',
+    TOOLS: '/adminka/tools',
+    DETAILS_ORDERS: '/adminka/details-order',
+    PHOTOCONTROL: '/adminka/photocontrol'
 }
 const routes = [
     {

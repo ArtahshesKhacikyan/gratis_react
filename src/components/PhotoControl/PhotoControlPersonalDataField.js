@@ -19,6 +19,13 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
+    // 'tarriffs': {
+    //     type: inputType.muiCheckbox,
+    //     name: 'error-checkbox-wrapper',
+    //     label: '',
+    //     initialValue: false,
+    //     schema: Yup.bool()
+    // },
     'name': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.name,

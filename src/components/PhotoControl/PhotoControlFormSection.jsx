@@ -14,9 +14,9 @@ import CarPhotoControlDetailsData from "./CarPhotoControlDetailsData";
 import PhotoControlDetailsDesktopLayout from "./Layout/PhotoControlDetailsDesktop-layout";
 import PhotoControlDetailsMobileLayout from "./Layout/PhotoControlDetailsMobile-layout";
 import PhotoControlDetailsTabletLayout from "./Layout/PhotoControlDetailsTablet-layout";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -25,7 +25,9 @@ import {
   getUserCategory,
   getCarsList,
 } from "./photoControlStore/action";
-
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,9 @@ class PhotoControlFormSection extends React.Component {
       validationSchema: null,
       selectedUserData: {},
       isDisabled: true,
-      isEdit: true
+      isEdit: true,
+      isTarifsChecked: false,
+      checkedTarrifs: [],
     };
   }
 
@@ -49,7 +53,6 @@ class PhotoControlFormSection extends React.Component {
         }
       );
       this.setState({ selectedUserData: _selectedUserData });
-
     }
     if (this.props.getCountryListResponse) {
       Object.values(this.props.getCountryListResponse.data).forEach(
@@ -88,25 +91,27 @@ class PhotoControlFormSection extends React.Component {
           });
         }
       );
-      Object.entries(this.props.getCarsListResponse.data.models).forEach(value => {
-        if (value[0] === this.state.selectedUserData.mark) {
-          let currentYear = new Date().getFullYear()
-          value[1].forEach(element => {
-            CarPhotoControlDetailsData.model.options.push({
-              key: element.key,
-              value: element.name,
-            });
-            if (element.name === this.state.selectedUserData.model) {
-              for (var i = element.from_year; i <= currentYear; i++) {
-                CarPhotoControlDetailsData.year.options.push({
-                  key: i,
-                  value: i,
-                });
+      Object.entries(this.props.getCarsListResponse.data.models).forEach(
+        (value) => {
+          if (value[0] === this.state.selectedUserData.mark) {
+            let currentYear = new Date().getFullYear();
+            value[1].forEach((element) => {
+              CarPhotoControlDetailsData.model.options.push({
+                key: element.key,
+                value: element.name,
+              });
+              if (element.key === this.state.selectedUserData.model) {
+                // for (var i = element.from_year; i <= currentYear; i++) {
+                //   CarPhotoControlDetailsData.year.options.push({
+                //     key: i,
+                //     value: i,
+                //   });
+                // }
               }
-            }
-          })
+            });
+          }
         }
-      })
+      );
     }
     const { initialValues, validationSchema } = this.init();
     this.setState({
@@ -148,26 +153,72 @@ class PhotoControlFormSection extends React.Component {
     };
   };
 
+  handleChangeTariffs = (event) => {
+    console.log("console.log", event.target);
+    this.setState({
+      isTarifsChecked: true,
+    });
+  };
+
+  getTarrifsCheckBoxes = () => {
+    let categorys = this.props.getUserCategoryResposne.data.filter(
+      (e) => e.name === this.state.initialValues.category
+    );
+    console.log("categorys", categorys);
+    if (typeof categorys[0] !== undefined) {
+      categorys[0].classes.map((name) => {
+        console.log("0000000", this.state.selectedUserData.tariffs.includes(name.name));
+        let checked = this.state.selectedUserData.tariffs.includes(name.name)
+          ? "checked"
+          : "";
+        return (
+          <div>
+            <input type="text" value={name.name} name={name.name} checked={checked}/>
+            <label class="form-check-label" for="inlineCheckbox">
+            {name.name}</label>
+          </div>
+        );
+      });
+    }
+  };
+
   handleFormChange = (e) => {
     this.formikHandleChange(e);
   };
 
   editButtonClick = () => {
-    this.setState({ isEdit: !this.state.isEdit })
-  }
+    this.setState({ isEdit: !this.state.isEdit });
+  };
 
+  onSubmitForm = (values) => {
+  };
+
+  closeModal = () => {
+    this.props.onHide();
+  };
+
+  canclePhotoControl=()=>{
+
+  }
 
   render() {
     const { initialValues, validationSchema } = this.state;
     if (!initialValues || !validationSchema) return "";
+    console.log("this ", this.props);
     return (
       <div className="personal-data-header">
         <div className="personal-data-section">
           <div className="photo-control-header">
             <button className="edit-icon-button" onClick={this.editButtonClick}>
-              {this.state.isEdit ?
-                <FontAwesomeIcon icon={faUserEdit} className='edit-icon-svg' fill='red' /> :
-                <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />}
+              {this.state.isEdit ? (
+                <FontAwesomeIcon
+                  icon={faUserEdit}
+                  className="edit-icon-svg"
+                  fill="red"
+                />
+              ) : (
+                <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
+              )}
             </button>
             <p className="edit-icon-section"> Фотоконтроль водителя</p>
           </div>
@@ -179,7 +230,7 @@ class PhotoControlFormSection extends React.Component {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 enableReinitialize={true}
-              // onSubmit={this.props.editedContact.id ? this.onEditForm : this.onSubmitForm}
+                onSubmit={this.onSubmitForm}
               >
                 {(data) => {
                   this.formikHandleChange = data.handleChange;
@@ -212,50 +263,40 @@ class PhotoControlFormSection extends React.Component {
                         handleChange={this.handleFormChange}
                         handleBlur={data.handleBlur}
                       />
-                      <p className="personal-data-section-paragraph">
-                        Фотоконтроль автомобиля
-                      </p>
-                      <div className="tarrifs">
-                        {this.state.selectedUserData.tariffs.map(value => {
-                          return <div>
-                            <input type="checkbox" value={value} checked/>
-                            <label htmlFor="">{value}</label>
-                          </div>
-                        })}
-                      </div>
-                      {/* <input type="checkbox" /> */}
-                      {this.state.isEdit ?
+                      {this.state.isEdit ? (
                         <div>
-                          <div className='button-section'>
+                          <div className="button-section">
                             <button className="success-button">
                               Верифицировать
-                    </button>
-                            <button className='cancle-button'>
-                              Отклонить
-                    </button >
-                            <button className='close-button'>
+                            </button>
+                            <button className="cancle-button" onClick={this.canclePhotoControl}>Отклонить</button>
+                            <button
+                              className="close-button"
+                              onClick={this.closeModal}
+                            >
                               Закрыть
-                    </button>
+                            </button>
                           </div>
-                        </div> : <div>
-                          <div className='button-section'>
+                        </div>
+                      ) : (
+                        <div>
+                          <div className="button-section">
                             <button className="success-button">
                               Сохранить
-                    </button>
+                            </button>
                             {/* <button className='cancle-button'>
                               Отклонить
                     </button > */}
-                            <button className='close-button'>
-                              Отменить
-                    </button>
+                            <button className="close-button">Отменить</button>
                           </div>
                         </div>
-                      }
-
+                      )}
                     </Form>
                   );
                 }}
               </Formik>
+              <p className="personal-data-section-paragraph">Тариф</p>
+              {this.getTarrifsCheckBoxes()}
             </div>
           </Row>
         </div>
