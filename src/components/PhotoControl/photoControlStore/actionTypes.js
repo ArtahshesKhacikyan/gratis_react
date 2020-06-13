@@ -5,4 +5,6 @@ export const GET_DRIVER_COUNTRIES_LIST_FAIL = 'get_driver_countries_list_fail';
 export const GET_USER_CATEGORY_SUCCESS = 'get_user_category_success';
 export const GET_USER_CATEGORY_FAIL = 'get_user_category_fail'
 export const GET_CAR_LIST_SUCCESS = 'get_car_list_success';
-export const GET_CAR_LIST_FAIL = 'get_car_list_fail'
+export const GET_CAR_LIST_FAIL = 'get_car_list_fail';
+export const VERIFY_PHOTOCONTROL_SUCCESS = 'verify_photocontrol_success';
+export const VERIFY_PHOTOCONTROL_FAIL = 'verify_photocontrol_fail'

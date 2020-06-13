@@ -24,10 +24,13 @@ import {
   getDriverCountryList,
   getUserCategory,
   getCarsList,
+  verifyPhotocontrol,
 } from "./photoControlStore/action";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import inputTypes from "../../resources/inputType";
+
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +41,7 @@ class PhotoControlFormSection extends React.Component {
       isDisabled: true,
       isEdit: true,
       isTarifsChecked: false,
-      tariffs: []
+      tariffs: [],
     };
   }
 
@@ -134,33 +137,34 @@ class PhotoControlFormSection extends React.Component {
         initialValues[value.name] = this.state.selectedUserData[value.name];
         CarPhotoControlDetailsData.mark.onChange = (event) => {
           CarPhotoControlDetailsData.model.options = [];
-          CarPhotoControlDetailsData.year.options = []
-          Object.entries(this.props.getCarsListResponse.data.models).forEach(value => {
-            if (value[0] === event.target.value) {
-              value[1].forEach((element) => {
-                CarPhotoControlDetailsData.model.options.push({
-                  key: element.key,
-                  value: element.name,
-                });
-              })
-              CarPhotoControlDetailsData.model.onChange = (e) => {
-                let currentYear = new Date().getFullYear();
-                CarPhotoControlDetailsData.year.options = []
-                let changedModel = value[1].find((element) => {
-                  return element.key = event.target.value
-                })
-                console.log("--changedModel-----", changedModel.from_year)
-                for (var i = changedModel.from_year; i <= currentYear; i++) {
-                  CarPhotoControlDetailsData.year.options.push({
-                    key: i,
-                    value: i,
+          CarPhotoControlDetailsData.year.options = [];
+          Object.entries(this.props.getCarsListResponse.data.models).forEach(
+            (value) => {
+              if (value[0] === event.target.value) {
+                value[1].forEach((element) => {
+                  CarPhotoControlDetailsData.model.options.push({
+                    key: element.key,
+                    value: element.name,
                   });
-                }
+                });
+                CarPhotoControlDetailsData.model.onChange = (e) => {
+                  let currentYear = new Date().getFullYear();
+                  CarPhotoControlDetailsData.year.options = [];
+                  let changedModel = value[1].find((element) => {
+                    return (element.key = event.target.value);
+                  });
+                  console.log("--changedModel-----", changedModel.from_year);
+                  for (var i = changedModel.from_year; i <= currentYear; i++) {
+                    CarPhotoControlDetailsData.year.options.push({
+                      key: i,
+                      value: i,
+                    });
+                  }
+                };
               }
             }
-          })
-        }
-
+          );
+        };
       });
     } else {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
@@ -181,7 +185,7 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleChangeTariffs = (event) => {
-    this.state.tariffs.push(event.target.value)
+    this.state.tariffs.push(event.target.value);
   };
 
   getTarrifsCheckBoxes = () => {
@@ -191,29 +195,29 @@ class PhotoControlFormSection extends React.Component {
     let tariifsCheck = [];
     if (typeof categorys[0] !== undefined) {
       categorys[0].classes.forEach(({ name }) => {
-        let checked = this.state.selectedUserData.tariffs.includes(name)
-        tariifsCheck.push(<div>
-          <FormGroup row>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  defaultChecked={checked}
-                  onChange={this.handleChangeTariffs}
-                  name={name}
-                  value={name}
-                  color="primary"
-                />
-              }
-              label={name}
-            />
-          </FormGroup>
-        </div>)
+        let checked = this.state.selectedUserData.tariffs.includes(name);
+        tariifsCheck.push(
+          <div>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked={checked}
+                    onChange={this.handleChangeTariffs}
+                    name={name}
+                    value={name}
+                    color="primary"
+                  />
+                }
+                label={name}
+              />
+            </FormGroup>
+          </div>
+        );
       });
     }
-    console.log("----------------", this.state.tariffs)
-    return <div className='tarrifs'>
-      {tariifsCheck}
-    </div>
+    console.log("----------------", this.state.tariffs);
+    return <div className="tarrifs">{tariifsCheck}</div>;
   };
 
   handleFormChange = (e) => {
@@ -224,17 +228,22 @@ class PhotoControlFormSection extends React.Component {
     this.setState({ isEdit: !this.state.isEdit });
   };
 
-  onSubmitForm = (values) => {
-    values.tarriffs = this.state.tarriffs
-    console.log("--values--", values)
+  onSubmitForm = (values, event) => {
+    let tarrifs = this.state.tariffs.map((tarrif) => {
+      return tarrif;
+    });
+    let body ={
+      tariffs: tarrifs,
+      status: 'completed'
+    }
+    this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
   };
 
   closeModal = () => {
     this.props.onHide();
   };
 
-  canclePhotoControl = () => {
-  }
+  canclePhotoControl = () => {};
 
   handleEvent = (e, data, eventFunction) => {
     this.setState({
@@ -246,7 +255,11 @@ class PhotoControlFormSection extends React.Component {
 
   cancleEdit = () => {
     this.setState({ isEdit: !this.state.isEdit });
-  }
+  };
+
+  savePhotoControl = (event) => {
+    console.log("event", event.target);
+  };
 
   render() {
     const { initialValues, validationSchema } = this.state;
@@ -263,8 +276,8 @@ class PhotoControlFormSection extends React.Component {
                   fill="red"
                 />
               ) : (
-                  <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
-                )}
+                <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
+              )}
             </button>
             <p className="edit-icon-section"> Фотоконтроль водителя</p>
           </div>
@@ -317,9 +330,7 @@ class PhotoControlFormSection extends React.Component {
                             <button className="success-button">
                               Верифицировать
                             </button>
-                            <button
-                              className="cancle-button"
-                            >Отклонить</button>
+                            <button className="cancle-button">Отклонить</button>
                             <button
                               className="close-button"
                               onClick={this.closeModal}
@@ -329,27 +340,31 @@ class PhotoControlFormSection extends React.Component {
                           </div>
                         </div>
                       ) : (
-                          <div>
-                            <div className="button-section">
-                              <button className="success-button">
-                                Сохранить
+                        <div>
+                          <div className="button-section">
+                            <button
+                              className="success-button"
+                              id="save"
+                              onClick={this.savePhotoControl}
+                              type={inputTypes.submit}
+                            >
+                              Сохранить
                             </button>
-                              {/* <button className='cancle-button'>
-                              Отклонить
-                    </button > */}
-                              <button
-                                className="close-button"
-                                onClick={this.cancleEdit}>Отменить</button>
-                            </div>
+                            <button
+                              className="close-button"
+                              onClick={this.cancleEdit}
+                            >
+                              Отменить
+                            </button>
                           </div>
-                        )}
+                        </div>
+                      )}
                       <p className="personal-data-section-paragraph">Тариф</p>
                       {this.getTarrifsCheckBoxes()}
                     </Form>
                   );
                 }}
               </Formik>
-
             </div>
           </Row>
         </div>
@@ -373,6 +388,7 @@ function mapDispatchToProps(dispatch) {
       getDriverCountryList,
       getUserCategory,
       getCarsList,
+      verifyPhotocontrol,
     },
     dispatch
   );

@@ -6,14 +6,17 @@ import {
     GET_USER_CATEGORY_SUCCESS,
     GET_USER_CATEGORY_FAIL,
     GET_CAR_LIST_SUCCESS,
-    GET_CAR_LIST_FAIL
+    GET_CAR_LIST_FAIL,
+    VERIFY_PHOTOCONTROL_SUCCESS,
+    VERIFY_PHOTOCONTROL_FAIL
 } from './actionTypes';
 
 const initialState = {
     getCountryListResponse: {},
     getPhotoCantrolDataResponse: {},
     getUserCategoryResposne: {},
-    getCarsListResponse: {}
+    getCarsListResponse: {},
+    verifyPhotocontrolRespose: {}
 };
 
 export default function (state = initialState, action) {
@@ -54,6 +57,16 @@ export default function (state = initialState, action) {
                 getCarsListResponse: action.payload,
             };
         case GET_CAR_LIST_FAIL:
+            return {
+                ...state,
+                errorMessage: action.message
+            };
+        case VERIFY_PHOTOCONTROL_SUCCESS:
+            return {
+                ...state,
+                verifyPhotocontrolRespose: action.payload,
+            };
+        case VERIFY_PHOTOCONTROL_FAIL:
             return {
                 ...state,
                 errorMessage: action.message

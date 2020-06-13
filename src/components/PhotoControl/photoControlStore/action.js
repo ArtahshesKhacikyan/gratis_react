@@ -6,7 +6,9 @@ import {
     GET_USER_CATEGORY_SUCCESS,
     GET_USER_CATEGORY_FAIL,
     GET_CAR_LIST_SUCCESS,
-    GET_CAR_LIST_FAIL
+    GET_CAR_LIST_FAIL,
+    VERIFY_PHOTOCONTROL_SUCCESS,
+    VERIFY_PHOTOCONTROL_FAIL
 } from './actionTypes';
 
 import constants from '../../../resources/constants';
@@ -74,6 +76,22 @@ export const getCarsList = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: GET_CAR_LIST_FAIL,
+            message: error
+        })
+    }
+};
+
+export const verifyPhotocontrol = (userId, values) => async (dispatch) => {
+    try {
+        const { data } = await tokenizedApiCaller.post(constants.api + userId, values, headerConfig);
+        dispatch({
+            type: VERIFY_PHOTOCONTROL_SUCCESS,
+            payload: data,
+            status: data.status
+        });
+    } catch (error) {
+        dispatch({
+            type: VERIFY_PHOTOCONTROL_FAIL,
             message: error
         })
     }
