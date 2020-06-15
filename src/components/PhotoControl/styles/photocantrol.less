@@ -87,6 +87,9 @@
     .personal-data-section-paragraph{
         font-size: 18px;
         font-weight: bold;
+        span[class*=Mui-checked]{
+            color: red;
+        }
     }
     .MuiInputBase-root{
         width: 300px;
@@ -200,7 +203,7 @@
     width: 1000px;
     position: relative;
     left: 370px;
-    top: 220px;
+    top: 195px;
     button{
         width: 300px;
         border-radius: 3px;
@@ -215,7 +218,7 @@
     .success-button{
         background-color: #00b63d;
         &:disabled{
-            background-color: #00a65a;
+            opacity: .65
         }
     }
     .cancle-button{

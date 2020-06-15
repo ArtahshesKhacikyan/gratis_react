@@ -83,7 +83,7 @@ export const getCarsList = () => async (dispatch) => {
 
 export const verifyPhotocontrol = (userId, values) => async (dispatch) => {
     try {
-        const { data } = await tokenizedApiCaller.post(constants.api + userId, values, headerConfig);
+        const { data } = await tokenizedApiCaller.put(constants.api + 'photocontrol/' + userId, values, headerConfig);
         dispatch({
             type: VERIFY_PHOTOCONTROL_SUCCESS,
             payload: data,

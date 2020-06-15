@@ -25,6 +25,7 @@ import {
   getUserCategory,
   getCarsList,
   verifyPhotocontrol,
+  getPhotocontrolData,
 } from "./photoControlStore/action";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -38,10 +39,13 @@ class PhotoControlFormSection extends React.Component {
       initialValues: null,
       validationSchema: null,
       selectedUserData: {},
-      isDisabled: true,
+      isDisabled: false,
       isEdit: true,
       isTarifsChecked: false,
       tariffs: [],
+      isSaveButtonDisabled: true,
+      carDataInfoChecked: false,
+      personalDataChecked: false,
     };
   }
 
@@ -123,6 +127,17 @@ class PhotoControlFormSection extends React.Component {
     });
   };
 
+  componentDidUpdate = async (prevProps) => {
+    const prevPropPhotocontDataLength =
+      prevProps.getPhotoCantrolDataResponse.data.length;
+    const photocontDataLength = this.props.getPhotoCantrolDataResponse.data
+      .length;
+    if (prevPropPhotocontDataLength !== photocontDataLength) {
+      await this.props.getPhotocontrolData();
+      this.props.onHide();
+    }
+  };
+
   init = () => {
     const validationShape = {};
     const initialValues = {};
@@ -130,12 +145,14 @@ class PhotoControlFormSection extends React.Component {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = this.state.selectedUserData[value.name];
-        // PhotoControlPersonalDataField.driverCountry.o = this.formElementChanged;
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = this.state.selectedUserData[value.name];
         CarPhotoControlDetailsData.mark.onChange = (event) => {
+          this.setState({
+            isSaveButtonDisabled: false,
+          });
           CarPhotoControlDetailsData.model.options = [];
           CarPhotoControlDetailsData.year.options = [];
           Object.entries(this.props.getCarsListResponse.data.models).forEach(
@@ -153,7 +170,6 @@ class PhotoControlFormSection extends React.Component {
                   let changedModel = value[1].find((element) => {
                     return (element.key = event.target.value);
                   });
-                  console.log("--changedModel-----", changedModel.from_year);
                   for (var i = changedModel.from_year; i <= currentYear; i++) {
                     CarPhotoControlDetailsData.year.options.push({
                       key: i,
@@ -170,7 +186,6 @@ class PhotoControlFormSection extends React.Component {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = value.initialValue;
-        // AddressFields[value.name].onChange = this.formElementChanged;
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
@@ -216,26 +231,23 @@ class PhotoControlFormSection extends React.Component {
         );
       });
     }
-    console.log("----------------", this.state.tariffs);
     return <div className="tarrifs">{tariifsCheck}</div>;
-  };
-
-  handleFormChange = (e) => {
-    this.formikHandleChange(e);
   };
 
   editButtonClick = () => {
     this.setState({ isEdit: !this.state.isEdit });
   };
 
-  onSubmitForm = (values, event) => {
+  onSubmitForm = () => {
     let tarrifs = this.state.tariffs.map((tarrif) => {
       return tarrif;
     });
-    let body ={
-      tariffs: tarrifs,
-      status: 'completed'
-    }
+    let body = {
+      status: "completed",
+      isUpdated: {
+        tariffs: tarrifs,
+      },
+    };
     this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
   };
 
@@ -249,6 +261,7 @@ class PhotoControlFormSection extends React.Component {
     this.setState({
       formikData: data,
       changedField: e.target.name,
+      isSaveButtonDisabled: false,
     });
     eventFunction(e);
   };
@@ -257,8 +270,28 @@ class PhotoControlFormSection extends React.Component {
     this.setState({ isEdit: !this.state.isEdit });
   };
 
-  savePhotoControl = (event) => {
-    console.log("event", event.target);
+  savePhotoControl = (e, data) => {
+    let body = {
+      isUpdated: data.values,
+    };
+    this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
+    this.setState({
+      isEdit: !this.state.isEdit,
+    });
+  };
+
+  handleChangeCheckbox = (event) => {
+    if (event.target.name === "personalData") {
+      this.setState({
+        personalDataChecked: event.target.checked,
+        isDisabled: !this.state.isDisabled,
+      });
+    } else {
+      this.setState({
+        carDataInfoChecked: event.target.checked,
+        isDisabled: !this.state.isDisabled,
+      });
+    }
   };
 
   render() {
@@ -279,10 +312,24 @@ class PhotoControlFormSection extends React.Component {
                 <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
               )}
             </button>
-            <p className="edit-icon-section"> Фотоконтроль водителя</p>
+            <p className="edit-icon-section">
+              {" "}
+              Фотоконтроль водителя ID:
+              {this.state.selectedUserData.userId} O.H:{" "}
+              {this.state.selectedUserData.id}
+            </p>
           </div>
 
-          <p className="personal-data-section-paragraph">Личные данные</p>
+          <p className="personal-data-section-paragraph">
+            Личные данные
+            <Checkbox
+              checked={this.state.personalDataChecked}
+              onChange={this.handleChangeCheckbox}
+              name="personalData"
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
+          </p>
+
           <Row className="our-modal-div">
             <div className="edit-create-modal">
               <Formik
@@ -292,7 +339,6 @@ class PhotoControlFormSection extends React.Component {
                 onSubmit={this.onSubmitForm}
               >
                 {(data) => {
-                  this.formikHandleChange = data.handleChange;
                   return (
                     <Form>
                       <FormPanel
@@ -301,7 +347,7 @@ class PhotoControlFormSection extends React.Component {
                         desktopLayout={DesktopLayout}
                         storage={data.values}
                         fields={PhotoControlPersonalDataField}
-                        errors={data.errors}
+                        errors={this.state.selectedUserData.errorFields}
                         touched={data.touched}
                         handleChange={data.handleChange}
                         handleBlur={data.handleBlur}
@@ -309,6 +355,12 @@ class PhotoControlFormSection extends React.Component {
                       />
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
+                        <Checkbox
+                          checked={this.state.carDataInfoChecked}
+                          onChange={this.handleChangeCheckbox}
+                          name="carDataInfo"
+                          inputProps={{ "aria-label": "primary checkbox" }}
+                        />
                       </p>
                       <FormPanel
                         mobileLayout={PhotoControlDetailsMobileLayout}
@@ -317,7 +369,7 @@ class PhotoControlFormSection extends React.Component {
                         storage={data.values}
                         disabled={this.state.isEdit}
                         fields={CarPhotoControlDetailsData}
-                        errors={data.errors}
+                        errors={this.state.selectedUserData.errorFields}
                         touched={data.touched}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
@@ -326,8 +378,12 @@ class PhotoControlFormSection extends React.Component {
                       />
                       {this.state.isEdit ? (
                         <div>
-                          <div className="button-section">
-                            <button className="success-button">
+                          <div
+                          
+                          className="button-section">
+                            <button className="success-button"
+                            disabled={this.state.isDisabled} >
+                              
                               Верифицировать
                             </button>
                             <button className="cancle-button">Отклонить</button>
@@ -345,7 +401,8 @@ class PhotoControlFormSection extends React.Component {
                             <button
                               className="success-button"
                               id="save"
-                              onClick={this.savePhotoControl}
+                              disabled={this.state.isSaveButtonDisabled}
+                              onClick={(e) => this.savePhotoControl(e, data)}
                               type={inputTypes.submit}
                             >
                               Сохранить
@@ -379,6 +436,7 @@ function mapStateToProps(state) {
     getCountryListResponse: state.photoControl.getCountryListResponse,
     getUserCategoryResposne: state.photoControl.getUserCategoryResposne,
     getCarsListResponse: state.photoControl.getCarsListResponse,
+    verifyPhotocontrolRespose: state.photoControl.verifyPhotocontrolRespose,
   };
 }
 
@@ -389,6 +447,7 @@ function mapDispatchToProps(dispatch) {
       getUserCategory,
       getCarsList,
       verifyPhotocontrol,
+      getPhotocontrolData,
     },
     dispatch
   );
