@@ -10,7 +10,7 @@ module.exports = {
         main: ['babel-polyfill', './src/index.js']
     },
     output: {
-        publicPath: './'
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -104,9 +104,10 @@ module.exports = {
     },
     plugins: [
         new HtmlWebPackPlugin({
-            template: './public/index.html',
             filename: './index.html',
-            favicon: './public/favicon.ico'
+            favicon:  path.resolve( __dirname, 'public/favicon.ico'),
+            template: path.resolve( __dirname, 'public/index.html' ),
+
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? '[name].css' : '[name].[hash].css',
@@ -129,6 +130,10 @@ module.exports = {
         historyApiFallback: true,
         // contentBase: path.join(__dirname, 'dist'),
         // port: 3000
+        overlay: {
+            warnings: false,
+            errors: true
+          }
     },
     devtool: 'source-map'
 };
