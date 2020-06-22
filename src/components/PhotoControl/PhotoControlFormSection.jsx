@@ -46,6 +46,7 @@ class PhotoControlFormSection extends React.Component {
       isSaveButtonDisabled: true,
       carDataInfoChecked: false,
       personalDataChecked: false,
+      initialErrors: null
     };
   }
 
@@ -120,10 +121,11 @@ class PhotoControlFormSection extends React.Component {
         }
       );
     }
-    const { initialValues, validationSchema } = this.init();
+    const { initialValues, validationSchema, initialErrors } = this.init();
     this.setState({
       initialValues,
       validationSchema,
+      initialErrors
     });
   };
 
@@ -141,14 +143,18 @@ class PhotoControlFormSection extends React.Component {
   init = () => {
     const validationShape = {};
     const initialValues = {};
+    const initialErrors = {}
     if (this.state.selectedUserData.id) {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = this.state.selectedUserData[value.name];
+        initialErrors[value.name] = false;
+        PhotoControlPersonalDataField.onChange = this.formElementChanged;
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = this.state.selectedUserData[value.name];
+        initialErrors[value.name] = false;
         CarPhotoControlDetailsData.mark.onChange = (event) => {
           this.setState({
             isSaveButtonDisabled: false,
@@ -195,9 +201,15 @@ class PhotoControlFormSection extends React.Component {
 
     return {
       initialValues,
+      initialErrors,
       validationSchema: Yup.object().shape(validationShape),
     };
   };
+
+  formElementChanged=(e)=>{
+    console.log("eeeeeeeeeeee", e.target)
+  }
+
 
   handleChangeTariffs = (event) => {
     this.state.tariffs.push(event.target.value);
@@ -255,7 +267,7 @@ class PhotoControlFormSection extends React.Component {
     this.props.onHide();
   };
 
-  canclePhotoControl = () => {};
+  canclePhotoControl = () => { };
 
   handleEvent = (e, data, eventFunction) => {
     this.setState({
@@ -281,22 +293,28 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleChangeCheckbox = (event) => {
+    const initialErrors = {}
     if (event.target.name === "personalData") {
+      Object.values(PhotoControlPersonalDataField).forEach((value) => {
+        initialErrors[value.name] = true;
+      });
       this.setState({
         personalDataChecked: event.target.checked,
         isDisabled: !this.state.isDisabled,
+        initialErrors: initialErrors
       });
-    } else {
-      this.setState({
-        carDataInfoChecked: event.target.checked,
-        isDisabled: !this.state.isDisabled,
-      });
+      if (this.state.carDataInfoChecked) {
+        console.log('----1111-------')
+        this.setState({
+          isDisabled: this.state.isDisabled,
+        });
+      }
     }
   };
 
   render() {
-    const { initialValues, validationSchema } = this.state;
-    if (!initialValues || !validationSchema) return "";
+    const { initialValues, validationSchema, initialErrors } = this.state;
+    if (!initialValues || !validationSchema || !initialErrors) return "";
     return (
       <div className="personal-data-header">
         <div className="personal-data-section">
@@ -309,49 +327,51 @@ class PhotoControlFormSection extends React.Component {
                   fill="red"
                 />
               ) : (
-                <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
-              )}
+                  <FontAwesomeIcon icon={faTimes} className="close-icon-svg" />
+                )}
             </button>
             <p className="edit-icon-section">
               {" "}
-              Фотоконтроль водителя ID:
+              {strings.photoControlHeaderText} ID:
               {this.state.selectedUserData.userId} O.H:{" "}
               {this.state.selectedUserData.id}
             </p>
           </div>
-
-          <p className="personal-data-section-paragraph">
-            Личные данные
-            <Checkbox
-              checked={this.state.personalDataChecked}
-              onChange={this.handleChangeCheckbox}
-              name="personalData"
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </p>
 
           <Row className="our-modal-div">
             <div className="edit-create-modal">
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
+                initialErrors={initialErrors}
                 enableReinitialize={true}
                 onSubmit={this.onSubmitForm}
               >
                 {(data) => {
+                  console.log("--55550---", data)
                   return (
                     <Form>
+                      <p className="personal-data-section-paragraph">
+                        Личные данные
+                        <Checkbox
+                          checked={this.state.personalDataChecked}
+                          onChange={this.handleChangeCheckbox}
+                          name="personalData"
+                          inputProps={{ "aria-label": "primary checkbox" }}
+                        />
+                      </p>
                       <FormPanel
                         mobileLayout={MobileLayout}
                         tabletLayout={TabletLayout}
                         desktopLayout={DesktopLayout}
                         storage={data.values}
                         fields={PhotoControlPersonalDataField}
-                        errors={this.state.selectedUserData.errorFields}
+                        errors={data.errors}
                         touched={data.touched}
-                        handleChange={data.handleChange}
-                        handleBlur={data.handleBlur}
-                        disabled={this.state.isEdit}
+                        handleChange={(e) =>
+                          this.handleEvent(e, data, data.handleChange)
+                        }                        handleBlur={data.handleBlur}
+                        // disabled={this.state.isEdit}
                       />
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
@@ -369,7 +389,7 @@ class PhotoControlFormSection extends React.Component {
                         storage={data.values}
                         disabled={this.state.isEdit}
                         fields={CarPhotoControlDetailsData}
-                        errors={this.state.selectedUserData.errorFields}
+                        errors={data.errors}
                         touched={data.touched}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
@@ -379,11 +399,11 @@ class PhotoControlFormSection extends React.Component {
                       {this.state.isEdit ? (
                         <div>
                           <div
-                          
-                          className="button-section">
+
+                            className="button-section">
                             <button className="success-button"
-                            disabled={this.state.isDisabled} >
-                              
+                              disabled={this.state.isDisabled} >
+
                               Верифицировать
                             </button>
                             <button className="cancle-button">Отклонить</button>
@@ -396,26 +416,26 @@ class PhotoControlFormSection extends React.Component {
                           </div>
                         </div>
                       ) : (
-                        <div>
-                          <div className="button-section">
-                            <button
-                              className="success-button"
-                              id="save"
-                              disabled={this.state.isSaveButtonDisabled}
-                              onClick={(e) => this.savePhotoControl(e, data)}
-                              type={inputTypes.submit}
-                            >
-                              Сохранить
+                          <div>
+                            <div className="button-section">
+                              <button
+                                className="success-button"
+                                id="save"
+                                disabled={this.state.isSaveButtonDisabled}
+                                onClick={(e) => this.savePhotoControl(e, data)}
+                                type={inputTypes.submit}
+                              >
+                                Сохранить
                             </button>
-                            <button
-                              className="close-button"
-                              onClick={this.cancleEdit}
-                            >
-                              Отменить
+                              <button
+                                className="close-button"
+                                onClick={this.cancleEdit}
+                              >
+                                Отменить
                             </button>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                       <p className="personal-data-section-paragraph">Тариф</p>
                       {this.getTarrifsCheckBoxes()}
                     </Form>

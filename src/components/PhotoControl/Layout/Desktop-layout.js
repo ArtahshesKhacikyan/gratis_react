@@ -4,22 +4,42 @@ export default [
         cols: [
             {
                 name: 'surname',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'surnameError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'name',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'nameError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'driverSerialNumber',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'driverSerialNumberError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'driverCountry',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'driverCountryError',
+                size: 1,
                 className: ''
             },
         ]

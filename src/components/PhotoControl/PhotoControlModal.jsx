@@ -3,15 +3,16 @@ import { Modal } from 'react-bootstrap';
 // import { TextField } from '@material-ui/core'
 import PhotoControlFormSection from './PhotoControlFormSection';
 import PhotoControlGalary from './PhotoControlGalary';
+import PhotoControlForms from './PhotoControlForms';
 class PhotoControlModal extends React.Component {
 
     render() {
-        const {userid} = this.props
+        const { userid } = this.props
         return (
-            <Modal 
-            show={this.props.show} 
-            onHide={this.props.onHide}
-            className='photocantrol-main-modal'>
+            <Modal
+                show={this.props.show}
+                onHide={this.props.onHide}
+                className='photocantrol-main-modal'>
                 <Modal.Header closeButton>
                     <Modal.Title>
 
@@ -19,8 +20,10 @@ class PhotoControlModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="modal-section-row">
+                        {/* <PhotoControlForms selectUserId={userid} show={this.props.show} onHide={this.props.onHide} /> */}
+
                         <PhotoControlFormSection  selectUserId={userid}  show={this.props.show} onHide={this.props.onHide}/>
-                        <PhotoControlGalary selectUserId={userid}/>
+                        <PhotoControlGalary selectUserId={userid} />
 
                     </div>
                 </Modal.Body>

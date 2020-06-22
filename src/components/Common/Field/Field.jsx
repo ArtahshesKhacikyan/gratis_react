@@ -73,7 +73,7 @@ class Field extends React.Component {
                 <MuiCheckbox
                     label={field.label}
                     name={field.name}
-                    onChange={handleChange}
+                    onChange={(e) => this.handleChange(e, field.onChange)}
                     className='checkbox-input'
                     disabled={disabled}
                     checked={value}

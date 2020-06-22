@@ -10,5 +10,7 @@ export default {
         model: 'Модель',
         color: 'Цвет',
         year: 'Год'
-    }   
+    },
+    photoControlHeaderText: 'Фотоконтроль водителя',
+    personalDataText: 'Личные данные'
 }
