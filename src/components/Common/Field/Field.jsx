@@ -41,13 +41,12 @@ class Field extends React.Component {
     }
 
     handleChange = (e, onChange) => {
-        console.log("----onChange-eeee-", e)
         this.props.handleChange(e);
         onChange && onChange(e);
     }
 
     render = () => {
-        const { field, handleChange, value, disabled, files } = this.props;
+        const { field, handleChange, value, disabled, error } = this.props;
         if (!field) {
             return null;
         }
@@ -64,7 +63,7 @@ class Field extends React.Component {
                     onBlur={this.handleBlur}
                     required={isRequired}
                     value={value}
-                    error={this.state.error}
+                    error={error}
                     readOnly={field.readOnly}
                 />
             );
@@ -92,7 +91,7 @@ class Field extends React.Component {
                     helpText={field.help}
                     options={field.options}
                     required={isRequired}
-                    error={this.state.error}
+                    error={error}
                 />
             );
         case fieldTypes.htmlContentType:

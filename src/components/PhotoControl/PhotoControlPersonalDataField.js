@@ -23,6 +23,7 @@ export default {
         type: inputType.muiCheckbox,
         name: 'surnameError',
         label: '',
+        className: 'errosField',
         initialValue: false,
         disabled: false,
         schema: Yup.bool()
@@ -87,7 +88,7 @@ export default {
     },
     'driverCountryError': {
         type: inputType.muiCheckbox,
-        name: 'driverCountryNumberError',
+        name: 'driverCountryError',
         label: '',
         disabled: false,
         initialValue: false,

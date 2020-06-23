@@ -73,6 +73,9 @@ class FormPanel extends React.Component {
                 }
                 opts[viewport] = size;
             });
+            // console.log("This err", this.props.errors)
+            // console.log("Fild name err", field.name)
+
             colFields.push(
                 <Col key={field.name} {...opts} className={`field-col ${field.className || ''}`}>
                     {fieldTypes.htmlContentType === this.props.fields[field.name].type ?
@@ -81,7 +84,7 @@ class FormPanel extends React.Component {
                             value={this.props.storage[field.name]}
                             handleChange={this.props.handleChange}
                             field={this.props.fields[field.name]}
-                            error={this.props.errors[field.name]}
+                            error={this.props.errors[field.name] || false}
                             touched={this.props.touched[field.name]}
                             handleBlur={this.props.handleBlur}
                             disabled={this.props.disabled}

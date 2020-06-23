@@ -31,6 +31,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import inputTypes from "../../resources/inputType";
+import { values } from "lodash";
 
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class PhotoControlFormSection extends React.Component {
       isSaveButtonDisabled: true,
       carDataInfoChecked: false,
       personalDataChecked: false,
-      initialErrors: null
+      initialErrors: null,
     };
   }
 
@@ -146,10 +147,47 @@ class PhotoControlFormSection extends React.Component {
     const initialErrors = {}
     if (this.state.selectedUserData.id) {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
+        console.log('Valueeee', value)
         validationShape[value.name] = value.schema;
+        // initialStatus[value.name] = value.disabled
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
-        PhotoControlPersonalDataField.onChange = this.formElementChanged;
+        PhotoControlPersonalDataField.surnameError.onChange = (event) => {
+          Object.values(PhotoControlPersonalDataField).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['surname'] = true;
+            } else {
+              initialErrors['surname'] = false;
+            }
+          })
+        }
+        PhotoControlPersonalDataField.nameError.onChange = (event) => {
+          Object.values(PhotoControlPersonalDataField).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['name'] = true;
+            } else {
+              initialErrors['name'] = false;
+            }
+          })
+        }
+        PhotoControlPersonalDataField.driverSerialNumberError.onChange = (event) => {
+          Object.values(PhotoControlPersonalDataField).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['driverSerialNumber'] = true;
+            } else {
+              initialErrors['driverSerialNumber'] = false;
+            }
+          })
+        }
+        PhotoControlPersonalDataField.driverCountryError.onChange = (event) => {
+          Object.values(PhotoControlPersonalDataField).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['driverCountry'] = true;
+            } else {
+              initialErrors['driverCountry'] = false;
+            }
+          })
+        }
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
@@ -192,10 +230,12 @@ class PhotoControlFormSection extends React.Component {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = value.initialValue;
+        initialErrors[value.name] = false
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = value.initialValue;
+        initialErrors[value.name] = false
       });
     }
 
@@ -206,8 +246,8 @@ class PhotoControlFormSection extends React.Component {
     };
   };
 
-  formElementChanged=(e)=>{
-    console.log("eeeeeeeeeeee", e.target)
+  formElementChanged = (event) => {
+    console.log("event target", event.target)
   }
 
 
@@ -293,7 +333,7 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleChangeCheckbox = (event) => {
-    const initialErrors = {}
+    const initialErrors = []
     if (event.target.name === "personalData") {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         initialErrors[value.name] = true;
@@ -303,18 +343,44 @@ class PhotoControlFormSection extends React.Component {
         isDisabled: !this.state.isDisabled,
         initialErrors: initialErrors
       });
-      if (this.state.carDataInfoChecked) {
-        console.log('----1111-------')
+      if (this.state.personalDataChecked) {
+        Object.values(PhotoControlPersonalDataField).forEach((value) => {
+          initialErrors[value.name] = false;
+        });
         this.setState({
-          isDisabled: this.state.isDisabled,
+          isDisabled: !this.state.isDisabled,
         });
       }
     }
   };
 
+  handleCarInfoDataCheckBoxChange = (event) => {
+    const _initialErrors = []
+    Object.values(CarPhotoControlDetailsData).forEach((value) => {
+      _initialErrors[value.name] = true;
+    });
+    console.log("initialErrors", _initialErrors)
+    this.setState({
+      carDataInfoChecked: event.target.checked,
+      isDisabled: !this.state.isDisabled,
+      initialErrors: _initialErrors
+    });
+    if (this.state.carDataInfoChecked) {
+      Object.values(CarPhotoControlDetailsData).forEach((value) => {
+        initialErrors[value.name] = false;
+      });
+      this.setState({
+        isDisabled: !this.state.isDisabled,
+      });
+    }
+  }
+
   render() {
-    const { initialValues, validationSchema, initialErrors } = this.state;
-    if (!initialValues || !validationSchema || !initialErrors) return "";
+    const { initialValues, validationSchema, initialErrors} = this.state;
+    if (!initialValues || !validationSchema || !initialErrors ) return "";
+    let disabledHandler = Object.values(initialErrors).find(value => {
+      return value = true
+    })
     return (
       <div className="personal-data-header">
         <div className="personal-data-section">
@@ -348,17 +414,12 @@ class PhotoControlFormSection extends React.Component {
                 onSubmit={this.onSubmitForm}
               >
                 {(data) => {
-                  console.log("--55550---", data)
+                  console.log("Data ----> ", data)
                   return (
                     <Form>
                       <p className="personal-data-section-paragraph">
                         Личные данные
-                        <Checkbox
-                          checked={this.state.personalDataChecked}
-                          onChange={this.handleChangeCheckbox}
-                          name="personalData"
-                          inputProps={{ "aria-label": "primary checkbox" }}
-                        />
+
                       </p>
                       <FormPanel
                         mobileLayout={MobileLayout}
@@ -366,21 +427,15 @@ class PhotoControlFormSection extends React.Component {
                         desktopLayout={DesktopLayout}
                         storage={data.values}
                         fields={PhotoControlPersonalDataField}
-                        errors={data.errors}
+                        errors={data.errors ? data.errors : data.initialErrors}
                         touched={data.touched}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
-                        }                        handleBlur={data.handleBlur}
-                        // disabled={this.state.isEdit}
+                        } handleBlur={data.handleBlur}
+                      // disabled={this.state.isEdit}
                       />
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
-                        <Checkbox
-                          checked={this.state.carDataInfoChecked}
-                          onChange={this.handleChangeCheckbox}
-                          name="carDataInfo"
-                          inputProps={{ "aria-label": "primary checkbox" }}
-                        />
                       </p>
                       <FormPanel
                         mobileLayout={PhotoControlDetailsMobileLayout}
@@ -402,11 +457,13 @@ class PhotoControlFormSection extends React.Component {
 
                             className="button-section">
                             <button className="success-button"
-                              disabled={this.state.isDisabled} >
+                              disabled={disabledHandler} >
 
                               Верифицировать
                             </button>
-                            <button className="cancle-button">Отклонить</button>
+                            <button
+                              disabled={!disabledHandler}
+                              className="cancle-button">Отклонить</button>
                             <button
                               className="close-button"
                               onClick={this.closeModal}

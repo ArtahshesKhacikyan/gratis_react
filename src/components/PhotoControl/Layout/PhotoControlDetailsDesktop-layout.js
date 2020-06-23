@@ -4,32 +4,62 @@ export default [
         cols: [
             {
                 name: 'category',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'categoryError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'carNum',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'carNumError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'mark',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'markError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'model',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'modelError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'color',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'colorError',
+                size: 1,
                 className: ''
             },
             {
                 name: 'year',
-                size: 6,
+                size: 5,
+                className: ''
+            },
+            {
+                name: 'yearError',
+                size: 1,
                 className: ''
             },
         ]
