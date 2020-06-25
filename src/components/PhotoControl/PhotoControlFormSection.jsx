@@ -32,6 +32,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import inputTypes from "../../resources/inputType";
 import { values } from "lodash";
+import ConfirmModal from "../Common/Modals/ConfirmModal";
 
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class PhotoControlFormSection extends React.Component {
       carDataInfoChecked: false,
       personalDataChecked: false,
       initialErrors: null,
+      confirmModalShow: false
     };
   }
 
@@ -62,6 +64,9 @@ class PhotoControlFormSection extends React.Component {
         }
       );
       this.setState({ selectedUserData: _selectedUserData });
+    }
+    if (this.state.selectedUserData) {
+      console.log("_selectedUserData", this.state.selectedUserData.errorFields)
     }
     if (this.props.getCountryListResponse) {
       Object.values(this.props.getCountryListResponse.data).forEach(
@@ -130,28 +135,31 @@ class PhotoControlFormSection extends React.Component {
     });
   };
 
-  componentDidUpdate = async (prevProps) => {
-    const prevPropPhotocontDataLength =
-      prevProps.getPhotoCantrolDataResponse.data.length;
-    const photocontDataLength = this.props.getPhotoCantrolDataResponse.data
-      .length;
-    if (prevPropPhotocontDataLength !== photocontDataLength) {
-      await this.props.getPhotocontrolData();
-      this.props.onHide();
-    }
-  };
+  // componentDidUpdate = async (prevProps) => {
+  //   if (true === this.props.verifyPhotocontrolRespose.status) {
+  //     await this.props.getPhotocontrolData();
+  //     this.props.onHide();
+  //   }
+  // }
 
   init = () => {
     const validationShape = {};
     const initialValues = {};
     const initialErrors = {}
+    if (this.state.selectedUserData) {
+      console.log("_selectedUserData", this.state.selectedUserData.errorFields)
+    }
     if (this.state.selectedUserData.id) {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
-        console.log('Valueeee', value)
         validationShape[value.name] = value.schema;
         // initialStatus[value.name] = value.disabled
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
+        Object.values(this.state.selectedUserData.errorFields).filter(error => {
+          if (error === value.name) {
+            initialErrors[value.name] = true
+          }
+        })
         PhotoControlPersonalDataField.surnameError.onChange = (event) => {
           Object.values(PhotoControlPersonalDataField).forEach((value) => {
             if (event.target.checked) {
@@ -193,6 +201,66 @@ class PhotoControlFormSection extends React.Component {
         validationShape[value.name] = value.schema;
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
+        Object.values(this.state.selectedUserData.errorFields).filter(error => {
+          if (error === value.name) {
+            initialErrors[value.name] = true
+          }
+        }),
+        CarPhotoControlDetailsData.categoryError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['category'] = true;
+            } else {
+              initialErrors['category'] = false;
+            }
+          })
+        }
+        CarPhotoControlDetailsData.carNumError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['carNum'] = true;
+            } else {
+              initialErrors['carNum'] = false;
+            }
+          })
+        }
+        CarPhotoControlDetailsData.markError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['mark'] = true;
+            } else {
+              initialErrors['mark'] = false;
+            }
+          })
+        }
+        CarPhotoControlDetailsData.modelError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            console.log("---yera---", value)
+            if (event.target.checked) {
+              initialErrors['model'] = true;
+            } else {
+              initialErrors['model'] = false;
+            }
+          })
+        }
+        CarPhotoControlDetailsData.colorError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['color'] = true;
+            } else {
+              initialErrors['color'] = false;
+            }
+          })
+        }
+        CarPhotoControlDetailsData.yearError.onChange = (event) => {
+          Object.values(CarPhotoControlDetailsData).forEach((value) => {
+            if (event.target.checked) {
+              initialErrors['year'] = true;
+            } else {
+              initialErrors['year'] = false;
+            }
+          })
+        }
         CarPhotoControlDetailsData.mark.onChange = (event) => {
           this.setState({
             isSaveButtonDisabled: false,
@@ -291,6 +359,10 @@ class PhotoControlFormSection extends React.Component {
   };
 
   onSubmitForm = () => {
+    this.setState({
+      confirmModalShow: true
+    })
+
     let tarrifs = this.state.tariffs.map((tarrif) => {
       return tarrif;
     });
@@ -307,7 +379,28 @@ class PhotoControlFormSection extends React.Component {
     this.props.onHide();
   };
 
-  canclePhotoControl = () => { };
+  handleCloseConfirmModal = () => {
+    this.setState({
+      confirmModalShow: false
+    })
+  }
+
+  canclePhotoControl = (e, data) => {
+    e && e.preventDefault();
+    let _fields = [];
+    console.log("DDDDD->>>", data)
+    let rejectedFields = Object.entries(data.initialErrors).filter(value => {
+      if (value[1]) {
+       return _fields.push(value[0])
+      }
+    })
+    console.log("dfffff", rejectedFields)
+    let body = {
+      status: "rejected",
+      fields: _fields
+    };
+    this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
+  };
 
   handleEvent = (e, data, eventFunction) => {
     this.setState({
@@ -318,7 +411,8 @@ class PhotoControlFormSection extends React.Component {
     eventFunction(e);
   };
 
-  cancleEdit = () => {
+  cancleEdit = (e) => {
+    e.preventDefault()
     this.setState({ isEdit: !this.state.isEdit });
   };
 
@@ -359,7 +453,6 @@ class PhotoControlFormSection extends React.Component {
     Object.values(CarPhotoControlDetailsData).forEach((value) => {
       _initialErrors[value.name] = true;
     });
-    console.log("initialErrors", _initialErrors)
     this.setState({
       carDataInfoChecked: event.target.checked,
       isDisabled: !this.state.isDisabled,
@@ -376,13 +469,16 @@ class PhotoControlFormSection extends React.Component {
   }
 
   render() {
-    const { initialValues, validationSchema, initialErrors} = this.state;
-    if (!initialValues || !validationSchema || !initialErrors ) return "";
+    const { initialValues, validationSchema, initialErrors } = this.state;
+    if (!initialValues || !validationSchema || !initialErrors) return "";
     let disabledHandler = Object.values(initialErrors).find(value => {
       return value = true
     })
     return (
       <div className="personal-data-header">
+        <ConfirmModal
+          show={this.state.confirmModalShow}
+          onHide={this.handleCloseConfirmModal} />
         <div className="personal-data-section">
           <div className="photo-control-header">
             <button className="edit-icon-button" onClick={this.editButtonClick}>
@@ -411,7 +507,7 @@ class PhotoControlFormSection extends React.Component {
                 validationSchema={validationSchema}
                 initialErrors={initialErrors}
                 enableReinitialize={true}
-                onSubmit={this.onSubmitForm}
+                onSubmit={(e) => this.onSubmitForm(e)}
               >
                 {(data) => {
                   console.log("Data ----> ", data)
@@ -432,7 +528,7 @@ class PhotoControlFormSection extends React.Component {
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
                         } handleBlur={data.handleBlur}
-                      // disabled={this.state.isEdit}
+                        disabled={this.state.isEdit}
                       />
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
@@ -462,6 +558,7 @@ class PhotoControlFormSection extends React.Component {
                               Верифицировать
                             </button>
                             <button
+                              onClick={(e) => this.canclePhotoControl(e, data)}
                               disabled={!disabledHandler}
                               className="cancle-button">Отклонить</button>
                             <button
