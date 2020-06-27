@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Orders from './Orders/Orders';
+import General from './General/General';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,15 +74,14 @@ class ToolsTabSection extends React.Component {
                         <Tab label="ТС" {...a11yProps(1)} />
                         <Tab label="Фотоконтроль" {...a11yProps(2)} />
                         <Tab label="Верификация" {...a11yProps(3)} />
-                        <Tab label="Верификация" {...a11yProps(4)} />
-                        <Tab label="Баланс" {...a11yProps(5)} />
-                        <Tab label="Поколение" {...a11yProps(6)} />
-                        <Tab label="Заказы" {...a11yProps(7)} />
+                        <Tab label="Баланс" {...a11yProps(4)} />
+                        <Tab label="Поколение" {...a11yProps(5)} />
+                        <Tab label="Заказы" {...a11yProps(6)} />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={this.state.tabsValue} index={0}>
-                    Item One
-      </TabPanel>
+                    <General />
+                </TabPanel>
                 <TabPanel value={this.state.tabsValue} index={1}>
                     Item Two
       </TabPanel>
@@ -95,14 +95,12 @@ class ToolsTabSection extends React.Component {
                     Item Five
       </TabPanel>
                 <TabPanel value={this.state.tabsValue} index={5}>
-                   Six
+                    Six
                 </TabPanel>
                 <TabPanel value={this.state.tabsValue} index={6}>
-      </TabPanel>
-      <TabPanel value={this.state.tabsValue} index={7}>
-                <Orders />
-      </TabPanel>
-      
+                    <Orders />
+                </TabPanel>
+
             </div>
         );
     }

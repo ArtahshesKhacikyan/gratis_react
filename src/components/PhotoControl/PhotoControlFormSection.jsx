@@ -65,9 +65,6 @@ class PhotoControlFormSection extends React.Component {
       );
       this.setState({ selectedUserData: _selectedUserData });
     }
-    if (this.state.selectedUserData) {
-      console.log("_selectedUserData", this.state.selectedUserData.errorFields)
-    }
     if (this.props.getCountryListResponse) {
       Object.values(this.props.getCountryListResponse.data).forEach(
         (values) => {
@@ -320,7 +317,13 @@ class PhotoControlFormSection extends React.Component {
 
 
   handleChangeTariffs = (event) => {
-    this.state.tariffs.push(event.target.value);
+    console.log("-------DDDDDDDDD------", event.target.value)
+    let tarrifs = [] 
+    tarrifs.push(event.target.value);
+    console.log("---tarrifs------", tarrifs)
+    // this.setState({
+    //   tariffs: tarrifs
+    // })
   };
 
   getTarrifsCheckBoxes = () => {
@@ -388,13 +391,11 @@ class PhotoControlFormSection extends React.Component {
   canclePhotoControl = (e, data) => {
     e && e.preventDefault();
     let _fields = [];
-    console.log("DDDDD->>>", data)
     let rejectedFields = Object.entries(data.initialErrors).filter(value => {
       if (value[1]) {
        return _fields.push(value[0])
       }
     })
-    console.log("dfffff", rejectedFields)
     let body = {
       status: "rejected",
       fields: _fields
@@ -474,6 +475,7 @@ class PhotoControlFormSection extends React.Component {
     let disabledHandler = Object.values(initialErrors).find(value => {
       return value = true
     })
+    console.log('this.state.tariffs.length < 1', this.state.tariffs)
     return (
       <div className="personal-data-header">
         <ConfirmModal

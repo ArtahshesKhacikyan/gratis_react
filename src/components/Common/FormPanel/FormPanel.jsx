@@ -118,7 +118,7 @@ class FormPanel extends React.Component {
 
                     <Media query='(min-width: 1200px)'>
                         {matches =>
-                            matches && this.renderRows(desktopLayout, ['lg'])
+                            matches && this.renderRows(desktopLayout, ['xs'])
                         }
                     </Media>
                 </div>
