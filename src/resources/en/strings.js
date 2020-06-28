@@ -32,8 +32,13 @@ export default {
         clientLastLogin: 'Kлиент',
         driverLastLogin: 'Водитель',
         clientLastOrderDate: 'Kлиент',
-        driverLastOrderDate: 'Водитель'
-
+        driverLastOrderDate: 'Водитель',
+        idGuest: 'Id пригласителя:',
+        operationSystem: 'ОС',
+        carMark: 'Маркa машин',
+        cordinate: 'Координаты',
+        appVersion: 'Версии приложений',
+        language: 'Язык'
     },
     photoControlHeaderText: 'Фотоконтроль водителя',
     personalDataText: 'Личные данные',

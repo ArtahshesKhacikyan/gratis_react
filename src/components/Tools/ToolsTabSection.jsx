@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Orders from './Orders/Orders';
 import General from './General/General';
+import ToolsHeader from './ToolsHeader';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -79,6 +80,7 @@ class ToolsTabSection extends React.Component {
                         <Tab label="Заказы" {...a11yProps(6)} />
                     </Tabs>
                 </AppBar>
+                <ToolsHeader />
                 <TabPanel value={this.state.tabsValue} index={0}>
                     <General />
                 </TabPanel>
