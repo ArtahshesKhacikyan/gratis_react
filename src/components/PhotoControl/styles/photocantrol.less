@@ -87,6 +87,7 @@
     .personal-data-section-paragraph{
         font-size: 18px;
         font-weight: bold;
+        margin-bottom: -40px;
         span[class*=Mui-checked]{
             color: red;
         }
@@ -204,7 +205,7 @@
     width: 1000px;
     position: relative;
     left: 370px;
-    top: 45px;
+    top: 65px;
     button{
         width: 300px;
         border-radius: 3px;
@@ -257,6 +258,7 @@
 
 .tarrifs{
     display: flex;
+    margin-top: 40px;
     label{
         margin: 5px;
     }
@@ -325,4 +327,14 @@
 
 .tarrifs-parth{
     margin-top: -120px;
+}
+
+.edit-create-modal{
+    .form-panel{
+        .panel-body{
+            .mui-textfield{
+                z-index: 101;
+            }
+        }
+    }
 }
