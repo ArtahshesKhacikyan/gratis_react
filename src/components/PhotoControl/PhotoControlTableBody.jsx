@@ -120,11 +120,11 @@ class PhotoControlTableBody extends React.Component {
               </TableRow>
             );
           })}
-        {emptyRows > 0 && (
+        {/* {emptyRows > 0 && (
           <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-            <TableCell colSpan={6} />
+            <TableCell />
           </TableRow>
-        )}
+        )} */}
       </TableBody>
     );
   }

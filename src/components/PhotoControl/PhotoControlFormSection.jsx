@@ -33,6 +33,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import inputTypes from "../../resources/inputType";
 import { values } from "lodash";
 import ConfirmModal from "../Common/Modals/ConfirmModal";
+import Switch from '@material-ui/core/Switch';
+import { useAlert } from 'react-alert'
 
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
@@ -45,11 +47,22 @@ class PhotoControlFormSection extends React.Component {
       isEdit: true,
       isTarifsChecked: false,
       tariffs: [],
+      tarrifsChecked: [],
       isSaveButtonDisabled: true,
       carDataInfoChecked: false,
       personalDataChecked: false,
       initialErrors: null,
-      confirmModalShow: false
+      confirmModalShow: false,
+      surname: false,
+      name: false,
+      driverSerialNumber: false,
+      driverCountry: false,
+      category: false,
+      carNum: false,
+      mark: false,
+      model: false,
+      year: false,
+      color: false
     };
   }
 
@@ -132,67 +145,28 @@ class PhotoControlFormSection extends React.Component {
     });
   };
 
-  // componentDidUpdate = async (prevProps) => {
-  //   if (true === this.props.verifyPhotocontrolRespose.status) {
-  //     await this.props.getPhotocontrolData();
-  //     this.props.onHide();
-  //   }
-  // }
+  componentDidUpdate = async (prevProps) => {
+    if (this.props.verifyPhotocontrolRespose !== prevProps.verifyPhotocontrolRespose) {
+      await this.props.getPhotocontrolData();
+      this.props.onHide()
+    }
+  }
 
   init = () => {
     const validationShape = {};
     const initialValues = {};
     const initialErrors = {}
-    if (this.state.selectedUserData) {
-      console.log("_selectedUserData", this.state.selectedUserData.errorFields)
-    }
     if (this.state.selectedUserData.id) {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
         validationShape[value.name] = value.schema;
-        // initialStatus[value.name] = value.disabled
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
         Object.values(this.state.selectedUserData.errorFields).filter(error => {
           if (error === value.name) {
             initialErrors[value.name] = true
+            this.setState({ [value.name]: true })
           }
         })
-        PhotoControlPersonalDataField.surnameError.onChange = (event) => {
-          Object.values(PhotoControlPersonalDataField).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['surname'] = true;
-            } else {
-              initialErrors['surname'] = false;
-            }
-          })
-        }
-        PhotoControlPersonalDataField.nameError.onChange = (event) => {
-          Object.values(PhotoControlPersonalDataField).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['name'] = true;
-            } else {
-              initialErrors['name'] = false;
-            }
-          })
-        }
-        PhotoControlPersonalDataField.driverSerialNumberError.onChange = (event) => {
-          Object.values(PhotoControlPersonalDataField).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['driverSerialNumber'] = true;
-            } else {
-              initialErrors['driverSerialNumber'] = false;
-            }
-          })
-        }
-        PhotoControlPersonalDataField.driverCountryError.onChange = (event) => {
-          Object.values(PhotoControlPersonalDataField).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['driverCountry'] = true;
-            } else {
-              initialErrors['driverCountry'] = false;
-            }
-          })
-        }
       });
       Object.values(CarPhotoControlDetailsData).forEach((value) => {
         validationShape[value.name] = value.schema;
@@ -201,95 +175,42 @@ class PhotoControlFormSection extends React.Component {
         Object.values(this.state.selectedUserData.errorFields).filter(error => {
           if (error === value.name) {
             initialErrors[value.name] = true
+            this.setState({ [value.name]: true })
           }
         }),
-        CarPhotoControlDetailsData.categoryError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['category'] = true;
-            } else {
-              initialErrors['category'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.carNumError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['carNum'] = true;
-            } else {
-              initialErrors['carNum'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.markError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['mark'] = true;
-            } else {
-              initialErrors['mark'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.modelError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            console.log("---yera---", value)
-            if (event.target.checked) {
-              initialErrors['model'] = true;
-            } else {
-              initialErrors['model'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.colorError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['color'] = true;
-            } else {
-              initialErrors['color'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.yearError.onChange = (event) => {
-          Object.values(CarPhotoControlDetailsData).forEach((value) => {
-            if (event.target.checked) {
-              initialErrors['year'] = true;
-            } else {
-              initialErrors['year'] = false;
-            }
-          })
-        }
-        CarPhotoControlDetailsData.mark.onChange = (event) => {
-          this.setState({
-            isSaveButtonDisabled: false,
-          });
-          CarPhotoControlDetailsData.model.options = [];
-          CarPhotoControlDetailsData.year.options = [];
-          Object.entries(this.props.getCarsListResponse.data.models).forEach(
-            (value) => {
-              if (value[0] === event.target.value) {
-                value[1].forEach((element) => {
-                  CarPhotoControlDetailsData.model.options.push({
-                    key: element.key,
-                    value: element.name,
-                  });
-                });
-                CarPhotoControlDetailsData.model.onChange = (e) => {
-                  let currentYear = new Date().getFullYear();
-                  CarPhotoControlDetailsData.year.options = [];
-                  let changedModel = value[1].find((element) => {
-                    return (element.key = event.target.value);
-                  });
-                  for (var i = changedModel.from_year; i <= currentYear; i++) {
-                    CarPhotoControlDetailsData.year.options.push({
-                      key: i,
-                      value: i,
+
+          CarPhotoControlDetailsData.mark.onChange = (event) => {
+            this.setState({
+              isSaveButtonDisabled: false,
+            });
+            CarPhotoControlDetailsData.model.options = [];
+            CarPhotoControlDetailsData.year.options = [];
+            Object.entries(this.props.getCarsListResponse.data.models).forEach(
+              (value) => {
+                if (value[0] === event.target.value) {
+                  value[1].forEach((element) => {
+                    CarPhotoControlDetailsData.model.options.push({
+                      key: element.key,
+                      value: element.name,
                     });
-                  }
-                };
+                  });
+                  CarPhotoControlDetailsData.model.onChange = (e) => {
+                    let currentYear = new Date().getFullYear();
+                    CarPhotoControlDetailsData.year.options = [];
+                    let changedModel = value[1].find((element) => {
+                      return (element.key = event.target.value);
+                    });
+                    for (var i = changedModel.from_year; i <= currentYear; i++) {
+                      CarPhotoControlDetailsData.year.options.push({
+                        key: i,
+                        value: i,
+                      });
+                    }
+                  };
+                }
               }
-            }
-          );
-        };
+            );
+          };
       });
     } else {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
@@ -311,19 +232,12 @@ class PhotoControlFormSection extends React.Component {
     };
   };
 
-  formElementChanged = (event) => {
-    console.log("event target", event.target)
-  }
-
-
   handleChangeTariffs = (event) => {
-    console.log("-------DDDDDDDDD------", event.target.value)
-    let tarrifs = [] 
+    let tarrifs = []
     tarrifs.push(event.target.value);
-    console.log("---tarrifs------", tarrifs)
-    // this.setState({
-    //   tariffs: tarrifs
-    // })
+    this.setState({
+      tarrifsChecked: tarrifs
+    })
   };
 
   getTarrifsCheckBoxes = () => {
@@ -366,9 +280,13 @@ class PhotoControlFormSection extends React.Component {
       confirmModalShow: true
     })
 
-    let tarrifs = this.state.tariffs.map((tarrif) => {
+    let tarrifs = this.state.tarrifsChecked.map((tarrif) => {
       return tarrif;
     });
+    if (tarrifs.length === 0) {
+      alert('Пожалуйста, выберите один из тарифов')
+      return
+    }
     let body = {
       status: "completed",
       isUpdated: {
@@ -378,7 +296,8 @@ class PhotoControlFormSection extends React.Component {
     this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
   };
 
-  closeModal = () => {
+  closeModal = (e) => {
+    e && e.preventDefault();
     this.props.onHide();
   };
 
@@ -391,9 +310,9 @@ class PhotoControlFormSection extends React.Component {
   canclePhotoControl = (e, data) => {
     e && e.preventDefault();
     let _fields = [];
-    let rejectedFields = Object.entries(data.initialErrors).filter(value => {
+    Object.entries(data.initialErrors).filter(value => {
       if (value[1]) {
-       return _fields.push(value[0])
+        return _fields.push(value[0])
       }
     })
     let body = {
@@ -427,45 +346,11 @@ class PhotoControlFormSection extends React.Component {
     });
   };
 
-  handleChangeCheckbox = (event) => {
-    const initialErrors = []
-    if (event.target.name === "personalData") {
-      Object.values(PhotoControlPersonalDataField).forEach((value) => {
-        initialErrors[value.name] = true;
-      });
-      this.setState({
-        personalDataChecked: event.target.checked,
-        isDisabled: !this.state.isDisabled,
-        initialErrors: initialErrors
-      });
-      if (this.state.personalDataChecked) {
-        Object.values(PhotoControlPersonalDataField).forEach((value) => {
-          initialErrors[value.name] = false;
-        });
-        this.setState({
-          isDisabled: !this.state.isDisabled,
-        });
-      }
-    }
-  };
-
-  handleCarInfoDataCheckBoxChange = (event) => {
-    const _initialErrors = []
-    Object.values(CarPhotoControlDetailsData).forEach((value) => {
-      _initialErrors[value.name] = true;
-    });
-    this.setState({
-      carDataInfoChecked: event.target.checked,
-      isDisabled: !this.state.isDisabled,
-      initialErrors: _initialErrors
-    });
-    if (this.state.carDataInfoChecked) {
-      Object.values(CarPhotoControlDetailsData).forEach((value) => {
-        initialErrors[value.name] = false;
-      });
-      this.setState({
-        isDisabled: !this.state.isDisabled,
-      });
+  handleSwichChange = (event) => {
+    this.setState({ [event.target.name]: event.target.checked })
+    console.log("This state", this.state.initialErrors)
+    if (event.target.name === 'name' && event.target.checked) {
+      console.log('---4444---')
     }
   }
 
@@ -475,12 +360,11 @@ class PhotoControlFormSection extends React.Component {
     let disabledHandler = Object.values(initialErrors).find(value => {
       return value = true
     })
-    console.log('this.state.tariffs.length < 1', this.state.tariffs)
     return (
       <div className="personal-data-header">
-        <ConfirmModal
+        {/* <ConfirmModal
           show={this.state.confirmModalShow}
-          onHide={this.handleCloseConfirmModal} />
+          onHide={this.handleCloseConfirmModal} /> */}
         <div className="personal-data-section">
           <div className="photo-control-header">
             <button className="edit-icon-button" onClick={this.editButtonClick}>
@@ -517,8 +401,39 @@ class PhotoControlFormSection extends React.Component {
                     <Form>
                       <p className="personal-data-section-paragraph">
                         Личные данные
-
                       </p>
+                      <div className='section-errors'>
+                        <Switch
+                          className='surname-switch'
+                          checked={this.state.surname}
+                          onChange={this.handleSwichChange}
+                          name="surname"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <Switch
+                          className='name-switch'
+                          checked={this.state.name}
+                          onChange={this.handleSwichChange}
+                          name="name"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      </div>
+                      <div className='section-second-errors'>
+                        <Switch
+                          className='name-driverSerialNumber'
+                          checked={this.state.driverSerialNumber}
+                          onChange={this.handleSwichChange}
+                          name="driverSerialNumber"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <Switch
+                          className='name-driverCountry'
+                          checked={this.state.driverCountry}
+                          onChange={this.handleSwichChange}
+                          name="driverCountry"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      </div>
                       <FormPanel
                         mobileLayout={MobileLayout}
                         tabletLayout={TabletLayout}
@@ -535,6 +450,22 @@ class PhotoControlFormSection extends React.Component {
                       <p className="personal-data-section-paragraph">
                         Фотоконтроль автомобиля
                       </p>
+                      <div className='details-car-section-errors'>
+                        <Switch
+                          className='category-switch'
+                          checked={this.state.category}
+                          onChange={this.handleSwichChange}
+                          name="category"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <Switch
+                          className='carNum-switch'
+                          checked={this.state.carNum}
+                          onChange={this.handleSwichChange}
+                          name="carNum"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      </div>
                       <FormPanel
                         mobileLayout={PhotoControlDetailsMobileLayout}
                         tabletLayout={PhotoControlDetailsTabletLayout}
@@ -549,6 +480,38 @@ class PhotoControlFormSection extends React.Component {
                         }
                         handleBlur={data.handleBlur}
                       />
+                      <div className='details-three-car-section-errors'>
+                        <Switch
+                          className='mark-switch'
+                          checked={this.state.mark}
+                          onChange={this.handleSwichChange}
+                          name="mark"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <Switch
+                          className='model-switch'
+                          checked={this.state.model}
+                          onChange={this.handleSwichChange}
+                          name="model"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      </div>
+                      <div className='details-second-car-section-errors'>
+                        <Switch
+                          className='color-switch'
+                          checked={this.state.color}
+                          onChange={this.handleSwichChange}
+                          name="color"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <Switch
+                          className='year-switch'
+                          checked={this.state.year}
+                          onChange={this.handleSwichChange}
+                          name="year"
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      </div>
                       {this.state.isEdit ? (
                         <div>
                           <div
@@ -565,7 +528,7 @@ class PhotoControlFormSection extends React.Component {
                               className="cancle-button">Отклонить</button>
                             <button
                               className="close-button"
-                              onClick={this.closeModal}
+                              onClick={(e) => this.closeModal(e, data)}
                             >
                               Закрыть
                             </button>
@@ -592,7 +555,7 @@ class PhotoControlFormSection extends React.Component {
                             </div>
                           </div>
                         )}
-                      <p className="personal-data-section-paragraph">Тариф</p>
+                      <p className="personal-data-section-paragraph tarrifs-parth">Тариф</p>
                       {this.getTarrifsCheckBoxes()}
                     </Form>
                   );

@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap';
 // import { TextField } from '@material-ui/core'
 import PhotoControlFormSection from './PhotoControlFormSection';
 import PhotoControlGalary from './PhotoControlGalary';
-import PhotoControlForms from './PhotoControlForms';
 class PhotoControlModal extends React.Component {
 
     render() {
@@ -20,11 +19,8 @@ class PhotoControlModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="modal-section-row">
-                        {/* <PhotoControlForms selectUserId={userid} show={this.props.show} onHide={this.props.onHide} /> */}
-
                         <PhotoControlFormSection  selectUserId={userid}  show={this.props.show} onHide={this.props.onHide}/>
                         <PhotoControlGalary selectUserId={userid} />
-
                     </div>
                 </Modal.Body>
             </Modal>

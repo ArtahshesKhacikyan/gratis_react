@@ -19,15 +19,15 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    'surnameError': {
-        type: inputType.muiCheckbox,
-        name: 'surnameError',
-        label: '',
-        className: 'errosField',
-        initialValue: false,
-        disabled: false,
-        schema: Yup.bool()
-    },
+    // 'surnameError': {
+    //     type: inputType.muiCheckbox,
+    //     name: 'surnameError',
+    //     label: '',
+    //     className: 'errosField',
+    //     initialValue: false,
+    //     disabled: false,
+    //     schema: Yup.bool()
+    // },
     'name': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.name,
