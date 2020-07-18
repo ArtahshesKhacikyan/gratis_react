@@ -180,6 +180,7 @@ class PhotoControlFormSection extends React.Component {
         }),
 
           CarPhotoControlDetailsData.mark.onChange = (event) => {
+            console.log("-----44444444----")
             this.setState({
               isSaveButtonDisabled: false,
             });
@@ -337,13 +338,8 @@ class PhotoControlFormSection extends React.Component {
   };
 
   savePhotoControl = (e, data) => {
-    let body = {
-      isUpdated: data.values,
-    };
-    this.props.verifyPhotocontrol(this.state.selectedUserData.id, body);
-    this.setState({
-      isEdit: !this.state.isEdit,
-    });
+    e.preventDefault()
+    this.setState({ isEdit: !this.state.isEdit });
   };
 
   handleSwichChange = (event) => {
@@ -396,7 +392,6 @@ class PhotoControlFormSection extends React.Component {
                 onSubmit={(e) => this.onSubmitForm(e)}
               >
                 {(data) => {
-                  console.log("Data ----> ", data)
                   return (
                     <Form>
                       <p className="personal-data-section-paragraph">
