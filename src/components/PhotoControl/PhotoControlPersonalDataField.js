@@ -19,15 +19,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'surnameError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'surnameError',
-    //     label: '',
-    //     className: 'errosField',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'name': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.name,
@@ -43,14 +34,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     }, 
-    'nameError': {
-        type: inputType.muiCheckbox,
-        name: 'nameError',
-        label: '',
-        initialValue: false,
-        disabled: false,
-        schema: Yup.bool()
-    },
     'driverSerialNumber': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.driverSerialNumber,
@@ -66,14 +49,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    'driverSerialNumberError': {
-        type: inputType.muiCheckbox,
-        name: 'driverSerialNumberError',
-        label: '',
-        disabled: false,
-        initialValue: false,
-        schema: Yup.bool()
-    },
     'driverCountry': {
         type: inputType.muiSelectField,
         placeholder: strings.placeholder.driverCountry,
@@ -85,13 +60,5 @@ export default {
         schema: Yup.string()
             .required(errorMessages.requiredInput)
             .nullable()
-    },
-    'driverCountryError': {
-        type: inputType.muiCheckbox,
-        name: 'driverCountryError',
-        label: '',
-        disabled: false,
-        initialValue: false,
-        schema: Yup.bool()
     },
 }

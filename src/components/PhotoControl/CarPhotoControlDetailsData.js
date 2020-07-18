@@ -16,14 +16,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'categoryError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'categoryError',
-    //     label: '',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'carNum': {
         type: inputType.muiTextField,
         placeholder: strings.placeholder.carNum,
@@ -39,14 +31,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'carNumError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'carNumError',
-    //     label: '',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'mark': {
         type: inputType.muiSelectField,
         placeholder: strings.placeholder.mark,
@@ -59,14 +43,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'markError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'markError',
-    //     label: '',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'model': {
         type: inputType.muiSelectField,
         placeholder: strings.placeholder.model,
@@ -79,14 +55,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'modelError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'modelError',
-    //     label: '',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'color': {
         type: inputType.muiSelectField,
         placeholder: strings.placeholder.color,
@@ -99,14 +67,6 @@ export default {
             .required(errorMessages.requiredInput)
             .nullable()
     },
-    // 'colorError': {
-    //     type: inputType.muiCheckbox,
-    //     name: 'colorError',
-    //     label: '',
-    //     initialValue: false,
-    //     disabled: false,
-    //     schema: Yup.bool()
-    // },
     'year': {
         type: inputType.muiSelectField,
         placeholder: strings.placeholder.year,
