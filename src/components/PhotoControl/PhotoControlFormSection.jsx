@@ -78,6 +78,9 @@ class PhotoControlFormSection extends React.Component {
       );
       this.setState({ selectedUserData: _selectedUserData });
     }
+    if (this.state.name) {
+      console.log("SSSSS")
+    }
     if (this.props.getCountryListResponse) {
       Object.values(this.props.getCountryListResponse.data).forEach(
         (values) => {
@@ -178,9 +181,7 @@ class PhotoControlFormSection extends React.Component {
             this.setState({ [value.name]: true })
           }
         }),
-
           CarPhotoControlDetailsData.mark.onChange = (event) => {
-            console.log("-----44444444----")
             this.setState({
               isSaveButtonDisabled: false,
             });
@@ -342,12 +343,16 @@ class PhotoControlFormSection extends React.Component {
     this.setState({ isEdit: !this.state.isEdit });
   };
 
-  handleSwichChange = (event) => {
-    this.setState({ [event.target.name]: event.target.checked })
-    console.log("This state", this.state.initialErrors)
-    if (event.target.name === 'name' && event.target.checked) {
-      console.log('---4444---')
+  handleSwichChange = (event, data) => {
+    this.setState({ 
+      [event.target.name]: event.target.checked
+    })
+    if(event.target.checked){
+      data.initialErrors[event.target.name] = true
+    }else{
+      data.initialErrors[event.target.name] = false
     }
+    
   }
 
   render() {
@@ -356,11 +361,9 @@ class PhotoControlFormSection extends React.Component {
     let disabledHandler = Object.values(initialErrors).find(value => {
       return value = true
     })
+    console.log('this.state.color', this.state.color)
     return (
       <div className="personal-data-header">
-        {/* <ConfirmModal
-          show={this.state.confirmModalShow}
-          onHide={this.handleCloseConfirmModal} /> */}
         <div className="personal-data-section">
           <div className="photo-control-header">
             <button className="edit-icon-button" onClick={this.editButtonClick}>
@@ -401,14 +404,16 @@ class PhotoControlFormSection extends React.Component {
                         <Switch
                           className='surname-switch'
                           checked={this.state.surname}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="surname"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         <Switch
                           className='name-switch'
                           checked={this.state.name}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="name"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
@@ -417,14 +422,16 @@ class PhotoControlFormSection extends React.Component {
                         <Switch
                           className='name-driverSerialNumber'
                           checked={this.state.driverSerialNumber}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="driverSerialNumber"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         <Switch
                           className='name-driverCountry'
                           checked={this.state.driverCountry}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="driverCountry"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
@@ -449,14 +456,16 @@ class PhotoControlFormSection extends React.Component {
                         <Switch
                           className='category-switch'
                           checked={this.state.category}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="category"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         <Switch
                           className='carNum-switch'
                           checked={this.state.carNum}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="carNum"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
@@ -479,14 +488,16 @@ class PhotoControlFormSection extends React.Component {
                         <Switch
                           className='mark-switch'
                           checked={this.state.mark}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="mark"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         <Switch
                           className='model-switch'
                           checked={this.state.model}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="model"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
@@ -495,14 +506,16 @@ class PhotoControlFormSection extends React.Component {
                         <Switch
                           className='color-switch'
                           checked={this.state.color}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="color"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         <Switch
                           className='year-switch'
                           checked={this.state.year}
-                          onChange={this.handleSwichChange}
+                          onChange={(e) =>
+                            this.handleSwichChange(e, data)}
                           name="year"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
@@ -514,7 +527,6 @@ class PhotoControlFormSection extends React.Component {
                             className="button-section">
                             <button className="success-button"
                               disabled={disabledHandler} >
-
                               Верифицировать
                             </button>
                             <button
