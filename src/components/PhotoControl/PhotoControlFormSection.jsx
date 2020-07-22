@@ -34,7 +34,8 @@ import inputTypes from "../../resources/inputType";
 import { values } from "lodash";
 import ConfirmModal from "../Common/Modals/ConfirmModal";
 import Switch from '@material-ui/core/Switch';
-import { useAlert } from 'react-alert'
+import { Modal, Button } from "react-bootstrap";
+
 
 class PhotoControlFormSection extends React.Component {
   constructor(props) {
@@ -62,7 +63,11 @@ class PhotoControlFormSection extends React.Component {
       mark: false,
       model: false,
       year: false,
-      color: false
+      color: false,
+      disabeledCancleButton: false,
+      disbledVerifyButton: false,
+      showErrorModal: false,
+      showTarrifErrorModal: false
     };
   }
 
@@ -77,9 +82,6 @@ class PhotoControlFormSection extends React.Component {
         }
       );
       this.setState({ selectedUserData: _selectedUserData });
-    }
-    if (this.state.name) {
-      console.log("SSSSS")
     }
     if (this.props.getCountryListResponse) {
       Object.values(this.props.getCountryListResponse.data).forEach(
@@ -286,7 +288,7 @@ class PhotoControlFormSection extends React.Component {
       return tarrif;
     });
     if (tarrifs.length === 0) {
-      alert('Пожалуйста, выберите один из тарифов')
+      this.setState({ showTarrifErrorModal: true })
       return
     }
     let body = {
@@ -317,6 +319,10 @@ class PhotoControlFormSection extends React.Component {
         return _fields.push(value[0])
       }
     })
+    if (_fields.length === 0) {
+      this.setState({ showErrorModal: true })
+      return
+    }
     let body = {
       status: "rejected",
       fields: _fields
@@ -344,26 +350,80 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleSwichChange = (event, data) => {
-    this.setState({ 
+    this.setState({
       [event.target.name]: event.target.checked
     })
-    if(event.target.checked){
+    if (event.target.checked) {
       data.initialErrors[event.target.name] = true
-    }else{
+    } else {
       data.initialErrors[event.target.name] = false
     }
-    
+
+  }
+
+  hideErrorModal = () => {
+    this.setState({
+      showErrorModal: false
+    })
+  }
+
+  renderErrorModal() {
+    return (
+      <div>
+        <Modal
+          className="error-modal"
+          show={this.state.showErrorModal}
+          onHide={this.hideErrorModal}>
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Пожалуйста выберите один из полей которых есть неисправность</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.hideErrorModal}>
+              Закрыть
+          </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    )
+  }
+
+  hideTarrifErrorModal = () => {
+    console.log("Mtav")
+    this.setState({
+      showTarrifErrorModal: false
+    })
+  }
+
+  renderTarrifErrorModal() {
+    return (
+      <div>
+        <Modal
+          className="error-modal"
+          show={this.state.showTarrifErrorModal}
+          onHide={this.hideTarrifErrorModal}>
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Пожалуйста, выберите один из тарифов</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.hideTarrifErrorModal}>
+              Закрыть
+          </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    )
   }
 
   render() {
     const { initialValues, validationSchema, initialErrors } = this.state;
     if (!initialValues || !validationSchema || !initialErrors) return "";
-    let disabledHandler = Object.values(initialErrors).find(value => {
-      return value = true
-    })
-    console.log('this.state.color', this.state.color)
+    console.log("this.state.surname", initialErrors)
     return (
       <div className="personal-data-header">
+        {this.renderErrorModal()}
+        {this.renderTarrifErrorModal()}
         <div className="personal-data-section">
           <div className="photo-control-header">
             <button className="edit-icon-button" onClick={this.editButtonClick}>
@@ -526,12 +586,22 @@ class PhotoControlFormSection extends React.Component {
 
                             className="button-section">
                             <button className="success-button"
-                              disabled={disabledHandler} >
+                              disabled={this.state.surname
+                                || this.state.name ||
+                                this.state.driverSerialNumber || this.state.driverCountry
+                                || this.state.category || this.state.carNum
+                                || this.state.mark || this.state.model ||
+                                this.state.color || this.state.year} >
                               Верифицировать
                             </button>
                             <button
                               onClick={(e) => this.canclePhotoControl(e, data)}
-                              disabled={!disabledHandler}
+                              // disabled={this.state.surname
+                              //   || this.state.name ||
+                              //   this.state.driverSerialNumber || this.state.driverCountry
+                              //   || this.state.category || this.state.carNum
+                              //   || this.state.mark || this.state.model ||
+                              //   this.state.color || this.state.year}
                               className="cancle-button">Отклонить</button>
                             <button
                               className="close-button"
