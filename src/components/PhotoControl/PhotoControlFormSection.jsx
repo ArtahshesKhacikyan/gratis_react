@@ -35,6 +35,7 @@ import { values } from "lodash";
 import ConfirmModal from "../Common/Modals/ConfirmModal";
 import Switch from '@material-ui/core/Switch';
 import { Modal, Button } from "react-bootstrap";
+import PhotoControlGalary from "./PhotoControlGalary";
 
 
 class PhotoControlFormSection extends React.Component {
@@ -64,6 +65,9 @@ class PhotoControlFormSection extends React.Component {
       model: false,
       year: false,
       color: false,
+      image1: false,
+      image2: false,
+      image3: false,
       disabeledCancleButton: false,
       disbledVerifyButton: false,
       showErrorModal: false,
@@ -167,9 +171,20 @@ class PhotoControlFormSection extends React.Component {
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
         Object.values(this.state.selectedUserData.errorFields).filter(error => {
+          console.log("-----error----", error)
+          console.log("-----VALUE----", value)
           if (error === value.name) {
             initialErrors[value.name] = true
             this.setState({ [value.name]: true })
+          } else if (error === 'image1') {
+            initialErrors['image1'] = true,
+              this.setState({ image1: true })
+          } else if (error === 'image2') {
+            initialErrors['image2'] = true,
+              this.setState({ image2: true })
+          } else if (error === 'image3') {
+            initialErrors['image3'] = true,
+              this.setState({ image3: true })
           }
         })
       });
@@ -350,6 +365,7 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleSwichChange = (event, data) => {
+    console.log("------event.target.name-----", event.target.name)
     this.setState({
       [event.target.name]: event.target.checked
     })
@@ -456,184 +472,197 @@ class PhotoControlFormSection extends React.Component {
               >
                 {(data) => {
                   return (
-                    <Form>
-                      <p className="personal-data-section-paragraph">
-                        Личные данные
+                    <Form className='photocontrol-form-section'>
+                      <div>
+                        <p className="personal-data-section-paragraph">
+                          Личные данные
                       </p>
-                      <div className='section-errors'>
-                        <Switch
-                          className='surname-switch'
-                          checked={this.state.surname}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="surname"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        <Switch
-                          className='name-switch'
-                          checked={this.state.name}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="name"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                      </div>
-                      <div className='section-second-errors'>
-                        <Switch
-                          className='name-driverSerialNumber'
-                          checked={this.state.driverSerialNumber}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="driverSerialNumber"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        <Switch
-                          className='name-driverCountry'
-                          checked={this.state.driverCountry}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="driverCountry"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                      </div>
-                      <FormPanel
-                        mobileLayout={MobileLayout}
-                        tabletLayout={TabletLayout}
-                        desktopLayout={DesktopLayout}
-                        storage={data.values}
-                        fields={PhotoControlPersonalDataField}
-                        errors={data.errors ? data.errors : data.initialErrors}
-                        touched={data.touched}
-                        handleChange={(e) =>
-                          this.handleEvent(e, data, data.handleChange)
-                        } handleBlur={data.handleBlur}
-                        disabled={this.state.isEdit}
-                      />
-                      <p className="personal-data-section-paragraph">
-                        Фотоконтроль автомобиля
-                      </p>
-                      <div className='details-car-section-errors'>
-                        <Switch
-                          className='category-switch'
-                          checked={this.state.category}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="category"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        <Switch
-                          className='carNum-switch'
-                          checked={this.state.carNum}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="carNum"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                      </div>
-                      <FormPanel
-                        mobileLayout={PhotoControlDetailsMobileLayout}
-                        tabletLayout={PhotoControlDetailsTabletLayout}
-                        desktopLayout={PhotoControlDetailsDesktopLayout}
-                        storage={data.values}
-                        disabled={this.state.isEdit}
-                        fields={CarPhotoControlDetailsData}
-                        errors={data.errors}
-                        touched={data.touched}
-                        handleChange={(e) =>
-                          this.handleEvent(e, data, data.handleChange)
-                        }
-                        handleBlur={data.handleBlur}
-                      />
-                      <div className='details-three-car-section-errors'>
-                        <Switch
-                          className='mark-switch'
-                          checked={this.state.mark}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="mark"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        <Switch
-                          className='model-switch'
-                          checked={this.state.model}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="model"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                      </div>
-                      <div className='details-second-car-section-errors'>
-                        <Switch
-                          className='color-switch'
-                          checked={this.state.color}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="color"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        <Switch
-                          className='year-switch'
-                          checked={this.state.year}
-                          onChange={(e) =>
-                            this.handleSwichChange(e, data)}
-                          name="year"
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                      </div>
-                      {this.state.isEdit ? (
-                        <div>
-                          <div
-
-                            className="button-section">
-                            <button className="success-button"
-                              disabled={this.state.surname
-                                || this.state.name ||
-                                this.state.driverSerialNumber || this.state.driverCountry
-                                || this.state.category || this.state.carNum
-                                || this.state.mark || this.state.model ||
-                                this.state.color || this.state.year} >
-                              Верифицировать
-                            </button>
-                            <button
-                              onClick={(e) => this.canclePhotoControl(e, data)}
-                              // disabled={this.state.surname
-                              //   || this.state.name ||
-                              //   this.state.driverSerialNumber || this.state.driverCountry
-                              //   || this.state.category || this.state.carNum
-                              //   || this.state.mark || this.state.model ||
-                              //   this.state.color || this.state.year}
-                              className="cancle-button">Отклонить</button>
-                            <button
-                              className="close-button"
-                              onClick={(e) => this.closeModal(e, data)}
-                            >
-                              Закрыть
-                            </button>
-                          </div>
+                        <div className='section-errors'>
+                          <Switch
+                            className='surname-switch'
+                            checked={this.state.surname}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="surname"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                          <Switch
+                            className='name-switch'
+                            checked={this.state.name}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="name"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
                         </div>
-                      ) : (
+                        <div className='section-second-errors'>
+                          <Switch
+                            className='name-driverSerialNumber'
+                            checked={this.state.driverSerialNumber}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="driverSerialNumber"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                          <Switch
+                            className='name-driverCountry'
+                            checked={this.state.driverCountry}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="driverCountry"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                        </div>
+                        <FormPanel
+                          mobileLayout={MobileLayout}
+                          tabletLayout={TabletLayout}
+                          desktopLayout={DesktopLayout}
+                          storage={data.values}
+                          fields={PhotoControlPersonalDataField}
+                          errors={data.errors ? data.errors : data.initialErrors}
+                          touched={data.touched}
+                          handleChange={(e) =>
+                            this.handleEvent(e, data, data.handleChange)
+                          } handleBlur={data.handleBlur}
+                          disabled={this.state.isEdit}
+                        />
+                        <p className="personal-data-section-paragraph">
+                          Фотоконтроль автомобиля
+                      </p>
+                        <div className='details-car-section-errors'>
+                          <Switch
+                            className='category-switch'
+                            checked={this.state.category}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="category"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                          <Switch
+                            className='carNum-switch'
+                            checked={this.state.carNum}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="carNum"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                        </div>
+                        <FormPanel
+                          mobileLayout={PhotoControlDetailsMobileLayout}
+                          tabletLayout={PhotoControlDetailsTabletLayout}
+                          desktopLayout={PhotoControlDetailsDesktopLayout}
+                          storage={data.values}
+                          disabled={this.state.isEdit}
+                          fields={CarPhotoControlDetailsData}
+                          errors={data.errors}
+                          touched={data.touched}
+                          handleChange={(e) =>
+                            this.handleEvent(e, data, data.handleChange)
+                          }
+                          handleBlur={data.handleBlur}
+                        />
+                        <div className='details-three-car-section-errors'>
+                          <Switch
+                            className='mark-switch'
+                            checked={this.state.mark}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="mark"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                          <Switch
+                            className='model-switch'
+                            checked={this.state.model}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="model"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                        </div>
+                        <div className='details-second-car-section-errors'>
+                          <Switch
+                            className='color-switch'
+                            checked={this.state.color}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="color"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                          <Switch
+                            className='year-switch'
+                            checked={this.state.year}
+                            onChange={(e) =>
+                              this.handleSwichChange(e, data)}
+                            name="year"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          />
+                        </div>
+                        {this.state.isEdit ? (
                           <div>
-                            <div className="button-section">
-                              <button
-                                className="success-button"
-                                id="save"
-                                disabled={this.state.isSaveButtonDisabled}
-                                onClick={(e) => this.savePhotoControl(e, data)}
-                                type={inputTypes.submit}
-                              >
-                                Сохранить
+                            <div
+
+                              className="button-section">
+                              <button className="success-button"
+                                disabled={this.state.surname
+                                  || this.state.name ||
+                                  this.state.driverSerialNumber || this.state.driverCountry
+                                  || this.state.category || this.state.carNum
+                                  || this.state.mark || this.state.model
+                                  || this.state.color || this.state.year
+                                  || this.state.image1
+                                  || this.state.image2 || this.state.image3} >
+                                Верифицировать
                             </button>
+                              <button
+                                onClick={(e) => this.canclePhotoControl(e, data)}
+                                // disabled={this.state.surname
+                                //   || this.state.name ||
+                                //   this.state.driverSerialNumber || this.state.driverCountry
+                                //   || this.state.category || this.state.carNum
+                                //   || this.state.mark || this.state.model ||
+                                //   this.state.color || this.state.year}
+                                className="cancle-button">Отклонить</button>
                               <button
                                 className="close-button"
-                                onClick={this.cancleEdit}
+                                onClick={(e) => this.closeModal(e, data)}
                               >
-                                Отменить
+                                Закрыть
                             </button>
                             </div>
                           </div>
-                        )}
-                      <p className="personal-data-section-paragraph tarrifs-parth">Тариф</p>
-                      {this.getTarrifsCheckBoxes()}
+                        ) : (
+                            <div>
+                              <div className="button-section">
+                                <button
+                                  className="success-button"
+                                  id="save"
+                                  disabled={this.state.isSaveButtonDisabled}
+                                  onClick={(e) => this.savePhotoControl(e, data)}
+                                  type={inputTypes.submit}
+                                >
+                                  Сохранить
+                            </button>
+                                <button
+                                  className="close-button"
+                                  onClick={this.cancleEdit}
+                                >
+                                  Отменить
+                            </button>
+                              </div>
+                            </div>
+                          )}
+                        <p className="personal-data-section-paragraph tarrifs-parth">Тариф</p>
+                        {this.getTarrifsCheckBoxes()}
+                      </div>
+                      <div className='photo-control-galary'>
+                        <PhotoControlGalary
+                          selectUserId={this.props.selectUserId}
+                          switchChange={(e) =>
+                            this.handleSwichChange(e, data)}
+                          image1={this.state.image1}
+                          image2={this.state.image2}
+                          image3={this.state.image3} />
+                      </div>
                     </Form>
                   );
                 }}

@@ -12,6 +12,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Switch from '@material-ui/core/Switch';
 
 class PhotoControlGalary extends React.Component {
   constructor(props) {
@@ -69,7 +70,6 @@ class PhotoControlGalary extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell align="center"></TableCell>
-
               <TableCell align="center">Перед</TableCell>
               <TableCell align="center">Вид Сзади</TableCell>
               <TableCell align="center">Левый бок</TableCell>
@@ -81,7 +81,14 @@ class PhotoControlGalary extends React.Component {
           <TableBody>
             <TableRow>
               <TableCell component="th" align="center" scope="row">
-                <input type="checkbox" name="image1" checked={this.state.image1Checked} />
+                <Switch
+                  className='mark-switch'
+                  checked={this.props.image1}
+                  onChange={this.props.switchChange}
+                  name="image1"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
+                {/* <input type="checkbox" name="image1" checked={this.state.image1Checked} /> */}
               </TableCell>
               <TableCell component="th" align="center">
                 <img src={rows.front} alt="" />
@@ -108,6 +115,43 @@ class PhotoControlGalary extends React.Component {
     );
   };
 
+  carSalonPhotos = (rows) => {
+    return (
+      <TableContainer component={Paper} className="cars-photo-table">
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center"></TableCell>
+
+              <TableCell align="center">В. Права</TableCell>
+              <TableCell align="center">В. Права В
+</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell component="th" align="center">
+                <Switch
+                  className='mark-switch'
+                  checked={this.props.image3}
+                  onChange={this.props.switchChange}
+                  name="image3"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
+                {/* <input type="checkbox" name="image2" className='error-checkbox' /> */}
+              </TableCell>
+              <TableCell component="th" align="center" scope="row">
+                <img src={rows.salon_a} alt="" />
+              </TableCell>
+              <TableCell align="center">
+                <img src={rows.salon_b} alt="" />
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    )
+  }
   carTexPassportPhotos = (rows) => {
     return (
       <TableContainer component={Paper} className="cars-photo-table">
@@ -123,7 +167,14 @@ class PhotoControlGalary extends React.Component {
           <TableBody>
             <TableRow>
               <TableCell component="th" align="center">
-                <input type="checkbox" name="image2" className='error-checkbox'/>
+                <Switch
+                  className='mark-switch'
+                  checked={this.props.image2}
+                  onChange={this.props.switchChange}
+                  name="image2"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
+                {/* <input type="checkbox" name="image2" className='error-checkbox' /> */}
               </TableCell>
               <TableCell component="th" align="center" scope="row">
                 <img src={rows.tech_pass} alt="" />
@@ -138,7 +189,11 @@ class PhotoControlGalary extends React.Component {
     );
   };
 
+
+
   render() {
+    const { switchChange, image1, image2, image3 } = this.props
+    console.log("----image2----", this.props)
     return (
       <div className="image-gallery-header">
         <Carousel>
@@ -186,7 +241,7 @@ class PhotoControlGalary extends React.Component {
         <div>{this.carPhotosTable(this.state)}</div>
         <div className="tex-passport-img-section">
           {this.carTexPassportPhotos(this.state)}
-          {this.carTexPassportPhotos(this.state)}
+          {this.carSalonPhotos(this.state)}
         </div>
       </div>
     );

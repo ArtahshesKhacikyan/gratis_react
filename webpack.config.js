@@ -10,7 +10,7 @@ module.exports = {
         main: ['babel-polyfill', './src/index.js']
     },
     output: {
-        publicPath: './'
+        publicPath: '/'
     },
     module: {
         rules: [
