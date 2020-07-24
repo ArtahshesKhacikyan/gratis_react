@@ -30,21 +30,22 @@ class LeftMenu extends React.Component {
         <a id="about" className="menu-item" href={routePaths.PHOTOCONTROL}>
           <FontAwesomeIcon icon={faCamera} />
           <span className='menu-span-section'>Фотоконтроль</span> </a>
-        <a id="contact" className="menu-item" href="">
-          <FontAwesomeIcon icon={faUserCheck} /> <span className='menu-span-section'>Верификация</span> </a>
-        <a className="menu-item" href="">
+        <a id="contact" className="menu-item" href="https://gratisgm.ru/admin/verification.html">
+          <FontAwesomeIcon icon={faUserCheck} /> 
+          <span className='menu-span-section'>Верификация</span> </a>
+        <a className="menu-item" href="https://gratisgm.ru/admin/user.html">
           <FontAwesomeIcon icon={faUser} />
           <span className='menu-span-section'>Пользователи</span> </a>
-        <a className="menu-item" href="">
+        <a className="menu-item" href="https://gratisgm.ru/admin/tarif_zones.html">
           <FontAwesomeIcon icon={faMapMarked} />
           <span className='menu-span-section'>Тарифные зоны</span> </a>
-        <a className="menu-item" href="">
+        <a className="menu-item" href="https://gratisgm.ru/admin/ostatok.html">
           <FontAwesomeIcon icon={faWallet} />
           <span className='menu-span-section'>Остаток на счету</span> </a>
-        <a className="menu-item" href="">
+        <a className="menu-item" href="https://gratisgm.ru/admin/prixod-rasxod.html">
           <FontAwesomeIcon icon={faChartLine} />
           <span className='menu-span-section'>Приход / расход</span> </a>
-        <a className="menu-item" href="">
+        <a className="menu-item" href="https://gratisgm.ru/admin/notifications.html">
           <FontAwesomeIcon icon={faBell} />
           <span className='menu-span-section'>Уведомления</span> </a>
         <a className="menu-item" href="">
@@ -53,7 +54,7 @@ class LeftMenu extends React.Component {
         <a className="menu-item" href="">
           <FontAwesomeIcon icon={faStar} />
           <span className='menu-span-section'>Оценка/Активность</span> </a>
-        <a className="menu-item" href="">
+        <a className="menu-item" href="https://gratisgm.ru/admin/generation.html">
           <FontAwesomeIcon icon={faUserCog} />
           <span className='menu-span-section'>Поколение</span> </a>
         <a className="menu-item" href="">
