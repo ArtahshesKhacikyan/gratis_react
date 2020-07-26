@@ -193,7 +193,6 @@ class PhotoControlGalary extends React.Component {
 
   render() {
     const { switchChange, image1, image2, image3 } = this.props
-    console.log("----image2----", this.props)
     return (
       <div className="image-gallery-header">
         <Carousel>

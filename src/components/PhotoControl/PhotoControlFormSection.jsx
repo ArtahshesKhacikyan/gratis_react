@@ -71,7 +71,9 @@ class PhotoControlFormSection extends React.Component {
       disabeledCancleButton: false,
       disbledVerifyButton: false,
       showErrorModal: false,
-      showTarrifErrorModal: false
+      showTarrifErrorModal: false,
+      tarrifsState: [],
+      categorysParth: {}
     };
   }
 
@@ -171,8 +173,6 @@ class PhotoControlFormSection extends React.Component {
         initialValues[value.name] = this.state.selectedUserData[value.name];
         initialErrors[value.name] = false;
         Object.values(this.state.selectedUserData.errorFields).filter(error => {
-          console.log("-----error----", error)
-          console.log("-----VALUE----", value)
           if (error === value.name) {
             initialErrors[value.name] = true
             this.setState({ [value.name]: true })
@@ -230,6 +230,24 @@ class PhotoControlFormSection extends React.Component {
               }
             );
           };
+          if(initialValues.category){
+            let categorys = this.props.getUserCategoryResposne.data.filter(
+              (e) => e.name === initialValues.category
+            );
+            this.setState({
+              categorysParth: categorys
+            })
+          }
+        CarPhotoControlDetailsData.category.onChange = (event) => {
+          Object.entries(this.props.getUserCategoryResposne.data).forEach(element => {
+            let categorys = this.props.getUserCategoryResposne.data.filter(
+              (e) => e.name === event.target.value
+            );
+            this.setState({
+              categorysParth: categorys
+            })
+          })
+        }
       });
     } else {
       Object.values(PhotoControlPersonalDataField).forEach((value) => {
@@ -243,7 +261,6 @@ class PhotoControlFormSection extends React.Component {
         initialErrors[value.name] = false
       });
     }
-
     return {
       initialValues,
       initialErrors,
@@ -260,12 +277,12 @@ class PhotoControlFormSection extends React.Component {
   };
 
   getTarrifsCheckBoxes = () => {
-    let categorys = this.props.getUserCategoryResposne.data.filter(
-      (e) => e.name === this.state.initialValues.category
-    );
+    // let categorys = this.props.getUserCategoryResposne.data.filter(
+    //   (e) => e.name === this.state.initialValues.category
+    // );
     let tariifsCheck = [];
-    if (typeof categorys[0] !== undefined) {
-      categorys[0].classes.forEach(({ name }) => {
+    if (typeof this.state.categorysParth[0] !== undefined) {
+      this.state.categorysParth[0].classes.forEach(({ name }) => {
         let checked = this.state.selectedUserData.tariffs.includes(name);
         tariifsCheck.push(
           <div>
@@ -435,7 +452,6 @@ class PhotoControlFormSection extends React.Component {
   render() {
     const { initialValues, validationSchema, initialErrors } = this.state;
     if (!initialValues || !validationSchema || !initialErrors) return "";
-    console.log("this.state.surname", initialErrors)
     return (
       <div className="personal-data-header">
         {this.renderErrorModal()}
