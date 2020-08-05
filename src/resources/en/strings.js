@@ -38,7 +38,10 @@ export default {
         carMark: 'Маркa машин',
         cordinate: 'Координаты',
         appVersion: 'Версии приложений',
-        language: 'Язык'
+        language: 'Язык',
+        day: 'День',
+        months: 'Месяц',
+        
     },
     photoControlHeaderText: 'Фотоконтроль водителя',
     personalDataText: 'Личные данные',

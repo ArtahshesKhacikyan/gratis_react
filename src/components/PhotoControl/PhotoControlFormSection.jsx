@@ -382,7 +382,6 @@ class PhotoControlFormSection extends React.Component {
   };
 
   handleSwichChange = (event, data) => {
-    console.log("------event.target.name-----", event.target.name)
     this.setState({
       [event.target.name]: event.target.checked
     })
@@ -422,7 +421,6 @@ class PhotoControlFormSection extends React.Component {
   }
 
   hideTarrifErrorModal = () => {
-    console.log("Mtav")
     this.setState({
       showTarrifErrorModal: false
     })

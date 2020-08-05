@@ -10,6 +10,7 @@ import Orders from "./Orders/Orders";
 import General from "./General/General";
 import ToolsHeader from "./ToolsHeader";
 import Vehicle from "./Vehicle/Vehicle";
+import Verification from "./Verification/Verification";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -91,7 +92,7 @@ class ToolsTabSection extends React.Component {
           Item Three
         </TabPanel>
         <TabPanel value={this.state.tabsValue} index={3}>
-          Item Four
+          <Verification />
         </TabPanel>
         <TabPanel value={this.state.tabsValue} index={4}>
           Item Five
