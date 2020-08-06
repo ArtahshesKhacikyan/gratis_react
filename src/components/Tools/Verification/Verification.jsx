@@ -104,6 +104,7 @@ class Verification extends React.Component {
                   <div>
                     {this.imageTableRender()}
                   </div>
+                  <button className='edit-button'>Редактировать</button>
                 </Form>
               );
             }}

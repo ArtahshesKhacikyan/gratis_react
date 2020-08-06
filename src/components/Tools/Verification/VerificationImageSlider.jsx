@@ -1,8 +1,6 @@
 import React from "react";
-import Lightbox from "react-images-zoom";
-import userImage from "../../../assets/images/userimage.jpg";
-import "react-image-gallery/styles/css/image-gallery.css";
-import ImageGallery from 'react-image-gallery';
+import ImageGallery from "react-image-gallery";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const images = [
   {
@@ -22,7 +20,12 @@ const images = [
 class VerificationImageSlider extends React.Component {
   render() {
     return (
-        <ImageGallery items={images} />
+      <ImageGallery
+        items={images}
+        showBullets={true}
+        disableThumbnailScroll={true}
+        lazyLoad={true}
+      />
     );
   }
 }

@@ -12,7 +12,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Switch from '@material-ui/core/Switch';
+import Switch from "@material-ui/core/Switch";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 class PhotoControlGalary extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class PhotoControlGalary extends React.Component {
       image1Checked: false,
       image2Checked: false,
       image3Checked: false,
+      photos: [],
     };
   }
 
@@ -48,9 +50,9 @@ class PhotoControlGalary extends React.Component {
             front: img.photo.front,
             back: img.photo.back,
             left_side: img.photo.left_side,
+            right_side: img.photo.right_side,
             license: img.photo.license,
             license_b: img.photo.license_b,
-            right_side: img.photo.right_side,
             salon_a: img.photo.salon_a,
             salon_b: img.photo.salon_b,
             tech_pass: img.photo.tech_pass,
@@ -82,11 +84,11 @@ class PhotoControlGalary extends React.Component {
             <TableRow>
               <TableCell component="th" align="center" scope="row">
                 <Switch
-                  className='mark-switch'
+                  className="mark-switch"
                   checked={this.props.image1}
                   onChange={this.props.switchChange}
                   name="image1"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  inputProps={{ "aria-label": "secondary checkbox" }}
                 />
                 {/* <input type="checkbox" name="image1" checked={this.state.image1Checked} /> */}
               </TableCell>
@@ -124,19 +126,18 @@ class PhotoControlGalary extends React.Component {
               <TableCell align="center"></TableCell>
 
               <TableCell align="center">В. Права</TableCell>
-              <TableCell align="center">В. Права В
-</TableCell>
+              <TableCell align="center">В. Права В</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell component="th" align="center">
                 <Switch
-                  className='mark-switch'
+                  className="mark-switch"
                   checked={this.props.image3}
                   onChange={this.props.switchChange}
                   name="image3"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  inputProps={{ "aria-label": "secondary checkbox" }}
                 />
                 {/* <input type="checkbox" name="image2" className='error-checkbox' /> */}
               </TableCell>
@@ -150,8 +151,8 @@ class PhotoControlGalary extends React.Component {
           </TableBody>
         </Table>
       </TableContainer>
-    )
-  }
+    );
+  };
   carTexPassportPhotos = (rows) => {
     return (
       <TableContainer component={Paper} className="cars-photo-table">
@@ -168,11 +169,11 @@ class PhotoControlGalary extends React.Component {
             <TableRow>
               <TableCell component="th" align="center">
                 <Switch
-                  className='mark-switch'
+                  className="mark-switch"
                   checked={this.props.image2}
                   onChange={this.props.switchChange}
                   name="image2"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  inputProps={{ "aria-label": "secondary checkbox" }}
                 />
                 {/* <input type="checkbox" name="image2" className='error-checkbox' /> */}
               </TableCell>
@@ -189,54 +190,58 @@ class PhotoControlGalary extends React.Component {
     );
   };
 
-
-
   render() {
-    const { switchChange, image1, image2, image3 } = this.props
+    const { switchChange, image1, image2, image3 } = this.props;
+    const images = [
+      {
+        original: this.state.front,
+        thumbnail: this.state.front,
+      },
+      {
+        original: this.state.back,
+        thumbnail: this.state.back,
+      },
+      {
+        original: this.state.left_side,
+        thumbnail: this.state.left_side,
+      },
+      {
+        original: this.state.right_side,
+        thumbnail: this.state.right_side,
+      },
+      {
+        original: this.state.salon_a,
+        thumbnail: this.state.salon_a,
+      },
+      {
+        original: this.state.salon_b,
+        thumbnail: this.state.salon_b,
+      },
+      {
+        original: this.state.tech_pass,
+        thumbnail: this.state.tech_pass,
+      },
+      {
+        original: this.state.tech_pass_b,
+        thumbnail: this.state.tech_pass_b,
+      },
+      {
+        original: this.state.license,
+        thumbnail: this.state.license,
+      },
+      {
+        original: this.state.license_b,
+        thumbnail: this.state.license_b,
+      },
+    ];
     return (
       <div className="image-gallery-header">
-        <Carousel>
-          <div>
-            <img src={this.state.front} />
-            <p className="legend"> Перед</p>
-          </div>
-          <div>
-            <img src={this.state.back} />
-            <p className="legend">Вид Сзади </p>
-          </div>
-          <div>
-            <img src={this.state.left_side} />
-            <p className="legend"> Левый бок</p>
-          </div>
-          <div>
-            <img src={this.state.right_side} />
-            <p className="legend">Правый бок</p>
-          </div>
-          <div>
-            <img src={this.state.salon_a} />
-            <p className="legend">Салон А</p>
-          </div>
-          <div>
-            <img src={this.state.salon_b} />
-            <p className="legend">Салон B</p>
-          </div>
-          <div>
-            <img src={this.state.tech_pass} />
-            <p className="legend">Тех. Паспорт</p>
-          </div>
-          <div>
-            <img src={this.state.tech_pass_b} />
-            <p className="legend">Тех. Паспорт B</p>
-          </div>
-          <div>
-            <img src={this.state.license} />
-            <p className="legend"> В. Права</p>
-          </div>
-          <div>
-            <img src={this.state.license_b} />
-            <p className="legend">В. Права B</p>
-          </div>
-        </Carousel>
+        <ImageGallery
+          items={images}
+          lazyLoad={true}
+          showBullets={true}
+          disableThumbnailScroll={true}
+        />
         <div>{this.carPhotosTable(this.state)}</div>
         <div className="tex-passport-img-section">
           {this.carTexPassportPhotos(this.state)}
