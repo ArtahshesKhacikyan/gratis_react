@@ -2,10 +2,15 @@ import React from "react";
 import { Formik, Form } from "formik";
 import FormPanel from "../../Common/FormPanel/FormPanel";
 import * as Yup from "yup";
-
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import {
+  FormControl,
+  Select,
+  InputLabel,
+  FormControlLabel,
+  Checkbox,
+  FormGroup,
+  MenuItem,
+} from "@material-ui/core";
 import strings from "../../../resources/en/strings";
 import MobileLayout from "./Layout/Mobile-layout";
 import TabletLayout from "./Layout/Tablet-layout";
@@ -32,6 +37,8 @@ class General extends React.Component {
     this.state = {
       initialValues: null,
       validationSchema: null,
+      isEdit: true,
+      isEditableField: true,
     };
   }
 
@@ -64,6 +71,18 @@ class General extends React.Component {
     };
   };
 
+  editButtonClick = () => {
+    this.setState({
+      isEditableField: false,
+    });
+  };
+
+  closeButton = () => {
+    this.setState({
+      isEditableField: true,
+    });
+  };
+
   render() {
     const { initialValues, validationSchema } = this.state;
     if (!initialValues || !validationSchema) return "";
@@ -78,7 +97,7 @@ class General extends React.Component {
                 enableReinitialize={true}
               >
                 {(data) => {
-                  console.log("DAta", data);
+                  console.log("DAta ------>", data);
                   return (
                     <Form>
                       <FormPanel
@@ -88,6 +107,7 @@ class General extends React.Component {
                         storage={data.values}
                         fields={DeviceInfo}
                         errors={data.errors}
+                        disabled={this.state.isEdit}
                         touched={data.touched}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
@@ -105,6 +125,7 @@ class General extends React.Component {
                         fields={PersonalDataField}
                         errors={data.errors}
                         touched={data.touched}
+                        disabled={this.state.isEditableField}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
                         }
@@ -121,6 +142,7 @@ class General extends React.Component {
                         fields={CarDataField}
                         errors={data.errors}
                         touched={data.touched}
+                        disabled={this.state.isEdit}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
                         }
@@ -136,6 +158,7 @@ class General extends React.Component {
                         storage={data.values}
                         fields={DriverLicense}
                         errors={data.errors}
+                        disabled={this.state.isEditableField}
                         touched={data.touched}
                         handleChange={(e) =>
                           this.handleEvent(e, data, data.handleChange)
@@ -151,6 +174,7 @@ class General extends React.Component {
                         desktopLayout={VerificationDesktopLayout}
                         storage={data.values}
                         fields={VerificationData}
+                        disabled={this.state.isEditableField}
                         errors={data.errors}
                         touched={data.touched}
                         handleChange={(e) =>
@@ -159,7 +183,24 @@ class General extends React.Component {
                         handleBlur={data.handleBlur}
                       />
                       <div className="general-button-section">
-                        <button className="edit-button">Редактировать</button>
+                        {this.state.isEditableField ? (
+                          <button
+                            className="edit-button"
+                            onClick={this.editButtonClick}
+                          >
+                            Редактировать
+                          </button>
+                        ) : (
+                          <div>
+                            <button className="save-button">Сохранить</button>
+                            <button
+                              onClick={this.closeButton}
+                              className="close-button"
+                            >
+                              Закрыть
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </Form>
                   );
@@ -235,6 +276,25 @@ class General extends React.Component {
                 <label htmlFor="">Количество в поколени:</label>
                 <label htmlFor="">Доход из бизнес плана:</label>
               </form>
+              <FormControl variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Статус пользователя
+                </InputLabel>
+                <Select
+                  className="status-admin"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  // value={age}
+                  // onChange={handleChange}
+                  label="Статус пользователя"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="user">User</MenuItem>
+                  <MenuItem value="super_user">Super User</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           </div>
         </div>

@@ -62,6 +62,8 @@ class FormPanel extends React.Component {
     }
 
     renderCols = (fields, sizes) => {
+        console.log("DDDDD", this.props)
+        console.log("fields", this.fields)
         const defaultSize = this.getDefaultSize(fields);
         let colFields = [];
         fields.forEach(field => {

@@ -14,13 +14,14 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import userImage from "../../../assets/images/userimage.jpg";
 import VerificationImageSlider from "./VerificationImageSlider";
- 
+
 class Verification extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       initialValues: null,
       validationSchema: null,
+      isEditableField: true
     };
   }
 
@@ -45,8 +46,8 @@ class Verification extends React.Component {
     };
   };
 
-  imageTableRender=()=>{
-    return(
+  imageTableRender = () => {
+    return (
       <TableContainer component={Paper} className="cars-photo-table">
         <Table aria-label="simple table">
           <TableHead>
@@ -67,8 +68,20 @@ class Verification extends React.Component {
           </TableBody>
         </Table>
       </TableContainer>
-    )
-  }
+    );
+  };
+
+  editButtonClick = () => {
+    this.setState({
+      isEditableField: false,
+    });
+  };
+
+  closeButton = () => {
+    this.setState({
+      isEditableField: true,
+    });
+  };
 
   render() {
     const { initialValues, validationSchema } = this.state;
@@ -76,8 +89,7 @@ class Verification extends React.Component {
     return (
       <div className="container-fluid verification-section-header">
         <div className="verification-section">
-          <h2 className="tools-verification-header">Верификация 
-          </h2>
+          <h2 className="tools-verification-header">Верификация</h2>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -96,15 +108,33 @@ class Verification extends React.Component {
                     fields={VerificationInfo}
                     errors={data.errors}
                     touched={data.touched}
+                    disabled={this.state.isEditableField}
                     handleChange={(e) =>
                       this.handleEvent(e, data, data.handleChange)
                     }
                     handleBlur={data.handleBlur}
                   />
+                  <div>{this.imageTableRender()}</div>
                   <div>
-                    {this.imageTableRender()}
+                    {this.state.isEditableField ? (
+                      <button
+                        className="edit-button"
+                        onClick={this.editButtonClick}
+                      >
+                        Редактировать
+                      </button>
+                    ) : (
+                      <div className="save-button-section">
+                        <button className="save-button">Сохранить</button>
+                        <button
+                          onClick={this.closeButton}
+                          className="close-button"
+                        >
+                          Закрыть
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <button className='edit-button'>Редактировать</button>
                 </Form>
               );
             }}

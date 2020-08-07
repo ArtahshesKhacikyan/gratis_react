@@ -12,6 +12,7 @@ class Vehicle extends React.Component {
     this.state = {
       initialValues: null,
       validationSchema: null,
+      isEditableField: true
     };
   }
 
@@ -36,12 +37,24 @@ class Vehicle extends React.Component {
     };
   };
 
+  editButtonClick = () => {
+    this.setState({
+      isEditableField: false,
+    });
+  };
+
+  closeButton = () => {
+    this.setState({
+      isEditableField: true,
+    });
+  };
+  
   render() {
     const { initialValues, validationSchema } = this.state;
     if (!initialValues || !validationSchema) return "";
     return (
       <div className="container-fluid">
-        <div className='vehicle-section'>
+        <div className="vehicle-section">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -59,13 +72,31 @@ class Vehicle extends React.Component {
                     fields={VehicleInfo}
                     errors={data.errors}
                     touched={data.touched}
+                    disabled={this.state.isEditableField}
                     handleChange={(e) =>
                       this.handleEvent(e, data, data.handleChange)
                     }
                     handleBlur={data.handleBlur}
                   />
                   <div className="general-button-section">
-                    <button className="edit-button">Редактировать</button>
+                    {this.state.isEditableField ? (
+                      <button
+                        className="edit-button"
+                        onClick={this.editButtonClick}
+                      >
+                        Редактировать
+                      </button>
+                    ) : (
+                      <div>
+                        <button className="save-button">Сохранить</button>
+                        <button
+                          onClick={this.closeButton}
+                          className="close-button"
+                        >
+                          Закрыть
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </Form>
               );
