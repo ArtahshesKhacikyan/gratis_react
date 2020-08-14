@@ -1,64 +1,88 @@
 .tools-header {
-    .tools-tabs {
-        background-color: black;
-        color: #ffffff;
-        .MuiTab-textColorPrimary{
-            color: #ffffff;
-        }
-        .MuiTab-textColorPrimary.Mui-selected{
-            color: black !important;
-            background-color: #ffffff !important;
-        }
-        .MuiTabs-indicator{
-            background-color: green;
-        }
-       
+  .tools-tabs {
+    background-color: black;
+    color: #ffffff;
+    .MuiTab-textColorPrimary {
+      color: #ffffff;
     }
-    .MuiBox-root{
-        padding: 0 !important;
+    .MuiTab-textColorPrimary.Mui-selected {
+      color: black !important;
+      background-color: #ffffff !important;
     }
-    .tools-header-section{
-        background-color: black;
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 10px 10px;
-        .status-section{
-            .balance-lable {
-                color: #00db04;
-                font-size: 18px;
-            }
-        }
-        .photocontrol-status-section{
-            // margin-left: 60px;
-        }
-        .car-and-phone-section{
-            display: flex;
-            flex-direction: column;
-        }
-        label{
-            font-size: 18px;
-            color: #ffffff;
-        }
-        p {
-            font-size: 18px;
-            color: red;
-        }
-        .user-info-section{
-            margin-left: 30px;
-            vertical-align: middle;
-        }
-        .user-avatar-img{
-            border-radius: 50%;
-            max-width: 80px;
-        }
+    .MuiTabs-indicator {
+      background-color: green;
     }
+  }
+  .MuiBox-root {
+    padding: 0 !important;
+  }
+  .tools-header-section {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px 10px;
+    .status-section {
+      .balance-lable {
+        color: #00db04;
+        font-size: 18px;
+      }
+    }
+    .car-and-phone-section {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 18px;
+      color: #ffffff;
+    }
+    p {
+      font-size: 18px;
+      color: red;
+    }
+    .user-info-section {
+      margin-left: 30px;
+      vertical-align: middle;
+    }
+    .user-avatar-img {
+      border-radius: 50%;
+      max-width: 80px;
+    }
+  }
 }
 
 .orders-header {
-    .tab-history {
-        .nav a.active{
-            background-color: #00b63d !important;
-            color: black;
-        }
+  .tab-history {
+    .nav a.active {
+      background-color: #00b63d !important;
+      color: black;
+    }
+  }
+}
+
+.orders-table {
+  margin-top: 20px;
+  .MuiTableContainer-root {
+    border: 1px solid #000;
+  }
+  .MuiTableCell-root{
+    border-right: 1px solid #000;
+  }
+}
+
+.orders-tabs{
+    margin-top: 25px;
+    .MuiTab-textColorPrimary.Mui-selected{
+        background-color: #00db04;
+        color: #ffffff;
+    }
+    .MuiButtonBase-root{
+        width: 450px;
+    }
+    .MuiAppBar-root{
+        width: 29%;
+        box-shadow: none;
+    }
+    .MuiTabs-indicator{
+        display: none;
     }
 }

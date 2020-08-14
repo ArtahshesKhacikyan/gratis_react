@@ -1,116 +1,153 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import MuiInputField from './MuiInputField';
-import MuiCheckbox from './MuiCheckbox';
-import MuiSelectField from './MuiSelectField';
-import HtmlContentField from './HtmlContentField';
-import inputTypes from '../../../resources/inputType';
-import fieldTypes from '../../../resources/fieldTypes';
-
+import MuiInputField from "./MuiInputField";
+import MuiCheckbox from "./MuiCheckbox";
+import MuiSelectField from "./MuiSelectField";
+import MuiDateField from './MuiDateField';
+import MuiTimeField from './MuiTimeField';
+import HtmlContentField from "./HtmlContentField";
+import inputTypes from "../../../resources/inputType";
+import fieldTypes from "../../../resources/fieldTypes";
 
 class Field extends React.Component {
-    static propTypes = {
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]),
-        handleChange: PropTypes.func.isRequired,
-        handleBlur: PropTypes.func,
-        field: PropTypes.object.isRequired,
-        error: PropTypes.string,
-        touched: PropTypes.bool,
-        handleFileChange: PropTypes.func,
-        files: PropTypes.func
-    }
+  static propTypes = {
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.object,
+    ]),
+    handleChange: PropTypes.func.isRequired,
+    handleBlur: PropTypes.func,
+    field: PropTypes.object.isRequired,
+    error: PropTypes.string,
+    touched: PropTypes.bool,
+    handleFileChange: PropTypes.func,
+    files: PropTypes.func,
+  };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: props.error ? props.error : '',
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: props.error ? props.error : "",
+    };
+  }
 
-    static getDerivedStateFromProps = (props) => {
-        if (props.error && props.touched) {
-            return { error: props.error };
-        }
-        return { error: '' };
+  static getDerivedStateFromProps = (props) => {
+    if (props.error && props.touched) {
+      return { error: props.error };
     }
+    return { error: "" };
+  };
 
-    handleBlur = (e) => {
-        this.props.handleBlur(e);
-    }
+  handleBlur = (e) => {
+    this.props.handleBlur(e);
+  };
 
-    handleChange = (e, onChange) => {
-        this.props.handleChange(e);
-        onChange && onChange(e);
-    }
+  handleChange = (e, onChange) => {
+    this.props.handleChange(e);
+    onChange && onChange(e);
+  };
 
-    render = () => {
-        const { field, handleChange, value, disabled, error } = this.props;
-        if (!field) {
-            return null;
-        }
-        const isRequired = field.schema && field.schema._exclusive.required !== undefined;
-        switch (field.type) {
-        case inputTypes.muiTextField:
-            return (
-                <MuiInputField
-                    label={field.label}
-                    name={field.name}
-                    type={field.type}
-                    disabled={disabled}
-                    onChange={handleChange}
-                    onBlur={this.handleBlur}
-                    required={isRequired}
-                    value={value}
-                    error={error}
-                    readOnly={field.readOnly}
-                />
-            );
-        case inputTypes.muiCheckbox:
-            return (
-                <MuiCheckbox
-                    label={field.label}
-                    name={field.name}
-                    onChange={(e) => this.handleChange(e, field.onChange)}
-                    className='checkbox-input'
-                    disabled={disabled}
-                    checked={value}
-                />
-            );
-        case inputTypes.muiSelectField:
-            return (
-                <MuiSelectField
-                    label={field.label}
-                    name={field.name}
-                    value={value}
-                    onChange={(e) => this.handleChange(e, field.onChange)}
-                    onBlur={this.handleBlur}
-                    placeholder={field.placeholder}
-                    disabled={disabled}
-                    helpText={field.help}
-                    options={field.options}
-                    required={isRequired}
-                    error={error}
-                />
-            );
-        case fieldTypes.htmlContentType:
-            return (
-                <HtmlContentField
-                    html={field.html}
-                    className={field.className}
-                    visible={field.visible}
-                />
-            );
-        default:
-            return null;
-        }
+  render = () => {
+    const { field, handleChange, value, disabled, error } = this.props;
+    if (!field) {
+      return null;
     }
+    const isRequired =
+      field.schema && field.schema._exclusive.required !== undefined;
+    switch (field.type) {
+      case inputTypes.muiTextField:
+        return (
+          <MuiInputField
+            label={field.label}
+            name={field.name}
+            type={field.type}
+            disabled={disabled}
+            onChange={handleChange}
+            onBlur={this.handleBlur}
+            required={isRequired}
+            value={value}
+            error={error}
+            readOnly={field.readOnly}
+          />
+        );
+      case inputTypes.muiCheckbox:
+        return (
+          <MuiCheckbox
+            label={field.label}
+            name={field.name}
+            onChange={(e) => this.handleChange(e, field.onChange)}
+            className="checkbox-input"
+            disabled={disabled}
+            checked={value}
+          />
+        );
+      case inputTypes.muiSelectField:
+        return (
+          <MuiSelectField
+            label={field.label}
+            name={field.name}
+            value={value}
+            onChange={(e) => this.handleChange(e, field.onChange)}
+            onBlur={this.handleBlur}
+            placeholder={field.placeholder}
+            disabled={disabled}
+            helpText={field.help}
+            options={field.options}
+            required={isRequired}
+            error={error}
+          />
+        );
+      case fieldTypes.htmlContentType:
+        return (
+          <HtmlContentField
+            html={field.html}
+            className={field.className}
+            visible={field.visible}
+          />
+        );
+      case inputTypes.muiDateField:
+        return (
+          <MuiDateField
+            label={field.label}
+            name={field.name}
+            value={value}
+            onChange={(e) => this.handleChange(e, field.onChange)}
+            onBlur={this.handleBlur}
+            placeholder={field.placeholder}
+            disabled={field.disabled || this.props.trialExpired}
+            required={isRequired}
+            error={this.state.error}
+            minDate={field.minDate}
+            maxDate={field.maxDate}
+            disableFuture={field.disableFuture}
+          />
+        );
+      case inputTypes.muiTimeField:
+        return (
+          <MuiTimeField
+            label={field.label}
+            name={field.name}
+            value={value}
+            placeholder={field.placeholder}
+            onChange={(e) => this.handleChange(e, field.onChange)}
+            disabled={field.disabled || this.props.trialExpired}
+            required={isRequired}
+            error={this.state.error}
+            onBlur={this.handleBlur}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 }
 
 function mapStateToProps(state) {
-    return {
-    };
+  return {};
 }
 
 export default connect(mapStateToProps)(Field);

@@ -1,60 +1,57 @@
-import React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
-import AnaliticsChart from './AnaliticsChart';
-import { withRouter } from 'react-router-dom';
-import { routePaths } from '../../../router';
-import MainModal from '../../OrderDetails/MainModal';
+import React from "react";
+import AnaliticsChart from "./AnaliticsChart";
+import { withRouter } from "react-router-dom";
+import { routePaths } from "../../../router";
+import MainModal from "../../OrderDetails/MainModal";
+import OrdersTable from "./OrdersTable";
+import OrdersTab from "./OrdersTab";
 
 class Orders extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isDetailsOrderShow: false,
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDetailsOrderShow: false,
+      showSection: {
+        client: true,
+        driver: false,
+      },
+    };
+  }
 
-    orderDetailsClick = () => {
-        window.open(routePaths.DETAILS_ORDERS,'','height=950,width=1200');
-    }
+  setSection(name) {
+    let newValue = _.mapValues(this.state.showSection, () => false);
+    newValue[name] = true;
+    this.setState({ showSection: newValue });
+  }
 
-    handleClose =()=>{
-        this.setState({
-            isDetailsOrderShow: false
-        })
-    }
+  onSectionClick = (e) => {
+    this.setSection(e.target.name);
+  };
 
-    render() {
-        return (
-            <div className="orders-header">
-                <MainModal show={this.state.isDetailsOrderShow} onHide={this.handleClose} />
+  orderDetailsClick = () => {
+    window.open(routePaths.DETAILS_ORDERS, "", "height=950,width=1200");
+  };
 
-                <div className="tab-history">
-                    <div >
-                        <Tabs>
-                            <Tab eventKey="clinet" title='Клиент'
-                            >
-                                <div>
-                                    <AnaliticsChart />
-                                    <button onClick={this.orderDetailsClick}>Order Details</button>
-                                </div>
-                            </Tab>
-                            <Tab
-                                eventKey="driver"
-                                title='Водитель'>
-                                <div>
-                                    <AnaliticsChart />
+  handleClose = () => {
+    this.setState({
+      isDetailsOrderShow: false,
+    });
+  };
 
-                                </div>
-                            </Tab>
-                        </Tabs>
-                        <div className="history-orders-chackbox">
-
-                        </div>
-                    </div>
-                </div>
-            </div >
-        )
-    }
+  render() {
+    return (
+      <div className="orders-header">
+        <MainModal
+          show={this.state.isDetailsOrderShow}
+          onHide={this.handleClose}
+        />
+        <div className="orders-table">
+          <button onClick={this.orderDetailsClick}>Order Details</button>
+        </div>
+        <OrdersTab />
+      </div>
+    );
+  }
 }
 
 export default withRouter(Orders);
