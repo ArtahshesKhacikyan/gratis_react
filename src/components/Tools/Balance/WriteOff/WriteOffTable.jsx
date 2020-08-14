@@ -6,33 +6,35 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import WriteOff from "./WriteOff";
+// import Deposit from "./Deposit";
 
 function createData(
-  orderId,
-  orderTime,
-  orderStatus,
-  durationOfOrder,
-  tariff,
-  orderAddress,
-  paymentMethod,
-  costOfOrder,
-  currency
+  date,
+  source,
+  method,
+  idOrder,
+  IdTransaction,
+  inputsMoney,
+  findings,
+  residue,
+  available,
+  description
 ) {
   return {
-    orderId,
-    orderTime,
-    orderStatus,
-    durationOfOrder,
-    tariff,
-    orderAddress,
-    paymentMethod,
-    costOfOrder,
-    currency,
+    date,
+    source,
+    method,
+    idOrder,
+    IdTransaction,
+    inputsMoney,
+    findings,
+    residue,
+    available,
+    description
   };
 }
 
-const rows = [createData(10000, 159, 11, 24, 55, 77, 88, 99, 100)];
+const rows = [createData(10000, 159, 11, 24, 55, 77, 88, 99, 100, 150)];
 
 class WriteOffTable extends React.Component {
   render() {
@@ -42,31 +44,34 @@ class WriteOffTable extends React.Component {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>ID заказа</TableCell>
-                <TableCell align="center">Время заказа</TableCell>
-                <TableCell align="center">Статус заказа</TableCell>
-                <TableCell align="center">Длительность заказа</TableCell>
-                <TableCell align="center">Тариф</TableCell>
-                <TableCell align="center">Адрес поездки</TableCell>
-                <TableCell align="center">Метод оплаты</TableCell>
-                <TableCell align="center">Стоимость поездки</TableCell>
-                <TableCell align="center">Валюта</TableCell>
+                <TableCell>Дата</TableCell>
+                <TableCell align="center">Источник</TableCell>
+                <TableCell align="center">Mетод</TableCell>
+                <TableCell align="center">Ид заказа</TableCell>
+                <TableCell align="center">Ид транзакция</TableCell>
+                <TableCell align="center">Вводы</TableCell>
+                <TableCell align="center">Выводы</TableCell>
+                <TableCell align="center">Остаток</TableCell>
+                <TableCell align="center">Доступно</TableCell>
+                <TableCell align="center">Описание</TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.orderId}>
+                <TableRow key={row.date}>
                   <TableCell component="th" scope="row">
-                    {row.orderId}
+                    {row.date}
                   </TableCell>
-                  <TableCell align="center">{row.orderTime}</TableCell>
-                  <TableCell align="center">{row.orderStatus}</TableCell>
-                  <TableCell align="center">{row.durationOfOrder}</TableCell>
-                  <TableCell align="center">{row.tariff}</TableCell>
-                  <TableCell align="center">{row.orderAddress}</TableCell>
-                  <TableCell align="center">{row.paymentMethod}</TableCell>
-                  <TableCell align="center">{row.costOfOrder}</TableCell>
-                  <TableCell align="center">{row.currency}</TableCell>
+                  <TableCell align="center">{row.source}</TableCell>
+                  <TableCell align="center">{row.method}</TableCell>
+                  <TableCell align="center">{row.idOrder}</TableCell>
+                  <TableCell align="center">{row.IdTransaction}</TableCell>
+                  <TableCell align="center">{row.inputsMoney}</TableCell>
+                  <TableCell align="center">{row.findings}</TableCell>
+                  <TableCell align="center">{row.residue}</TableCell>
+                  <TableCell align="center">{row.available}</TableCell>
+                  <TableCell align="center">{row.description}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
