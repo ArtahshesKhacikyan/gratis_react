@@ -1,9 +1,22 @@
+import * as Yup from 'yup';
+import errorMessages from '../../../../resources/en/errorMassages';
+import inputType from '../../../../resources/inputType';
+import strings from '../../../../resources/en/strings';
+
 export default {
-  appointmentDate: {
+  startDate: {
     type: inputType.muiDateField,
     placeholder: strings.placeholder.date,
-    name: "appointmentDate",
-    label: strings.calendarPopup.labels.date,
+    name: "startDate",
+    label: '',
+    initialValue: null,
+    schema: Yup.date().required(errorMessages.requiredInput).nullable(),
+  },
+  endDate: {
+    type: inputType.muiDateField,
+    placeholder: strings.placeholder.date,
+    name: "endDate",
+    label: '',
     initialValue: null,
     schema: Yup.date().required(errorMessages.requiredInput).nullable(),
   },
@@ -17,7 +30,7 @@ export default {
       .required(errorMessages.requiredInput)
       .test(
         "startIsGreaterThanEnd",
-        errorMessages.appointments.startIsGreaterThanEnd,
+        errorMessages.startIsGreaterThanEnd,
         function (startTime) {
           return moment(this.parent.endTime) > moment(startTime);
         }
@@ -35,7 +48,7 @@ export default {
       .required(errorMessages.requiredInput)
       .test(
         "endIsSmallerThanStart",
-        errorMessages.appointments.endIsSmallerThanStart,
+        errorMessages.endIsSmallerThanStart,
         function (endTime) {
           return moment(this.parent.startTime) < moment(endTime);
         }
